@@ -37,7 +37,6 @@ if [[ $HEAT -eq 1 ]]; then
          -e ~/templates/environments/podman.yaml \
          -e ~/templates/environments/ceph-ansible/ceph-ansible.yaml \
          -e ~/containers-env-file.yaml \
-         -e ~/overcloud-0-yml/container-cli.yaml \
          -e ~/domain.yaml \
          -e ~/ussuri/standard/overrides.yaml \
          --stack-only \
