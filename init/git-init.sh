@@ -2,7 +2,7 @@
 # Filename:                git-init.sh
 # Description:             configures my git env
 # Supported Langauge(s):   GNU Bash 4.2.x
-# Time-stamp:              <2019-11-14 15:09:42 fultonj> 
+# Time-stamp:              <2019-11-15 08:37:00 fultonj> 
 # -------------------------------------------------------
 # Clones the repos that I am interested in.
 # -------------------------------------------------------
@@ -100,13 +100,13 @@ if [[ $1 == 'tht' ]]; then
         if [[ ! -d ~/dist ]]; then mkdir ~/dist; fi
         pushd /usr/share/ansible/
         # roles
-        sudo mv -v tripleo-roles ~/dist
+        sudo mv -v roles ~/dist
         sudo ln -f -v -s ~/tripleo-ansible/tripleo_ansible/roles roles
         # playbooks
         sudo mv -v tripleo-playbooks ~/dist
         sudo ln -f -v -s ~/tripleo-ansible/tripleo_ansible/playbooks tripleo-playbooks
         # plugins
-        sudo mv -v tripleo-plugins ~/dist
+        sudo mv -v plugins ~/dist
         sudo ln -f -v -s ~/tripleo-ansible/tripleo_ansible/ansible_plugins plugins
         popd
     fi
