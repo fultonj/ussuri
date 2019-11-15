@@ -1,7 +1,7 @@
 #!/bin/bash
 source ~/stackrc
 time sudo openstack tripleo container image prepare \
-  -e ~/train/containers.yaml \
+  -e containers.yaml \
   --output-env-file ~/containers-env-file.yaml
 
 #  -e ~/local_images.yaml \
