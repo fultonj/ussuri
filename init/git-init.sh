@@ -2,7 +2,7 @@
 # Filename:                git-init.sh
 # Description:             configures my git env
 # Supported Langauge(s):   GNU Bash 4.2.x
-# Time-stamp:              <2019-11-15 08:37:00 fultonj> 
+# Time-stamp:              <2019-11-15 08:57:36 fultonj> 
 # -------------------------------------------------------
 # Clones the repos that I am interested in.
 # -------------------------------------------------------
@@ -99,15 +99,20 @@ if [[ $1 == 'tht' ]]; then
     if [[ -d ~/tripleo-ansible ]]; then
         if [[ ! -d ~/dist ]]; then mkdir ~/dist; fi
         pushd /usr/share/ansible/
-        # roles
-        sudo mv -v roles ~/dist
-        sudo ln -f -v -s ~/tripleo-ansible/tripleo_ansible/roles roles
         # playbooks
         sudo mv -v tripleo-playbooks ~/dist
         sudo ln -f -v -s ~/tripleo-ansible/tripleo_ansible/playbooks tripleo-playbooks
-        # plugins
-        sudo mv -v plugins ~/dist
-        sudo ln -f -v -s ~/tripleo-ansible/tripleo_ansible/ansible_plugins plugins
+
+        ## Instead rely on adding ~/tripleo-ansible/tripleo_ansible/{roles,plugins}
+        ## to the ansible path when config-download is run manually
+        ## see ~/ussuri/standard/deploy-config-download.sh and similar
+        # 
+        ## roles
+        # sudo mv -v roles ~/dist
+        # sudo ln -f -v -s ~/tripleo-ansible/tripleo_ansible/roles roles
+        ## plugins
+        # sudo mv -v plugins ~/dist
+        # sudo ln -f -v -s ~/tripleo-ansible/tripleo_ansible/ansible_plugins plugins
         popd
     fi
     popd

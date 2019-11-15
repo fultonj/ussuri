@@ -86,12 +86,15 @@ if [[ $CONF -eq 1 ]]; then
     #ansible-playbook $DIR/deploy_steps_playbook.yaml --list-tasks
 
     # include library/roles from tripleo-validations, tripleo-common, tripleo-ansible
-    export ANSIBLE_ROLES_PATH="$ANSIBLE_ROLES_PATH:/usr/share/openstack-tripleo-common/:/usr/share/openstack-tripleo-validations/roles:/usr/share/ansible/roles:/usr/share/ceph-ansible/roles"
-    export ANSIBLE_LIBRARY="$ANSIBLE_LIBRARY:/usr/share/openstack-tripleo-validations/library:/usr/share/ansible-modules/:/usr/share/ansible/plugins/modules/:/usr/share/ceph-ansible/library"
-    export DEFAULT_ACTION_PLUGIN_PATH="$DEFAULT_ACTION_PLUGIN_PATH:/usr/share/ansible/plugins/action:/usr/share/ceph-ansible/plugins/actions"
-    export DEFAULT_CALLBACK_PLUGIN_PATH="$DEFAULT_CALLBACK_PLUGIN_PATH:/usr/share/ansible/plugins/callback:/usr/share/ceph-ansible/plugins/callback"
-    export DEFAULT_FILTER_PLUGIN_PATH="$DEFAULT_FILTER_PLUGIN_PATH:/usr/share/ansible/plugins/filter:/usr/share/ceph-ansible/plugins/filter"
-    export DEFAULT_MODULE_UTILS_PATH="$DEFAULT_MODULE_UTILS_PATH:/usr/share/ansible/plugins/module_utils"
+    # in the home directory. Need to include the ones in home dir before /usr/share
+    
+    
+    export ANSIBLE_ROLES_PATH="/home/stack/tripleo-ansible/tripleo_ansible/roles:$ANSIBLE_ROLES_PATH:/usr/share/openstack-tripleo-common/:/usr/share/openstack-tripleo-validations/roles:/usr/share/ansible/roles:/usr/share/ceph-ansible/roles"
+    export ANSIBLE_LIBRARY="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/modules:$ANSIBLE_LIBRARY:/usr/share/openstack-tripleo-validations/library:/usr/share/ansible-modules/:/usr/share/ansible/plugins/modules/:/usr/share/ceph-ansible/library"
+    export DEFAULT_ACTION_PLUGIN_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins:$DEFAULT_ACTION_PLUGIN_PATH:/usr/share/ansible/plugins/action:/usr/share/ceph-ansible/plugins/actions"
+    export DEFAULT_CALLBACK_PLUGIN_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/modules:$DEFAULT_CALLBACK_PLUGIN_PATH:/usr/share/ansible/plugins/callback:/usr/share/ceph-ansible/plugins/callback"
+    export DEFAULT_FILTER_PLUGIN_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/filter:$DEFAULT_FILTER_PLUGIN_PATH:/usr/share/ansible/plugins/filter:/usr/share/ceph-ansible/plugins/filter"
+    export DEFAULT_MODULE_UTILS_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/module_utils:$DEFAULT_MODULE_UTILS_PATH:/usr/share/ansible/plugins/module_utils"
     export ANSIBLE_LOG_PATH="ansible.log"
     echo "NEXT: $(date)" >> ansible.log
 
