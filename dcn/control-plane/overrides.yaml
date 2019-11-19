@@ -1,0 +1,11 @@
+---
+parameter_defaults:
+  ContainerHealthcheckDisabled: true
+  NtpServer: pool.ntp.org
+  ControllerCount: 1
+  ComputeCount: 0
+  OvercloudControlFlavor: baremetal
+  OvercloudComputeFlavor: baremetal
+  ControllerSchedulerHints:
+    'capabilities:node': '0-controller-%index%'
+  GlanceBackend: swift

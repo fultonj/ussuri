@@ -1,0 +1,11 @@
+---
+parameter_defaults:
+  GlanceBackend: swift
+  GlanceCacheEnabled: true
+  DistributedComputeHCIExtraConfig:
+    nova::glance_api_servers: 'http://127.0.0.1:9292'
+    glance::api::bind_host: '127.0.0.1'
+
+  # Assumes the following has happened:
+  #   # echo "    - OS::TripleO::Services::GlanceApi" >> distributed_compute_hci.yaml
+  #
