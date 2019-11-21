@@ -37,7 +37,7 @@ control-plane [glance-api end point (images + volumes pool on external rbd)]
 |
 +-- External Ceph Cluster [images, volumes, vms] (deployed first)
 |
-+-- central [computes (vms pool on external rbd)]
++-- central [computes (vms/volumes pool on external rbd)]
 |
 |
 (distance)
@@ -55,40 +55,35 @@ point to copy any set of images to any DCN site so that they can be
 COW fast-booted on that site. 
 
 One way to arrange my [virtual hardware](../tripleo-lab/overrides.yml#L12)
-to try the above is the following five stacks:
+to try the above is the following 4 stacks:
 
 ```
 +------------------+
-| central-ceph     |
+| control-plane    |    GlanceBackend: RBD | {Cinder,Nova}EnableRbdBackend: false
 +------------------+
-| oc0-ceph-0       |
+| oc0-controller-0 |    ControllerNoCeph
+| oc0-controller-1 |
+| oc0-controller-2 |
+| oc0-ceph-0       |    CephAll
 | oc0-ceph-1       |
 | oc0-ceph-2       |
 +------------------+
 
 +------------------+
-| control-plane    |
+| central          |    Nova/Cinder use external ceph at control-plane
 +------------------+
-| oc0-controller-0 |
-| oc0-controller-1 |
-| oc0-controller-2 |
+| oc0-ceph-3       |    DistributedCompute
 +------------------+
 
 +------------------+
-| central-compute  |
+| dcn0             |    HCI (same as standard dcn)
 +------------------+
-| oc0-ceph-3       |
-+------------------+
-
-+------------------+
-| dcn0             |
-+------------------+
-| oc0-ceph-4       |
+| oc0-ceph-4       |    DistributedComputeHCI + glance
 +------------------+
 
 +------------------+
-| dcn1             |
+| dcn1             |    HCI (same as standard dcn)
 +------------------+
-| oc0-ceph-5       |
+| oc0-ceph-5       |    DistributedComputeHCI + glance
 +------------------+
 ```
