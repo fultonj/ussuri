@@ -111,4 +111,4 @@ At least the extract steps above gave you the input you'd need for step 5.
 
 ## Next
 
-Develop steps to automate the manual steps in this environment.
+Write TripleO patches to automate the manual steps in this environment.
