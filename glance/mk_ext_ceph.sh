@@ -10,12 +10,13 @@ if [[ ! -e $INV ]]; then
     exit 1
 fi
 
+# Yes, this is awful. We will get better extraction later.
 ANS="ansible -i $INV DistributedComputeHCI[0] -m shell -b"
 FSID=$($ANS -a "cat /etc/ceph/$CEPH.conf" | grep "fsid" | awk 'BEGIN { FS = "= " } ; { print $2 }')
 KEY=$($ANS -a "cat /etc/ceph/$CEPH.client.openstack.keyring" | grep key | awk 'BEGIN { FS = "= " } ; { print $2 }')
 IPS=$($ANS -a "cat /etc/ceph/$CEPH.conf" | grep "mon host" | awk 'BEGIN { FS = "= " } ; { print $2 }')
 
-cat <<EOF > external_ceph.yaml
+cat <<EOF > ${CEPH}_external_ceph.yaml
 parameter_defaults:
   CephClusterName: $CEPH
   CephClusterFSID: "$FSID"
@@ -23,5 +24,5 @@ parameter_defaults:
   CephExternalMonHost: "$IPS"
 EOF
 echo ""
-cat external_ceph.yaml
+cat ${CEPH}_external_ceph.yaml
 
