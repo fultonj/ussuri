@@ -34,6 +34,9 @@ for n in $(seq 1 $N); do
     sed s/"1-ceph-%index%"/"$k-ceph-%index%"/g -i $deploy/overrides.yaml
     cp dcn0/deploy.sh $deploy/deploy.sh
     sed s/dcn0/$deploy/g -i $deploy/deploy.sh
+    cp dcn0/validate.sh $deploy/validate.sh
+    cp dcn0/use-dcn.sh $deploy/use-dcn.sh
+    sed s/dcn0/$deploy/g -i $deploy/use-dcn.sh
     pushd $deploy
     bash deploy.sh
     popd
