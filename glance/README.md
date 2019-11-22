@@ -91,9 +91,9 @@ to try something like the above is the following three stacks:
 - Tag nodes with [ironic.sh](ironic.sh)
 - [control-plane/deploy.sh](control-plane/deploy.sh)
 - [dcn0/deploy.sh](dcn0/deploy.sh)
-- Extract Ceph client information from dcn0 [mk_ext_ceph.sh](mk_ext_ceph.sh)
+- Extract Ceph client information from dcn0 [tht_ext_ceph.sh](external_ceph/tht_ext_ceph.sh)
 - Use [dcnN.sh](dcnN.sh) to deploy dcn1 (or as many as you like)
-- Extract Ceph client information from dcn1 [mk_ext_ceph.sh dcn1](mk_ext_ceph.sh)
+- Extract Ceph client information from dcn1 [tht_ext_ceph.sh dcn1](external_ceph/tht_ext_ceph.sh)
 
 You've now completed steps 1-4 of 
 [RFE BZ 1760941](https://bugzilla.redhat.com/show_bug.cgi?id=1760941#c0).

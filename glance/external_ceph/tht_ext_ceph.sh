@@ -4,7 +4,7 @@ CEPH=$1
 if [[ -z $CEPH ]]; then CEPH=dcn0; fi
 echo "Extracting ceph client information for ceph cluster: $CEPH"
 
-INV=$CEPH/config-download/ceph-ansible/inventory.yml
+INV=../$CEPH/config-download/ceph-ansible/inventory.yml
 if [[ ! -e $INV ]]; then
     echo "Missing config download inventory: $INV"
     exit 1
