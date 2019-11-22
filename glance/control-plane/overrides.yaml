@@ -1,0 +1,55 @@
+---
+parameter_defaults:
+  ContainerHealthcheckDisabled: true
+  NtpServer: pool.ntp.org
+  ControllerCount: 1
+  ComputeCount: 1
+  CephStorageCount: 1
+  ControllerSchedulerHints:
+    'capabilities:node': '0-controller-%index%'
+  ComputeSchedulerHints:
+    'capabilities:node': '0-compute-%index%'
+  CephStorageSchedulerHints:
+    'capabilities:node': '0-ceph-%index%'
+  OvercloudControlFlavor: baremetal
+  OvercloudComputeFlavor: baremetal
+  OvercloudCephStorageFlavor: baremetal
+  # Ceph
+  CephClusterName: central
+  CephAnsiblePlaybookVerbosity: 3
+  CephPoolDefaultSize: 1
+  CephPoolDefaultPgNum: 32
+  LocalCephAnsibleFetchDirectoryBackup: /tmp/fetch_dir
+  CephAnsibleEnvironmentVariables:
+    ANSIBLE_HOST_KEY_CHECKING: 'False'
+    ANSIBLE_PRIVATE_KEY_FILE: '/home/stack/.ssh/id_rsa'
+    ANSIBLE_FILTER_PLUGINS: /usr/share/ceph-ansible/plugins/filter/
+  CephAnsibleDisksConfig:
+    osd_scenario: lvm
+    osd_objectstore: bluestore
+    devices:
+      - /dev/sdb
+      # - /dev/sdc
+      # - /dev/sdd
+      # - /dev/sde
+      # - /dev/sdf
+      # - /dev/sdg
+      # - /dev/sdh
+      # - /dev/sdi
+      # - /dev/sdj
+      # - /dev/sdk
+      # - /dev/sdl
+  CephAnsibleExtraConfig:
+    ceph_osd_docker_cpu_limit: 1
+    # is_hci: true
+    #mon_host_v1: { 'enabled': False }
+  ## Set relative to your hardware:
+  ##   https://red.ht/2pxAhVW
+  # ComputeHCIParameters:
+  #   NovaReservedHostMemory: 181000
+  # ComputeHCIExtraConfig:
+  #   nova::cpu_allocation_ratio: 8.2
+  CephConfigOverrides:
+    osd_recovery_op_priority: 3
+    osd_recovery_max_active: 3
+    osd_max_backfills: 1
