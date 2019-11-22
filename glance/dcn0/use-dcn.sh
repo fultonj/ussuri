@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 MKAZ=1
-GLANCE=1
-NOVA=1
-DEPS=1
+GLANCE=0
+NOVA=0
+DEPS=0
 CINDER=0
 PUBLIC=0
 
@@ -31,7 +31,7 @@ if [[ $PUBLIC -eq 1 ]]; then
 fi
 
 if [[ $MKAZ -eq 1 ]]; then
-    # Create host aggregate and AZ
+    echo "Creating host aggregate and AZ"
     # unnecessary if undercloud can reach endpoints and deployed with nova-az.yaml
     if ! openstack aggregate show $HOST_AGGREGATE >null 2>&1; then
         echo "Creating a host aggregate for $AZ"
@@ -55,23 +55,7 @@ if [[ $MKAZ -eq 1 ]]; then
 fi
 
 if [[ $GLANCE -eq 1 ]]; then
-    # delete all images if any
-    for ID in $(openstack image list -f value -c ID); do
-        openstack image delete $ID;
-    done
-    # download cirros image only if necessary
-    IMG=cirros-0.4.0-x86_64-disk.img
-    RAW=$(echo $IMG | sed s/img/raw/g)
-    if [ ! -f $RAW ]; then
-        if [ ! -f $IMG ]; then
-            echo "Could not find qemu image $img; downloading a copy."
-            curl -# https://download.cirros-cloud.net/0.4.0/$IMG > $IMG
-        fi
-        echo "Could not find raw image $RAW; converting."
-        qemu-img convert -f qcow2 -O raw $IMG $RAW
-    fi
-    openstack image create cirros --container-format bare --disk-format raw --public --file $RAW
-    openstack image list
+    echo "ask glance to copy the image at central to dcn0"
 fi
 
 if [[ $NOVA -eq 1 ]]; then
@@ -79,7 +63,7 @@ if [[ $NOVA -eq 1 ]]; then
         echo "Checking the following dependencies..."
         IMAGE_ID=$(openstack image show cirros -f value -c id)
         if [[ -z $IMAGE_ID ]]; then
-            echo "Unable to find cirros image; re-run with GLANCE=1"
+            echo "Unable to find cirros image"
             exit 1
         fi
         echo "- glance image"
@@ -176,7 +160,7 @@ if [[ $NOVA -eq 1 ]]; then
 	done
 
 	echo "Creating Cinder volume"
-	openstack volume create --size 1 --availability-zone $AZ myvol
+	openstack volume create --size 1 --availability-zone $AZ myvol-${AZ}
 	if [ $? != "0" ]; then
             echo "Error creating a volume in AZ ${AZ}. If this is a brand new dcn"
             echo "deployment then cinder-scheduler may not have time to learn about"
@@ -185,7 +169,7 @@ if [[ $NOVA -eq 1 ]]; then
 	fi
 	for i in {1..5}; do
             sleep 1
-            STATUS=$(openstack volume show myvol -f value -c status)
+            STATUS=$(openstack volume show myvol-${AZ} -f value -c status)
             if [[ $STATUS == "available" || $STATUS == "error" ]]; then
 		break
             fi
@@ -198,14 +182,14 @@ if [[ $NOVA -eq 1 ]]; then
     fi
 
     echo "Launching Nova server"
-    openstack server create --flavor tiny --image cirros --key-name demokp --network private --security-group basic myserver --availability-zone $AZ
+    openstack server create --flavor tiny --image cirros --key-name demokp --network private --security-group basic myserver-${AZ} --availability-zone $AZ
 
-    STATUS=$(openstack server show myserver -f value -c status)
+    STATUS=$(openstack server show myserver-${AZ} -f value -c status)
     echo "Server status: $STATUS (waiting)"
     while [[ $STATUS == "BUILD" ]]; do
         sleep 1
         echo -n "."
-        STATUS=$(openstack server show myserver -f value -c status)
+        STATUS=$(openstack server show myserver-${AZ} -f value -c status)
     done
     echo ""
     if [[ $STATUS == "ERROR" ]]; then
@@ -216,7 +200,7 @@ if [[ $NOVA -eq 1 ]]; then
         openstack server list
         if [[ $PUBLIC -eq 1 ]]; then
             FLOATING_IP=$(openstack floating ip list -f value -c "Floating IP Address")
-            openstack server add floating ip myserver $FLOATING_IP
+            openstack server add floating ip myserver-${AZ} $FLOATING_IP
             echo "Will attempt to SSH into $FLOATING_IP for 30 seconds"
             i=0
             while true; do
@@ -234,7 +218,7 @@ if [[ $NOVA -eq 1 ]]; then
         fi
 	if [[ $CINDER -eq 1 ]]; then
             echo "Attaching the volume"
-            openstack server add volume myserver myvol
+            openstack server add volume myserver-${AZ} myvol-${AZ}
             sleep 3
             openstack volume list
 	fi
