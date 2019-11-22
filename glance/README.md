@@ -86,29 +86,35 @@ to try something like the above is the following three stacks:
 +------------------+
 ```
 
-## How to deploy it
+## How to deploy it with TripleO
 
 - Tag nodes with [ironic.sh](ironic.sh)
 - [control-plane/deploy.sh](control-plane/deploy.sh)
 - [dcn0/deploy.sh](dcn0/deploy.sh)
-- Extract Ceph client information from dcn0 [tht_ext_ceph.sh](external_ceph/tht_ext_ceph.sh)
 - Use [dcnN.sh](dcnN.sh) to deploy dcn1 (or as many as you like)
-- Extract Ceph client information from dcn1 [tht_ext_ceph.sh dcn1](external_ceph/tht_ext_ceph.sh)
 
 You've now completed steps 1-4 of 
 [RFE BZ 1760941](https://bugzilla.redhat.com/show_bug.cgi?id=1760941#c0).
 As [step 5](https://blueprints.launchpad.net/tripleo/+spec/multiple-external-ceph)
-isn't yet implemented we need to do this step manually.
-At least the extract steps above gave you the input you'd need for step 5.
+isn't yet implemented in TripleO we need to do this step outside of TripleO.
 
-### Manual Steps to configure multiple Ceph clients
+### Steps outside of TripleO to configure multiple Ceph clients
 
-- Todo: document these steps
+Run [multiple_ceph/deploy.sh](multiple_ceph/deploy.sh) which will use
+Ansible to do the following:
 
-### Manual Steps to configure Glance multiple RBD backends
+- Create a keyring on each of the DCN Ceph clusters which may be used
+  to read/write to the images pool
+- Install the keyring and Ceph configuration file for each DCN ceph
+  cluster on the Central controller which runs Glance
+- Test that the RBD command on the Central controller is able to use
+  the installed keyring and configuration file to write to each DCN
+  ceph cluster
+
+### Steps outside of TripleO to configure Glance with multiple RBD backends
 
 - Todo: document these steps
 
 ## Next
 
-Write TripleO patches to automate the manual steps in this environment.
+Write TripleO patches to make the above possible with just TripleO.

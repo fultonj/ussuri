@@ -1,0 +1,60 @@
+---
+- name: set conf path fact
+  set_fact:
+    conf: "/etc/ceph/{{ dcn }}.conf"
+
+- name: upload ceph configuration files (ignore attrs were not transferred)
+  synchronize:
+    mode: push
+    dest: "{{ conf }}"
+    src: "dcn_ceph_data/{{ dcn }}.conf"
+
+- name: chown dcn conf file
+  shell: "chown root:root {{ conf }}"
+
+- name: set keyring path fact
+  set_fact:
+    keyring: "/etc/ceph/client.{{ dcn }}.glance.keyring"
+  
+- name: upload ceph keyrings
+  synchronize:
+    mode: push
+    dest: "{{ keyring }}"
+    src: "dcn_ceph_data/client.{{ dcn }}.glance.keyring"
+
+- name: chown dcn keyring
+  shell: "chown ceph:ceph {{ keyring }}"
+
+- name: chcon dcn conf and key files
+  shell: "chcon system_u:object_r:container_file_t:s0 {{ item }}"
+  loop:
+    - "{{ keyring }}"
+    - "{{ conf }}"
+
+- name: collect list of /etc/ceph
+  shell: "ls -l /etc/ceph/"
+  register: ls_ceph
+
+- name: show /etc/ceph
+  debug:
+    msg: "{{ ls_ceph.stdout_lines }}"
+  
+- name: set rbd command fact
+  set_fact:
+    rbd: "podman exec ceph-mon-`hostname` rbd --conf {{ conf }} --id {{ dcn }}.glance --keyring {{ keyring }}"
+
+- name: Test ceph client connection by writing an object
+  shell: "{{ rbd }} create --size 1024 images/test_object_from_central"
+  register: ceph_write
+
+- name: Test ceph client connection by writing an object
+  shell: "{{ rbd }} ls images"
+  register: ceph_read
+
+- name: show ceph client test results
+  debug:
+    msg: "Write (should be empty): {{ ceph_write.stdout_lines }} | Read: {{ ceph_read.stdout_lines }}"
+
+- name: Clean up after testing by deleteing test object
+  shell: "{{ rbd }} rm images/test_object_from_central"
+  register: ceph_write

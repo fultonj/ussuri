@@ -1,0 +1,38 @@
+---
+- name: Prepare undercloud
+  gather_facts: false
+  hosts: undercloud
+  tags: pull
+  tasks:
+    - name: Create dcn_ceph_data directory if it does not exist
+      file:
+        path: dcn_ceph_data
+        state: directory
+        mode: '0755'
+
+- name: Extract Ceph data from DCN servers
+  gather_facts: false
+  hosts: dcn0-distributedcomputehci-0 dcn1-distributedcomputehci-0
+  become: true
+  tags: pull
+  tasks:
+    - include_tasks: tasks/make_client.yml
+      vars:
+        dcn: "{{ item.dcn }}"
+        host: "{{ item.host }}"
+      loop:
+        - { dcn: 'dcn0', host: 'dcn0-distributedcomputehci-0' }
+        - { dcn: 'dcn1', host: 'dcn1-distributedcomputehci-0' }
+        
+- name: Configure central control plane as DCN Ceph cluster client
+  gather_facts: false
+  become: true
+  hosts: control-plane-controller-0
+  tags: push
+  tasks:
+    - include_tasks: tasks/install_client.yml
+      vars:
+        dcn: "{{ item }}"
+      loop:
+        - dcn0
+        - dcn1

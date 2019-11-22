@@ -1,0 +1,29 @@
+---
+- when: host == inventory_hostname
+  block:
+    - name: download ceph configuration file
+      synchronize:
+        mode: pull
+        src: "/etc/ceph/{{ dcn }}.conf"
+        dest: "dcn_ceph_data/{{ dcn }}.conf"
+
+    - name: set ceph command fact
+      set_fact:
+        ceph: "podman exec ceph-mon-{{ host }} ceph --conf /etc/ceph/{{ dcn }}.conf"
+
+    - name: set ceph keyring fact
+      set_fact:
+        keyfile: "/etc/ceph/client.{{ dcn }}.glance.keyring"
+
+    - name: create ceph client glance keyring
+      shell: "{{ ceph }} auth get-or-create client.{{ dcn }}.glance mon 'profile rbd' osd 'profile rbd pool=images'"
+
+    - name: export ceph client glance keyring to file
+      shell: "{{ ceph }} auth get client.{{ dcn }}.glance > {{ keyfile }}"
+
+    - name: download ceph client glance keyrings
+      synchronize:
+        mode: pull
+        src: "{{ keyfile }}"
+        dest: "dcn_ceph_data/client.{{ dcn }}.glance.keyring"
+
