@@ -58,7 +58,7 @@ be COW fast-booted on that site. There are other possible variations
 at the central site not requiring an external Ceph cluster.
 
 One way to arrange my [virtual hardware](../tripleo-lab/overrides.yml#L12)
-to try something like the above is the following 4 stacks:
+to try something like the above is the following three stacks:
 
 ```
 +------------------+
