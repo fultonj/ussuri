@@ -111,9 +111,72 @@ Ansible to do the following:
   the installed keyring and configuration file to write to each DCN
   ceph cluster
 
+One thing the above doesn't do is the following, which is necessary to
+configure glance to use the appropriate keyring.
+
+Ensure the following lines are in /etc/ceph/dcn0.conf
+
+```
+[client]
+keyring = /etc/ceph/client.dcn0.glance.keyring
+```
+
 ### Steps outside of TripleO to configure Glance with multiple RBD backends
 
-- Todo: document these steps
+The following Glance configuration file is used by the glance_api container:
+
+ `/var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf`
+
+(Obviously, this is wrong since its managed by TripleO but this is a POC)
+
+Modify the file as follows:
+
+- Under `[DEFAULT]` add `enabled_backends = central:rbd, dcn0:rbd`
+
+`sudo crudini --set /var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf DEFAULT enabled_backends central:rbd, dcn0:rbd`
+
+- Remove the entire default `[glance_store]` section (it will be replaced)
+  
+`sudo crudini --del /var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf glance_store`
+
+- Append the following to the bottom of the file:
+
+```
+[glance_store]
+stores=http,rbd
+os_region_name=regionOne
+default_backend = central
+
+[central]
+store_description = "central RBD backend"
+rbd_store_pool = images
+rbd_store_user = openstack
+rbd_store_ceph_conf = /etc/ceph/ceph.conf
+
+[dcn0]
+store_description = "dcn0 RBD backend"
+rbd_store_pool = images
+rbd_store_user = dcn0.glance
+rbd_store_ceph_conf = /etc/ceph/dcn0.conf
+```
+
+Restart the glance container:
+
+ `sudo systemctl restart tripleo_glance_api.service`
+ 
+Ensure the `control-planerc` is on the controller node and after
+sourcing it, verify glance can see both backends:
+
+```
+(control-plane) [root@control-plane-controller-0 ceph]# glance stores-info
++----------+----------------------------------------------------------------------------------+
+| Property | Value                                                                            |
++----------+----------------------------------------------------------------------------------+
+| stores   | [{"default": "true", "id": "central", "description": "central RBD backend"},     |
+|          | {"id": "dcn0", "description": "dcn0 RBD backend"}]                               |
++----------+----------------------------------------------------------------------------------+
+(control-plane) [root@control-plane-controller-0 ceph]# 
+```
 
 ## Next
 
