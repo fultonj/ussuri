@@ -152,6 +152,12 @@ store_description = "dcn0 RBD backend"
 rbd_store_pool = images
 rbd_store_user = dcn0.glance
 rbd_store_ceph_conf = /etc/ceph/dcn0.conf
+
+[dcn1]
+store_description = "dcn1 RBD backend"
+rbd_store_pool = images
+rbd_store_user = dcn1.glance
+rbd_store_ceph_conf = /etc/ceph/dcn1.conf
 ```
 
 It then restarts the glance container:
@@ -169,14 +175,6 @@ authenticate with the ceph keyring), then glance would have refused
 to restart and display its list of available hosts.
 
 ```
-(control-plane) [heat-admin@control-plane-controller-0 ~]$ glance stores-info
-+----------+----------------------------------------------------------------------------------+
-| Property | Value                                                                            |
-+----------+----------------------------------------------------------------------------------+
-| stores   | [{"id": "dcn1", "description": "dcn1 RBD backend"}, {"default": "true", "id":    |
-|          | "central", "description": "central RBD backend"}, {"id": "dcn0", "description":  |
-|          | "dcn0 RBD backend"}]                                                             |
-+----------+----------------------------------------------------------------------------------+
 (control-plane) [heat-admin@control-plane-controller-0 ~]$ glance stores-info
 +----------+----------------------------------------------------------------------------------+
 | Property | Value                                                                            |
