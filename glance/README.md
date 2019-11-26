@@ -111,16 +111,6 @@ Ansible to do the following:
   the installed keyring and configuration file to write to each DCN
   ceph cluster
 
-One thing the above doesn't do is the following, which is necessary to
-configure glance to use the appropriate keyring.
-
-Ensure the following lines are in /etc/ceph/dcn0.conf
-
-```
-[client]
-keyring = /etc/ceph/client.dcn0.glance.keyring
-```
-
 ### Steps outside of TripleO to configure Glance with multiple RBD backends
 
 The following Glance configuration file is used by the glance_api container:
@@ -131,9 +121,12 @@ The following Glance configuration file is used by the glance_api container:
 
 Modify the file as follows:
 
-- Under `[DEFAULT]` add `enabled_backends = central:rbd, dcn0:rbd`
+- Under `[DEFAULT]` add `enabled_backends = central:rbd, dcn0:rbd` and
+  remove `registry_host=0.0.0.0`
 
 `sudo crudini --set /var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf DEFAULT enabled_backends central:rbd, dcn0:rbd`
+
+`sudo crudini --del /var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf DEFAULT registry_host`
 
 - Remove the entire default `[glance_store]` section (it will be replaced)
   
@@ -177,6 +170,8 @@ sourcing it, verify glance can see both backends:
 +----------+----------------------------------------------------------------------------------+
 (control-plane) [root@control-plane-controller-0 ceph]# 
 ```
+
+
 
 ## Next
 

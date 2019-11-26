@@ -9,12 +9,19 @@
     dest: "{{ conf }}"
     src: "dcn_ceph_data/{{ dcn }}.conf"
 
-- name: chown dcn conf file
-  shell: "chown root:root {{ conf }}"
-
 - name: set keyring path fact
   set_fact:
     keyring: "/etc/ceph/client.{{ dcn }}.glance.keyring"
+
+- name: add client section in conf file with path to keyring
+  ini_file:
+    path: "{{ conf }}"
+    section: client
+    option: keyring
+    value: "{{ keyring }}"
+    
+- name: chown dcn conf file
+  shell: "chown root:root {{ conf }}"
   
 - name: upload ceph keyrings
   synchronize:
