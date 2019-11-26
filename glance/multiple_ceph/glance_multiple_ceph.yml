@@ -36,3 +36,16 @@
       loop:
         - dcn0
         - dcn1
+
+- name: Configure central control plane with extra glance backends
+  gather_facts: false
+  become: true
+  hosts: control-plane-controller-0
+  tags: glance
+  tasks:
+    - include_tasks: tasks/glance.yml
+      vars:
+        rc: /home/heat-admin/control-planerc
+        dcns:
+          - dcn0
+          - dcn1

@@ -110,29 +110,30 @@ Ansible to do the following:
 - Test that the RBD command on the Central controller is able to use
   the installed keyring and configuration file to write to each DCN
   ceph cluster
+- Modify Glance on the central controller to use the additional
+  DCN RBD backends
 
-### Steps outside of TripleO to configure Glance with multiple RBD backends
+#### What Glance changes are made by the playbook?
 
 The following Glance configuration file is used by the glance_api container:
 
  `/var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf`
 
-(Obviously, this is wrong since its managed by TripleO but this is a POC)
+Modifying it outside of TripleO is wrong (it's already managed by
+puppet), but for this POC the playbook modifies this file as follows:
 
-Modify the file as follows:
+- Under `[DEFAULT]` adds `enabled_backends = central:rbd, dcn0:rbd,
+  dcn1:rbd` and removes `registry_host=0.0.0.0`
 
-- Under `[DEFAULT]` add `enabled_backends = central:rbd, dcn0:rbd` and
-  remove `registry_host=0.0.0.0`
-
-`sudo crudini --set /var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf DEFAULT enabled_backends central:rbd, dcn0:rbd`
+`sudo crudini --set /var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf DEFAULT enabled_backends central:rbd, dcn0:rbd, dcn1:rbd`
 
 `sudo crudini --del /var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf DEFAULT registry_host`
 
-- Remove the entire default `[glance_store]` section (it will be replaced)
+- Removes the entire default `[glance_store]` section (it will be replaced)
   
 `sudo crudini --del /var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf glance_store`
 
-- Append the following to the bottom of the file:
+- Appends the following to the bottom of the file:
 
 ```
 [glance_store]
@@ -153,25 +154,39 @@ rbd_store_user = dcn0.glance
 rbd_store_ceph_conf = /etc/ceph/dcn0.conf
 ```
 
-Restart the glance container:
+It then restarts the glance container:
 
  `sudo systemctl restart tripleo_glance_api.service`
- 
+
+## Did it work?
+
 Ensure the `control-planerc` is on the controller node and after
-sourcing it, verify glance can see both backends:
+sourcing it, verify glance can see all three backends (the playbook
+does this too).
+
+If something wasn't configured corectly (e.g. the rbd client couldn't
+authenticate with the ceph keyring), then glance would have refused 
+to restart and display its list of available hosts.
 
 ```
-(control-plane) [root@control-plane-controller-0 ceph]# glance stores-info
+(control-plane) [heat-admin@control-plane-controller-0 ~]$ glance stores-info
 +----------+----------------------------------------------------------------------------------+
 | Property | Value                                                                            |
 +----------+----------------------------------------------------------------------------------+
-| stores   | [{"default": "true", "id": "central", "description": "central RBD backend"},     |
-|          | {"id": "dcn0", "description": "dcn0 RBD backend"}]                               |
+| stores   | [{"id": "dcn1", "description": "dcn1 RBD backend"}, {"default": "true", "id":    |
+|          | "central", "description": "central RBD backend"}, {"id": "dcn0", "description":  |
+|          | "dcn0 RBD backend"}]                                                             |
 +----------+----------------------------------------------------------------------------------+
-(control-plane) [root@control-plane-controller-0 ceph]# 
+(control-plane) [heat-admin@control-plane-controller-0 ~]$ glance stores-info
++----------+----------------------------------------------------------------------------------+
+| Property | Value                                                                            |
++----------+----------------------------------------------------------------------------------+
+| stores   | [{"id": "dcn1", "description": "dcn1 RBD backend"}, {"default": "true", "id":    |
+|          | "central", "description": "central RBD backend"}, {"id": "dcn0", "description":  |
+|          | "dcn0 RBD backend"}]                                                             |
++----------+----------------------------------------------------------------------------------+
+(control-plane) [heat-admin@control-plane-controller-0 ~]$ 
 ```
-
-
 
 ## Next
 

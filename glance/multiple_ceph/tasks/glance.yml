@@ -1,0 +1,61 @@
+---
+- name: set glance conf path fact
+  set_fact:
+    glance_conf: "/var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf"
+  
+- name: add enabled_backends to DEFAULT section
+  ini_file:
+    path: "{{ glance_conf }}"
+    section: DEFAULT
+    option: enabled_backends
+    value: "central:rbd, {{ dcns|join(':rbd, ') }}:rbd"
+
+- name: remove registry_host from DEFAULT section
+  ini_file:
+    path: "{{ glance_conf }}"
+    section: DEFAULT
+    option: registry_host
+    state: absent
+
+- name: remove entire glance_store section
+  ini_file:
+    path: "{{ glance_conf }}"
+    section: glance_store
+    state: absent
+
+- name: Add new glance_store and central sections
+  blockinfile:
+    path: "{{ glance_conf }}"
+    block: |
+      [glance_store]
+      stores=http,rbd
+      os_region_name=regionOne
+      default_backend = central
+      [central]
+      store_description = "central RBD backend"
+      rbd_store_pool = images
+      rbd_store_user = openstack
+      rbd_store_ceph_conf = /etc/ceph/ceph.conf
+
+- name: Add new DCN sections
+  blockinfile:
+    path: "{{ glance_conf }}"
+    block: |
+      [{{ item }}]
+      store_description = "{{ item }} RBD backend"
+      rbd_store_pool = images
+      rbd_store_user = {{ item }}.glance
+      rbd_store_ceph_conf = /etc/ceph/{{ item }}.conf
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item }}"
+  loop: "{{ dcns }}"
+    
+- name: restart glance container
+  shell: "systemctl restart tripleo_glance_api.service"
+
+- name: query glance stores-info
+  shell: "source {{ rc }}; glance stores-info"
+  register: stores_info
+
+- name: show stores_info
+  debug:
+    msg: "{{ stores_info.stdout_lines }}"
