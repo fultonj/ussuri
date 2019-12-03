@@ -36,7 +36,7 @@
     src: "dcn_ceph_data/client.{{ dcn }}.glance.keyring"
 
 - name: chown dcn keyring
-  shell: "chown ceph:ceph {{ keyring }}"
+  shell: "chown 167:167 {{ keyring }}"
 
 - name: chcon dcn conf and key files
   shell: "chcon system_u:object_r:container_file_t:s0 {{ item }}"
