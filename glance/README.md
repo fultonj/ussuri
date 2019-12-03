@@ -170,7 +170,8 @@ It then restarts the glance container:
  `sudo systemctl restart tripleo_glance_api.service`
 
 In addition the [following](https://github.com/fultonj/ussuri/blob/26880d84f788b70a395066bbdf3a2b9878436b33/glance/multiple_ceph/glance_multiple_ceph.yml#L48-L50)
-parameters do the following extra configuration:
+parameters do the following extra configuration provided the
+undercloud is hosting [patched glance containers](patch_glance/).
 
 1. if `import_multi_stores` is true configure feature [import-multi-stores](https://review.opendev.org/#/c/667132)
 2. if `copy_existing_image` is true configure feature [copy-existing-image](https://review.opendev.org/#/c/696457)
