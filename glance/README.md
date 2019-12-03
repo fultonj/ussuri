@@ -209,7 +209,7 @@ to restart and display its list of available hosts.
 ```
 ### Can I import an image into more than one store?
 
-- Todo
+- [use-multistore.sh](control-plane/use-multistore.sh) [under development]
 
 ## Next
 
