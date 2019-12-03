@@ -169,6 +169,20 @@ It then restarts the glance container:
 
  `sudo systemctl restart tripleo_glance_api.service`
 
+In addition the [following](https://github.com/fultonj/ussuri/blob/26880d84f788b70a395066bbdf3a2b9878436b33/glance/multiple_ceph/glance_multiple_ceph.yml#L48-L50)
+parameters do the following extra configuration:
+
+1. if `import_multi_stores` is true configure feature [import-multi-stores](https://review.opendev.org/#/c/667132)
+2. if `copy_existing_image` is true configure feature [copy-existing-image](https://review.opendev.org/#/c/696457)
+3. if `force_container` is true download a glance container patched
+  with reviews from 1 xor 2 and forcibly replace the running glance
+  container with it.
+
+The `force_container` flag is used if you [patch](patch_glance/) 
+the glance container image after deploying the overcloud and want
+to quickly test it without redeploying. It's not necessary if you
+patched the container before deploying.
+
 ## Did it work?
 
 ### Does glance see multiple stores?
@@ -192,7 +206,7 @@ to restart and display its list of available hosts.
 +----------+----------------------------------------------------------------------------------+
 (control-plane) [heat-admin@control-plane-controller-0 ~]$ 
 ```
-### Can I import an image into more than once store?
+### Can I import an image into more than one store?
 
 - Todo
 
