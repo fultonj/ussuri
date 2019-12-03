@@ -1,53 +1,10 @@
 ---
-- name: set glance conf path fact
-  set_fact:
-    glance_conf: "/var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf"
-  
-- name: add enabled_backends to DEFAULT section
-  ini_file:
-    path: "{{ glance_conf }}"
-    section: DEFAULT
-    option: enabled_backends
-    value: "central:rbd, {{ dcns|join(':rbd, ') }}:rbd"
-
-- name: remove registry_host from DEFAULT section
-  ini_file:
-    path: "{{ glance_conf }}"
-    section: DEFAULT
-    option: registry_host
-    state: absent
-
-- name: remove entire glance_store section
-  ini_file:
-    path: "{{ glance_conf }}"
-    section: glance_store
-    state: absent
-
-- name: Add new glance_store and central sections
-  blockinfile:
-    path: "{{ glance_conf }}"
-    block: |
-      [glance_store]
-      stores=http,rbd
-      os_region_name=regionOne
-      default_backend = central
-      [central]
-      store_description = "central RBD backend"
-      rbd_store_pool = images
-      rbd_store_user = openstack
-      rbd_store_ceph_conf = /etc/ceph/ceph.conf
-
-- name: Add new DCN sections
-  blockinfile:
-    path: "{{ glance_conf }}"
-    block: |
-      [{{ item }}]
-      store_description = "{{ item }} RBD backend"
-      rbd_store_pool = images
-      rbd_store_user = {{ item }}.glance
-      rbd_store_ceph_conf = /etc/ceph/{{ item }}.conf
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item }}"
-  loop: "{{ dcns }}"
+- name: fail if both features are enabled
+  fail:
+    msg: "import_multi_stores and copy_existing_image cannot both be true"
+  when:
+    - import_multi_stores
+    - copy_existing_image
 
 - name: update enabled_import_methods for import-multi-stores
   ini_file:
@@ -66,7 +23,7 @@
     value: "['glance-direct', 'web-download', 'copy-image']"
   when:
     - copy_existing_image
-  
+
 - name: restart glance container
   shell: "systemctl restart tripleo_glance_api.service"
 
@@ -78,13 +35,16 @@
       set_fact:
         container_tag: current-tripleo-import-multi-stores
       when: import_multi_stores
+
     - name: set tag for copy_existing_image
       set_fact:
         container_tag: current-tripleo-copy-existing-image
       when: copy_existing_image
+
     - name: download container image with container_tag
       shell: "podman pull {{ glance_container_url }}:{{ container_tag }}"
       register: podman_pull
+
     - name: stop and remove older container (taking glance out of systemd control)
       shell: |
         systemctl disable tripleo_glance_api.service
@@ -93,12 +53,14 @@
         podman rmi {{ glance_container_url }}:current-tripleo
       register: stop_rm_old_container
       ignore_errors: true
+
       # Todo: Update entry_points.txt in:
       #  /usr/lib/python2.7/site-packages/glance-19.1.0.dev13-py2.7.egg-info/
       # to have:
       #  copy_image = glance.async_.flows._internal_plugins.copy_image:get_flow
       # when: copy_existing_image
       # and -v it in below
+
     - name: start new container directly
       shell: |
         podman run \
@@ -122,16 +84,7 @@
         -v /var/lib/glance:/var/lib/glance:slave \
         {{ glance_container_url }}:{{ container_tag }}
       register: start_new_container
+
     - name: show start_new_container output
       debug:
         msg: "{{ start_new_container.stdout_lines }}"
-
-- when:
-    - query_stores
-  block:
-    - name: query glance stores-info
-      shell: "source {{ rc }}; glance stores-info"
-      register: stores_info
-    - name: show stores_info
-      debug:
-        msg: "{{ stores_info.stdout_lines }}"

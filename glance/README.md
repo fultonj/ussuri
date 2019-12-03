@@ -113,10 +113,9 @@ Ansible to do the following:
   ceph cluster
 - Modify Glance on the central controller to use the additional
   DCN RBD backends
-- Modify Glance on the central controller to support either
+- Modify Glance on the central controller and DCNs to support either
   [import-multi-stores](https://review.opendev.org/#/c/667132)
-  or [copy-existing-image](https://review.opendev.org/#/c/696457)
-  (todo: I need this on glance on DCN too)
+  or [copy-existing-image](https://review.opendev.org/#/c/696457).
 
 #### What Glance changes are made by the playbook?
 
