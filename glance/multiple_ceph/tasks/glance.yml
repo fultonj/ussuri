@@ -48,14 +48,87 @@
       rbd_store_ceph_conf = /etc/ceph/{{ item }}.conf
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item }}"
   loop: "{{ dcns }}"
-    
+
+- name: update enabled_import_methods for import-multi-stores
+  ini_file:
+    path: "{{ glance_conf }}"
+    section: DEFAULT
+    option: enabled_import_methods
+    value: "['glance-direct', 'web-download']"
+  when:
+    - import_multi_stores
+
+- name: update enabled_import_methods for copy-existing-image
+  ini_file:
+    path: "{{ glance_conf }}"
+    section: DEFAULT
+    option: enabled_import_methods
+    value: "['glance-direct', 'web-download', 'copy-image']"
+  when:
+    - copy_existing_image
+  
 - name: restart glance container
   shell: "systemctl restart tripleo_glance_api.service"
+  when:
+    - not copy_existing_image
+    - not import_multi_stores
 
-- name: query glance stores-info
-  shell: "source {{ rc }}; glance stores-info"
-  register: stores_info
+- when:
+    - copy_existing_image or import_multi_stores
+    - force_container
+  block:
+    - name: set tag for import_multi_stores
+      set_fact:
+        container_tag: current-tripleo-import-multi-stores
+      when: import_multi_stores
+    - name: set tag for copy_existing_image
+      set_fact:
+        container_tag: current-tripleo-copy-existing-image
+      when: copy_existing_image
+    - name: download container image with container_tag
+      shell: "podman pull {{ glance_container_url }}:{{ container_tag }}"
+      register: podman_pull
+    - name: stop and remove older container (taking glance out of systemd control)
+      shell: |
+        systemctl disable tripleo_glance_api.service
+        systemctl stop tripleo_glance_api.service
+        podman rm -f glance_api
+        podman rmi {{ glance_container_url }}:current-tripleo
+      register: stop_rm_old_container
+      ignore_errors: true
+    - name: start new container directly
+      shell: |
+        podman run \
+        -e KOLLA_CONFIG_STRATEGY=COPY_ALWAYS \
+        --rm --net=host --name glance_api \
+        --conmon-pidfile=/var/run/glance_api.pid --detach=true \
+        -v /etc/hosts:/etc/hosts:ro \
+        -v /etc/localtime:/etc/localtime:ro \
+        -v /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro \
+        -v /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro \
+        -v /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro \
+        -v /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro \
+        -v /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro \
+        -v /dev/log:/dev/log \
+        -v /etc/ssh/ssh_known_hosts:/etc/ssh/ssh_known_hosts:ro \
+        -v /etc/puppet:/etc/puppet:ro \
+        -v /var/log/containers/glance:/var/log/glance:z \
+        -v /var/lib/kolla/config_files/glance_api.json:/var/lib/kolla/config_files/config.json \
+        -v /var/lib/config-data/puppet-generated/glance_api/:/var/lib/kolla/config_files/src:ro \
+        -v /etc/ceph:/var/lib/kolla/config_files/src-ceph:ro \
+        -v /var/lib/glance:/var/lib/glance:slave \
+        {{ glance_container_url }}:{{ container_tag }}
+      register: start_new_container
+    - name: show start_new_container output
+      debug:
+        msg: "{{ start_new_container.stdout_lines }}"
 
-- name: show stores_info
-  debug:
-    msg: "{{ stores_info.stdout_lines }}"
+- when:
+    - query_stores
+  block:
+    - name: query glance stores-info
+      shell: "source {{ rc }}; glance stores-info"
+      register: stores_info
+    - name: show stores_info
+      debug:
+        msg: "{{ stores_info.stdout_lines }}"

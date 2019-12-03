@@ -45,6 +45,11 @@
   tasks:
     - include_tasks: tasks/glance.yml
       vars:
+        import_multi_stores: True
+        copy_existing_image: False
+        force_container: False
+        query_stores: True
+        glance_container_url: 192.168.24.1:8787/tripleomaster/centos-binary-glance-api
         rc: /home/heat-admin/control-planerc
         dcns:
           - dcn0
