@@ -1,19 +1,21 @@
 #!/bin/bash
 
 case "$1" in
-        import)
-            PATCH=import-multi-stores
-            REFSPEC=refs/changes/32/667132/8
-            ;;
-         
-        copy)
-            PATCH=copy-existing-image
-            REFSPEC=refs/changes/57/696457/1
-            ;;
-         
-        *)
-            echo "Usage: $0 {copy|import}"
-            exit 1
+    import)
+        # https://review.opendev.org/#/c/667132
+        PATCH=import-multi-stores
+        REFSPEC=refs/changes/32/667132/9
+        ;;
+
+    copy)
+        # https://review.opendev.org/#/c/696457
+        PATCH=copy-existing-image
+        REFSPEC=refs/changes/57/696457/2
+        ;;
+
+    *)
+        echo "Usage: $0 {copy|import}"
+        exit 1
 esac
 
 echo "Uploading new glance container patched for $PATCH"
