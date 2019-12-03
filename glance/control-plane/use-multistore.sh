@@ -1,8 +1,12 @@
 #!/bin/bash
-
-STORES="central dcn0"
-CINDER=1
-
+# By default this uploads the image to "stores": ["central", "dcn0"]
+# Modify the curl request below accordingly to add other stores.
+# 
+# Don't use a real cirros image, just use a small file
+SMALL=1
+# Run same RBD commands against cinder to compare results
+CINDER=0
+# -------------------------------------------------------
 if [[ -e control-planerc ]]; then
     source control-planerc
 else
@@ -40,6 +44,15 @@ if [ ! -f $RAW ]; then
     qemu-img convert -f qcow2 -O raw $IMG $RAW
 fi
 # -------------------------------------------------------
+if [ $SMALL -eq 1 ]; then
+    NAME=myfile
+    RAW=/tmp/$NAME
+    if [[ ! -e $RAW ]]; then
+        echo $NAME > $RAW
+    fi
+    echo "Using a small file to test with: $RAW"
+fi
+# -------------------------------------------------------
 OLD_ID=$(openstack image show $NAME -f value -c id)
 if [[ ! -z $OLD_ID ]]; then 
     echo "- Clean out old image"
@@ -64,14 +77,10 @@ ENDPOINT=$(openstack endpoint list -c "Service Name" -c "Interface" -c "URL" \
                      -f value | grep glance | grep public | awk {'print $3'})
 
 if [[ $PATCH == "import-multi-stores" ]]; then
-    echo "- Import $NAME into multiple stores $STORES with curl"
-    # if I don't pass stores one a time, then I get:
-    # HTTP 409 Store for identifier central, dcn0 not found
-    for S in $STORES; do
-      set -o xtrace
-      curl -g -i -X POST $ENDPOINT/v2/images/$ID/import -H "x-image-meta-store: $S" -H "User-Agent: python-glanceclient" -H "Content-Type: application/json" -H "X-Auth-Token: $TOKEN" -d '{"method": {"name": "glance-direct"}}'
-      set +o xtrace
-    done
+    echo "- Import $NAME into multiple stores with curl"
+    set -o xtrace
+    curl -g -i -X POST $ENDPOINT/v2/images/$ID/import -H "User-Agent: python-glanceclient" -H "Content-Type: application/json" -H "X-Auth-Token: $TOKEN" -d '{"method": {"name": "glance-direct"}, "stores": ["central", "dcn0"]}'
+    set +o xtrace
 fi
 
 if [[ $PATCH == "copy-existing-image" ]]; then
@@ -80,6 +89,25 @@ if [[ $PATCH == "copy-existing-image" ]]; then
     curl -g -i -X POST $ENDPOINT/v2/images/$ID/import -H "x-image-meta-store: $STORES" -H "User-Agent: python-glanceclient" -H "Content-Type: application/json" -H "X-Auth-Token: $TOKEN" -d '{"method": {"name": "copy-image"}}'
     set +o xtrace
 fi
+
+openstack image show $NAME
+
+echo "Waiting for image to finish importing..."
+i=0
+while [ 1 ]; do
+    STATUS=$(openstack image show $NAME -f value -c status)
+    if [[ $STATUS == "importing" ]]; then
+        echo -n "."
+        sleep 5
+        i=$(($i+1))
+    else
+        break;
+    fi
+    if [[ $i -gt 20 ]]; then
+        echo "Giving up after $(($i * 5)) seconds"
+        exit 1
+    fi
+done
 
 echo "- Use RBD to list images on central"
 sudo podman exec ceph-mon-$(hostname) rbd -p images ls -l

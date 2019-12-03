@@ -18,4 +18,4 @@ for FILE in $FILES; do
     fi
 done
 
-ssh heat-admin@$CONTROLLER "bash $SCRIPT import"
+#ssh heat-admin@$CONTROLLER "bash $SCRIPT import"
