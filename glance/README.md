@@ -88,6 +88,7 @@ to try something like the above is the following three stacks:
 
 ## How to deploy it with TripleO
 
+- Apply upstream [glance patch](patch_glance/) to glance container image
 - Tag nodes with [ironic.sh](ironic.sh)
 - [control-plane/deploy.sh](control-plane/deploy.sh)
 - [dcn0/deploy.sh](dcn0/deploy.sh)
@@ -112,6 +113,10 @@ Ansible to do the following:
   ceph cluster
 - Modify Glance on the central controller to use the additional
   DCN RBD backends
+- Modify Glance on the central controller to support either
+  [import-multi-stores](https://review.opendev.org/#/c/667132)
+  or [copy-existing-image](https://review.opendev.org/#/c/696457)
+  (todo: I need this on glance on DCN too)
 
 #### What Glance changes are made by the playbook?
 
@@ -166,6 +171,8 @@ It then restarts the glance container:
 
 ## Did it work?
 
+### Does glance see multiple stores?
+
 Ensure the `control-planerc` is on the controller node and after
 sourcing it, verify glance can see all three backends (the playbook
 does this too).
@@ -185,6 +192,9 @@ to restart and display its list of available hosts.
 +----------+----------------------------------------------------------------------------------+
 (control-plane) [heat-admin@control-plane-controller-0 ~]$ 
 ```
+### Can I import an image into more than once store?
+
+- Todo
 
 ## Next
 

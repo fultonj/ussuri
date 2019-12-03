@@ -9,12 +9,30 @@ glance-api container deployed by TripleO.
 In theory they could be layered to test both features at once but this
 doc is written for testing one at a time.
 
-## import-multi-stores
+## TL;DR
+
+Before deployment run the
+[glance-container-patch.sh](glance-container-patch.sh)
+script with either `import` or `copy` like this:
+
+```
+bash glance-container-patch.sh import
+```
+
+Then later when tripleo deploys the overcloud, the glance service will 
+be running with the desired patch. Later when you use Ansible to 
+configure multistore glance, after TripleO runs, the same playbook
+will also [configure glance](https://github.com/fultonj/ussuri/blob/26880d84f788b70a395066bbdf3a2b9878436b33/glance/multiple_ceph/tasks/glance.yml#L52-L68)
+to use the new feature.
+
+## Details
+
+### import-multi-stores
 
 To test [import-multi-stores](https://review.opendev.org/#/c/667132)
 both configuration changes and container changes are required.
 
-### Configuration Changes
+#### Configuration Changes
 
 Add the following in glance-api.conf:
 
@@ -28,7 +46,7 @@ enabled_import_methods=[web-download]
 (undercloud) [stack@undercloud ~]$ 
 ```
 
-### Container Changes
+#### Container Changes
 
 Use the [glance-container-patch.sh](glance-container-patch.sh) script
 as below which uses TripleO's 
@@ -41,12 +59,12 @@ bash glance-container-patch.sh import
 The above prepares your undercloud to deploy a patched version of the
 glance-api image when the overcloud is deployed.
 
-## copy-existing-image
+### copy-existing-image
 
 To test [copy-existing-image](https://review.opendev.org/#/c/696457)
 both configuration changes and container changes are required.
 
-### Configuration Changes
+#### Configuration Changes
 
 Add the following in glance-api.conf:
 
@@ -80,9 +98,7 @@ Beacuse TripleO does not yet support the above configuration, both of
 the above can be applied with Ansible after the overcloud is deployed
 as a workaround. If you run the play [multiple_ceph](../multiple_ceph)
 
-(Todo: Modify the playbooks to make the last sentence true)
-
-### Container Changes
+#### Container Changes
 
 Use the [glance-container-patch.sh](glance-container-patch.sh) script
 as below which uses TripleO's 

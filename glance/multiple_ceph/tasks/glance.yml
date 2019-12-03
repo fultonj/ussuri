@@ -96,6 +96,12 @@
         podman rmi {{ glance_container_url }}:current-tripleo
       register: stop_rm_old_container
       ignore_errors: true
+      # Todo: Update entry_points.txt in:
+      #  /usr/lib/python2.7/site-packages/glance-19.1.0.dev13-py2.7.egg-info/
+      # to have:
+      #  copy_image = glance.async_.flows._internal_plugins.copy_image:get_flow
+      # when: copy_existing_image
+      # and -v it in below
     - name: start new container directly
       shell: |
         podman run \
