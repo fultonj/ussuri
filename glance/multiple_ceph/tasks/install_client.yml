@@ -3,6 +3,12 @@
   set_fact:
     conf: "/etc/ceph/{{ dcn }}.conf"
 
+- name: upload control-planerc (ignore attrs were not transferred)
+  synchronize:
+    mode: push
+    dest: "/home/heat-admin/control-planerc"
+    src: "dcn_ceph_data/control-planerc"
+
 - name: upload ceph configuration files (ignore attrs were not transferred)
   synchronize:
     mode: push
