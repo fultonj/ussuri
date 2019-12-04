@@ -86,17 +86,26 @@ fi
 if [[ $PATCH == "copy-existing-image" ]]; then
     echo "- Copy $NAME between multiple stores $STORES with curl"
     set -o xtrace
-    curl -g -i -X POST $ENDPOINT/v2/images/$ID/import -H "x-image-meta-store: $STORES" -H "User-Agent: python-glanceclient" -H "Content-Type: application/json" -H "X-Auth-Token: $TOKEN" -d '{"method": {"name": "copy-image"}}'
+    curl -g -i -X POST $ENDPOINT/v2/images/$ID/import -H "User-Agent: python-glanceclient" -H "Content-Type: application/json" -H "X-Auth-Token: $TOKEN" -d '{"method": {"name": "copy-image"}, "stores": ["central", "dcn0"]}'
     set +o xtrace
 fi
 
 openstack image show $NAME
 
-echo "Waiting for image to finish importing..."
+echo "Looking at glance tasks"
+glance task-list | head -5
+
+echo "Show newest task"
+TASK_ID=$(glance task-list | head -4 | grep processing | awk {'print $2'})
+glance task-show $TASK_ID
+echo "Confirm image ID in task"
+glance task-show $TASK_ID | grep $ID
+
+echo "Waiting for image to finish uploading or importing..."
 i=0
 while [ 1 ]; do
     STATUS=$(openstack image show $NAME -f value -c status)
-    if [[ $STATUS == "importing" ]]; then
+    if [[ $STATUS == "importing" || $STATUS == "uploading" ]]; then
         echo -n "."
         sleep 5
         i=$(($i+1))
