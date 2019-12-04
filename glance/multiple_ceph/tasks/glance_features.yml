@@ -24,9 +24,14 @@
   when:
     - copy_existing_image
 
-- name: restart glance container
-  shell: "systemctl restart tripleo_glance_api.service"
-
+- name: restart service glance container and issue daemon-reload to pick up config change
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: tripleo_glance_api.service
+  when:
+    - not force_container
+  
 - when:
     - copy_existing_image or import_multi_stores
     - force_container
