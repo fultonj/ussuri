@@ -88,3 +88,11 @@
     - name: show start_new_container output
       debug:
         msg: "{{ start_new_container.stdout_lines }}"
+
+    - name: show if new container is running
+      shell: "podman ps | grep {{ container_tag }}"
+      register: running_container
+
+    - name: show running_container output
+      debug:
+        msg: "{{ running_container.stdout_lines }}"
