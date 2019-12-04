@@ -208,7 +208,12 @@ to restart and display its list of available hosts.
 ```
 ### Can I import an image into more than one store?
 
-- [use-multistore.sh](control-plane/use-multistore.sh) [under development]
+Yes, run this:
+
+- "[use-multistore.sh](control-plane/use-multistore.sh) import"
+
+It works:
+- http://paste.openstack.org/show/787129/
 
 ## Next
 
