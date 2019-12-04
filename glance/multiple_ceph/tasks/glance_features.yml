@@ -1,4 +1,13 @@
 ---
+- name: fail for copy-image
+  fail:
+    msg: |
+      copy_existing_image needs to be stacked stacked on
+      import_multi_stores but the stacked changes are not
+      getting picked up so testing this feature is on hold
+  when:
+    - copy_existing_image
+
 - name: fail if both features are enabled
   fail:
     msg: "import_multi_stores and copy_existing_image cannot both be true"
@@ -24,6 +33,13 @@
   when:
     - copy_existing_image
 
+- name: configure glance in debug mode
+  ini_file:
+    path: "{{ glance_conf }}"
+    section: DEFAULT
+    option: debug
+    value: "true"
+  
 - name: restart service glance container and issue daemon-reload to pick up config change
   systemd:
     state: restarted
