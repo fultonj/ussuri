@@ -18,7 +18,9 @@ case "$1" in
         exit 1
 esac
 
-echo "Uploading new glance container patched for $PATCH"
+RAND=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 7 ; echo '')
+
+echo "Uploading new glance container called $PATCH-$RAND"
 # -------------------------------------------------------
 # Wrapper to avoid maintaining two copies of containers.yaml
 INIT="../../init/"
@@ -45,7 +47,7 @@ cat <<EOF > containers_tail
     includes:
     - glance-api
     modify_role: tripleo-modify-image
-    modify_append_tag: "-$PATCH"
+    modify_append_tag: "-$PATCH-$RAND"
     modify_vars:
       tasks_from: dev_install.yml
       source_image: docker.io/tripleomaster/centos-binary-glance-api:current-tripleo
@@ -67,6 +69,6 @@ echo "Is the $PATCH version in ~/containers-env-file.yaml"
 grep $PATCH ~/containers-env-file.yaml
 
 echo "Testing a podman pull of centos-binary-glance-api:current-tripleo-$PATCH"
-sudo podman pull 192.168.24.1:8787/tripleomaster/centos-binary-glance-api:current-tripleo-$PATCH
+sudo podman pull 192.168.24.1:8787/tripleomaster/centos-binary-glance-api:current-tripleo-$PATCH-$RAND
 
 sudo podman images | grep glance

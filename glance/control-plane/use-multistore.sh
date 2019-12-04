@@ -3,7 +3,7 @@
 # Modify the curl request below accordingly to add other stores.
 # 
 # Don't use a real cirros image, just use a small file
-SMALL=1
+SMALL=0
 # Run same RBD commands against cinder to compare results
 CINDER=0
 # -------------------------------------------------------

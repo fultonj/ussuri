@@ -54,12 +54,12 @@
   block:
     - name: set tag for import_multi_stores
       set_fact:
-        container_tag: current-tripleo-import-multi-stores
+        container_tag: "current-tripleo-import-multi-stores-{{ random_tag }}"
       when: import_multi_stores
 
     - name: set tag for copy_existing_image
       set_fact:
-        container_tag: current-tripleo-copy-existing-image
+        container_tag: "current-tripleo-copy-existing-image-{{ random_tag }}"
       when: copy_existing_image
 
     - name: download container image with container_tag
