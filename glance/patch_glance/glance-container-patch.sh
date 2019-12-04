@@ -4,13 +4,13 @@ case "$1" in
     import)
         # https://review.opendev.org/#/c/667132
         PATCH=import-multi-stores
-        REFSPEC=refs/changes/32/667132/9
+        REFSPEC=refs/changes/32/667132/12
         ;;
 
     copy)
         # https://review.opendev.org/#/c/696457
         PATCH=copy-existing-image
-        REFSPEC=refs/changes/57/696457/2
+        REFSPEC=refs/changes/57/696457/3
         ;;
 
     *)
