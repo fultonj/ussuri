@@ -60,7 +60,7 @@
     - include_tasks: tasks/glance_features.yml
       vars:
         import_multi_stores: True
-        copy_existing_image: True
+        copy_existing_image: False
         force_container: False
         glance_container_url: 192.168.24.1:8787/tripleomaster/centos-binary-glance-api
         glance_conf: "/var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf"
