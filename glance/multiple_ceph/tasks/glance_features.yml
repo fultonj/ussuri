@@ -47,6 +47,14 @@
     section: DEFAULT
     option: debug
     value: "true"
+
+- name: Set default backend for dcn hosts based on hostname
+  ini_file:
+    path: "{{ glance_conf }}"
+    section: glance_store
+    option: default_backend
+    value: "{{ inventory_hostname[0:4] }}"
+  when: inventory_hostname is regex("^dcn[0-9]+")
   
 - name: restart service glance container and issue daemon-reload to pick up config change
   systemd:
