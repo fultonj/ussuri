@@ -208,12 +208,30 @@ to restart and display its list of available hosts.
 ```
 ### Can I import an image into more than one store?
 
-Yes, run this:
+Yes, run this `[use-multistore.sh](control-plane/use-multistore.sh) import`
+The example output is at: http://paste.openstack.org/show/787129/
 
-- "[use-multistore.sh](control-plane/use-multistore.sh) import"
+If you then boot an instance in the dcn0 AZ, you can observe it used 
+the parent image which is local for fast COW boots.
 
-It works:
-- http://paste.openstack.org/show/787129/
+- glance image at dcn0:
+```
+[root@dcn0-distributedcomputehci-0 nova]# podman exec ceph-mon-`hostname` rbd -p images ls -l --cluster dcn0
+warning: line 36: 'osd_memory_target' in section 'osd' redefined 
+NAME                                      SIZE   PARENT FMT PROT LOCK 
+35cb2a43-eb89-4bed-99a2-c4376133a492      39 MiB          2           
+35cb2a43-eb89-4bed-99a2-c4376133a492@snap 39 MiB          2 yes       
+[root@dcn0-distributedcomputehci-0 nova]# 
+```
+
+- instance at dcn0 using parent glance image:
+```
+[root@dcn0-distributedcomputehci-0 nova]# podman exec ceph-mon-`hostname` rbd -p vms ls -l --cluster dcn0
+warning: line 36: 'osd_memory_target' in section 'osd' redefined 
+NAME                                      SIZE  PARENT                                           FMT PROT LOCK 
+2b431c77-93b8-4edf-88d9-1fd518d987c2_disk 1 GiB images/35cb2a43-eb89-4bed-99a2-c4376133a492@snap   2      excl 
+[root@dcn0-distributedcomputehci-0 nova]# 
+```
 
 ## Next
 
