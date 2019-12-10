@@ -19,6 +19,7 @@ case "$1" in
 esac
 
 RAND=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 7 ; echo '')
+echo $RAND > RAND
 
 echo "Uploading new glance container called $PATCH-$RAND"
 # -------------------------------------------------------

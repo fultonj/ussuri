@@ -1,4 +1,12 @@
 ---
+- name: fail when random_tag is not set
+  fail:
+    msg: |
+      The random_tag variable is not defined so future tasks will 
+      not know which tag to pull. Exiting.
+  when:
+    - random_tag is not defined
+
 - name: fail for copy-image
   fail:
     msg: |
