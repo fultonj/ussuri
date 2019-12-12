@@ -168,6 +168,25 @@ It then restarts the glance container:
 
  `sudo systemctl restart tripleo_glance_api.service`
 
+It also updates each DCN nodes `glance-api.conf` and `nova.conf` to 
+make the Nova query the local Glance on the DCN (not the central
+Glance) and to make the local Glance's default backend the dcnN
+ceph cluster. For example:
+
+- glance-api.conf on dcn0
+```
+[glance_store]
+default_backend=dcn0
+```
+- nova.conf on dcn0
+```
+[glance]
+api_servers = http://172.16.13.212:9292
+```
+Where `172.16.13.212:9292` turns up a local Glance server and would be
+consistent with the output of `netstat -an | grep 9292`. It then
+restarts the DCN Nova services.
+
 In addition the [following](https://github.com/fultonj/ussuri/blob/26880d84f788b70a395066bbdf3a2b9878436b33/glance/multiple_ceph/glance_multiple_ceph.yml#L48-L50)
 parameters do the following extra configuration provided the
 undercloud is hosting [patched glance containers](patch_glance/).
@@ -235,6 +254,10 @@ NAME                                      SIZE  PARENT                          
 2b431c77-93b8-4edf-88d9-1fd518d987c2_disk 1 GiB images/35cb2a43-eb89-4bed-99a2-c4376133a492@snap   2      excl 
 [root@dcn0-distributedcomputehci-0 nova]# 
 ```
+
+Observe also in `/var/log/containers/glance/api.log` on the DCN node
+that the query from local Nova to get the image was sent to the DCN
+node's local Glance and not the central Glance.
 
 ## Next
 

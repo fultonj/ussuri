@@ -65,3 +65,14 @@
         glance_container_url: 192.168.24.1:8787/tripleomaster/centos-binary-glance-api
         random_tag: "{{ lookup('file', '../patch_glance/RAND') }}"
         glance_conf: "/var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf"
+
+- name: Configure all nova-computes to use their local glance
+  gather_facts: false
+  become: true
+  hosts: dcn0-distributedcomputehci-0 #dcn1-distributedcomputehci-0
+  tags:
+    - nova
+  tasks:
+    - include_tasks: tasks/nova_glance.yml
+      vars:
+        nova_conf: "/var/lib/config-data/puppet-generated/nova_libvirt/etc/nova/nova.conf"

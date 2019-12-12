@@ -1,0 +1,29 @@
+---
+- name: Get IPs of glance-api servers listening on port 9292
+  shell: "netstat -an | grep 9292 | awk {'print $4'}"
+  register: netstat_glance_port
+  # we'd prefer to be setting this to the haproxy in front of glance
+
+- when:
+    - netstat_glance_port.rc is defined
+    - netstat_glance_port.rc == 0
+    - (netstat_glance_port.stdout_lines|length) > 0
+  block:
+    - name: Set glance api_servers in nova conf to local the glance
+      ini_file:
+          path: "{{ nova_conf }}"
+          section: glance
+          option: api_servers
+          value: "{{ 'http://' + netstat_glance_port.stdout_lines | join(',') }}"
+
+    - name: restart nova containers and issue daemon-reload to pick up config change
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: "{{ item }}"
+      loop:
+        - tripleo_nova_compute.service
+        - tripleo_nova_libvirt.service
+        - tripleo_nova_migration_target.service
+        - tripleo_nova_virtlogd.service
+
