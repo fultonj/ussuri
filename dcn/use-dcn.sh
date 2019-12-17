@@ -6,6 +6,7 @@ NOVA=1
 DEPS=1
 CINDER=0
 PUBLIC=0
+IMAGE=cirros
 
 if [[ ! -f control-planerc ]]; then
     echo "Could not find control-planerc to authenticate. Exiting"
@@ -70,16 +71,16 @@ if [[ $GLANCE -eq 1 ]]; then
         echo "Could not find raw image $RAW; converting."
         qemu-img convert -f qcow2 -O raw $IMG $RAW
     fi
-    openstack image create cirros --container-format bare --disk-format raw --public --file $RAW
+    openstack image create $IMAGE --container-format bare --disk-format raw --public --file $RAW
     openstack image list
 fi
 
 if [[ $NOVA -eq 1 ]]; then
     if [[ $DEPS -eq 1 ]]; then
         echo "Checking the following dependencies..."
-        IMAGE_ID=$(openstack image show cirros -f value -c id)
+        IMAGE_ID=$(openstack image show $IMAGE -f value -c id)
         if [[ -z $IMAGE_ID ]]; then
-            echo "Unable to find cirros image; re-run with GLANCE=1"
+            echo "Unable to find $IMAGE image; re-run with GLANCE=1"
             exit 1
         fi
         echo "- glance image"
@@ -198,7 +199,7 @@ if [[ $NOVA -eq 1 ]]; then
     fi
 
     echo "Launching Nova server"
-    openstack server create --flavor tiny --image cirros --key-name demokp --network private --security-group basic myserver --availability-zone $AZ
+    openstack server create --flavor tiny --image $IMAGE --key-name demokp --network private --security-group basic myserver --availability-zone $AZ
 
     STATUS=$(openstack server show myserver -f value -c status)
     echo "Server status: $STATUS (waiting)"

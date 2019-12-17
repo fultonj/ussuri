@@ -2,8 +2,9 @@
 
 OVERALL=1
 CINDER=1
-GLANCE=1
+GLANCE=0
 NOVA=1
+IMAGE=cirros-0.3.4
 
 function run_on_mon {
     # since it will be run on the controller
@@ -54,7 +55,7 @@ if [ $GLANCE -eq 1 ]; then
     openstack image list
 
     echo "Importing $raw image into Glance"
-    openstack image create cirros --disk-format=raw --container-format=bare < $raw
+    openstack image create $IMAGE --disk-format=raw --container-format=bare < $raw
     if [ ! $? -eq 0 ]; then 
         echo "Could not import $raw image. Aborting"; 
         exit 1;
@@ -78,7 +79,7 @@ if [ $NOVA -eq 1 ]; then
     openstack keypair create demokp > ~/demokp.pem 
     chmod 600 ~/demokp.pem
 
-    openstack server create --flavor m1.tiny --image cirros --key-name demokp inst1 --nic net-id=$netid
+    openstack server create --flavor m1.tiny --image $IMAGE --key-name demokp inst1 --nic net-id=$netid
     openstack server list
     if [[ $(openstack server list -c Status -f value) == "BUILD" ]]; then
         echo "Waiting one minute for building server to boot"
