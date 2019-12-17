@@ -261,4 +261,5 @@ node's local Glance and not the central Glance.
 
 ## Next
 
-Write TripleO patches to make the above possible with just TripleO.
+- Configure edgeN glance to read/write to central ceph
+- Write TripleO patches to make the above possible with just TripleO.
