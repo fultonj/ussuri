@@ -9,4 +9,4 @@ if [[ ! -e $INV ]]; then
     ansible -i inventory.yml all -m ping
 fi
 
-ansible-playbook -i inventory.yml glance_multiple_ceph.yml $@
+ansible-playbook -i inventory.yml site.yml $@

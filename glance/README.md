@@ -101,7 +101,7 @@ isn't yet implemented in TripleO we need to do this step outside of TripleO.
 
 ### Steps outside of TripleO to configure multiple Ceph clients
 
-Run [multiple_ceph/deploy.sh](multiple_ceph/deploy.sh) which will use
+Run [ansible/run.sh](ansible/run.sh) which will use
 Ansible to do the following:
 
 - Create a keyring on each of the DCN Ceph clusters which may be used
