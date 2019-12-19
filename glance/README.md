@@ -204,6 +204,8 @@ patched the container before deploying.
 
 ## Did it work?
 
+This can be tested with [validate](validate).
+
 ### Does glance see multiple stores?
 
 Ensure the `control-planerc` is on the controller node and after
@@ -227,10 +229,7 @@ to restart and display its list of available hosts.
 ```
 ### Can I import an image into more than one store?
 
-Yes, run [this](control-plane/use-multistore.sh) script like this:
-```
-use-multistore.sh import
-```
+Yes, run [use-multistore-glance.sh](use-multistore-glance.sh).
 The example output is at: http://paste.openstack.org/show/787129/
 
 If you then boot an instance in the dcn0 AZ, you can observe it used 

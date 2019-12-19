@@ -1,17 +1,24 @@
 #!/usr/bin/env bash
 
 MKAZ=1
-GLANCE=0
-NOVA=0
-DEPS=0
+NOVA=1
+DEPS=1
 CINDER=0
 PUBLIC=0
+IMAGE=cirros
+CEPH=1
 
 if [[ ! -f control-planerc ]]; then
     echo "Could not find control-planerc to authenticate. Exiting"
     exit 1
 fi
 source control-planerc
+
+openstack image show $IMAGE
+if [[ $? != 0 ]]; then
+    echo "Unable to find Glance image: $IMAGE . Aborting."
+    exit 1
+fi
 
 openstack endpoint list > /dev/null
 if [[ $? -gt 0 ]]; then
@@ -31,7 +38,7 @@ if [[ $PUBLIC -eq 1 ]]; then
 fi
 
 if [[ $MKAZ -eq 1 ]]; then
-    echo "Creating host aggregate and AZ"
+    # Create host aggregate and AZ
     # unnecessary if undercloud can reach endpoints and deployed with nova-az.yaml
     if ! openstack aggregate show $HOST_AGGREGATE >null 2>&1; then
         echo "Creating a host aggregate for $AZ"
@@ -54,16 +61,12 @@ if [[ $MKAZ -eq 1 ]]; then
     openstack availability zone list --volume
 fi
 
-if [[ $GLANCE -eq 1 ]]; then
-    echo "ask glance to copy the image at central to dcn0"
-fi
-
 if [[ $NOVA -eq 1 ]]; then
     if [[ $DEPS -eq 1 ]]; then
         echo "Checking the following dependencies..."
-        IMAGE_ID=$(openstack image show cirros -f value -c id)
+        IMAGE_ID=$(openstack image show $IMAGE -f value -c id)
         if [[ -z $IMAGE_ID ]]; then
-            echo "Unable to find cirros image"
+            echo "Unable to find $IMAGE image (see use-multistore-glance.sh)"
             exit 1
         fi
         echo "- glance image"
@@ -81,46 +84,46 @@ if [[ $NOVA -eq 1 ]]; then
         echo "- security groups"
         # create public/private networks only if necessary
         if [[ $PUBLIC -eq 1 ]]; then
-            PUB_NET_ID=$(openstack network show public -c id -f value)
+            PUB_NET_ID=$(openstack network show public-${AZ} -c id -f value)
             if [[ -z $PUB_NET_ID ]]; then
                 openstack network create --external --provider-physical-network datacentre --provider-network-type flat public
             fi
-            PUB_SUBNET_ID=$(openstack network show public -c subnets -f value)
+            PUB_SUBNET_ID=$(openstack network show public-${AZ} -c subnets -f value)
             if [[ -z $PUB_SUBNET_ID ]]; then
-                openstack subnet create public-net \
+                openstack subnet create public-net-${AZ} \
                           --subnet-range $PUBLIC_NETWORK_CIDR \
                           --no-dhcp \
                           --gateway $GATEWAY \
                           --allocation-pool start=$PUBLIC_NET_START,end=$PUBLIC_NET_END \
-                          --network public
+                          --network public-${AZ}
             fi
             echo "- public networks"
         fi
-        PRI_NET_ID=$(openstack network show private -c id -f value)
+        PRI_NET_ID=$(openstack network show private-${AZ} -c id -f value)
         if [[ -z $PRI_NET_ID ]]; then
-            openstack network create --internal private
+            openstack network create --internal private-${AZ}
         fi
-        PRI_SUBNET_ID=$(openstack network show private -c subnets -f value)
+        PRI_SUBNET_ID=$(openstack network show private-${AZ} -c subnets -f value)
         if [[ -z $PRI_SUBNET_ID ]]; then
-            openstack subnet create private-net \
+            openstack subnet create private-net-${AZ} \
                       --subnet-range $PRIVATE_NETWORK_CIDR \
-                      --network private
+                      --network private-${AZ}
         fi
         echo "- private networks"
         # create router only if necessary
         if [[ $PUBLIC -eq 1 ]]; then        
-            ROUTER_ID=$(openstack router show vrouter -f value -c id)
+            ROUTER_ID=$(openstack router show vrouter-${AZ} -f value -c id)
             if [[ -z $ROUTER_ID ]]; then
                 # IP will be automatically assigned from allocation pool of the subnet
-                openstack router create vrouter
-                openstack router set vrouter --external-gateway public
-                openstack router add subnet vrouter private-net
+                openstack router create vrouter-${AZ}
+                openstack router set vrouter-${AZ} --external-gateway public-${AZ}
+                openstack router add subnet vrouter-${AZ} private-net-${AZ}
             fi
             echo "- router"
             # create floating IP only if necessary
             FLOATING_IP=$(openstack floating ip list -f value -c "Floating IP Address")
             if [[ -z $FLOATING_IP ]]; then
-                openstack floating ip create public
+                openstack floating ip create public-${AZ}
                 FLOATING_IP=$(openstack floating ip list -f value -c "Floating IP Address")
             fi
             if [[ -z $FLOATING_IP ]]; then
@@ -135,15 +138,15 @@ if [[ $NOVA -eq 1 ]]; then
             openstack flavor create --ram 512 --disk 1 --vcpu 1 --public tiny
         fi
         echo "- flavor"
-        KEYPAIR_ID=$(openstack keypair show demokp -f value -c user_id)
+        KEYPAIR_ID=$(openstack keypair show demokp-${AZ} -f value -c user_id)
         if [[ ! -z $KEYPAIR_ID ]]; then
-            openstack keypair delete demokp
-            if [[ -f ~/demokp.pem ]]; then
-                rm -f ~/demokp.pem
+            openstack keypair delete demokp-${AZ}
+            if [[ -f ~/demokp-${AZ}.pem ]]; then
+                rm -f ~/demokp-${AZ}.pem
             fi
         fi
-        openstack keypair create demokp > ~/demokp.pem
-        chmod 600 ~/demokp.pem
+        openstack keypair create demokp-${AZ} > ~/demokp-${AZ}.pem
+        chmod 600 ~/demokp-${AZ}.pem
         echo "- SSH keypairs"
         echo ""
     fi
@@ -182,7 +185,7 @@ if [[ $NOVA -eq 1 ]]; then
     fi
 
     echo "Launching Nova server"
-    openstack server create --flavor tiny --image cirros --key-name demokp --network private --security-group basic myserver-${AZ} --availability-zone $AZ
+    openstack server create --flavor tiny --image $IMAGE --key-name demokp-${AZ} --network private-${AZ} --security-group basic myserver-${AZ} --availability-zone $AZ
 
     STATUS=$(openstack server show myserver-${AZ} -f value -c status)
     echo "Server status: $STATUS (waiting)"
@@ -205,7 +208,7 @@ if [[ $NOVA -eq 1 ]]; then
             i=0
             while true; do
                 ssh -o "UserKnownHostsFile /dev/null" -o "StrictHostKeyChecking no" \
-                    -i ~/demokp.pem cirros@$FLOATING_IP "exit" 2> /dev/null && break
+                    -i ~/demokp-${AZ}.pem cirros@$FLOATING_IP "exit" 2> /dev/null && break
                 echo -n "."
                 sleep 1
                 i=$(($i+1))
@@ -213,7 +216,7 @@ if [[ $NOVA -eq 1 ]]; then
             done
             echo ""
             ssh -o "UserKnownHostsFile /dev/null" -o "StrictHostKeyChecking no" \
-                -i ~/demokp.pem cirros@$FLOATING_IP "uname -a; lsblk"
+                -i ~/demokp-${AZ}.pem cirros@$FLOATING_IP "uname -a; lsblk"
             echo ""
         fi
 	if [[ $CINDER -eq 1 ]]; then
@@ -224,9 +227,17 @@ if [[ $NOVA -eq 1 ]]; then
 	fi
         if [[ $PUBLIC -eq 1 ]]; then        
             ssh -o "UserKnownHostsFile /dev/null" -o "StrictHostKeyChecking no" \
-                -i ~/demokp.pem cirros@$FLOATING_IP "uname -a; lsblk"
+                -i ~/demokp-${AZ}.pem cirros@$FLOATING_IP "uname -a; lsblk"
             echo ""
-            echo -e "\nssh -o \"UserKnownHostsFile /dev/null\" -o \"StrictHostKeyChecking no\" -i ~/demokp.pem cirros@$FLOATING_IP"
+            echo -e "\nssh -o \"UserKnownHostsFile /dev/null\" -o \"StrictHostKeyChecking no\" -i ~/demokp-${AZ}.pem cirros@$FLOATING_IP"
         fi
     fi
+fi
+
+if [[ $CEPH -eq 1 ]]; then
+    echo "Display RBD images pool of $AZ cluster"
+    sudo podman exec ceph-mon-`hostname` rbd -p images ls -l --cluster $AZ
+    echo "Display RBD vms pool of $AZ cluster"
+    sudo podman exec ceph-mon-`hostname` rbd -p vms ls -l --cluster $AZ
+    echo "Parent of instance should be from images pool"
 fi

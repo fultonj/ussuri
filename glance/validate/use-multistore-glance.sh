@@ -1,11 +1,6 @@
 #!/bin/bash
 # By default this uploads the image to "stores": ["central", "dcn0"]
 # Modify the curl request below accordingly to add other stores.
-# 
-# Don't use a real cirros image, just use a small file
-SMALL=0
-# Run same RBD commands against cinder to compare results
-CINDER=0
 # -------------------------------------------------------
 if [[ -e control-planerc ]]; then
     source control-planerc
@@ -24,14 +19,13 @@ case "$1" in
             ;;
          
         *)
-            echo "Usage: $0 {copy|import}"
-            exit 1
+            PATCH=import-multi-stores
 esac
 
-echo "Testing feature $PATCH on $STORES"
+echo "Testing feature $PATCH on stores central and dcn0"
 # -------------------------------------------------------
-# get image
-NAME=cirros-0.3.4
+# Get image if missing
+NAME=cirros
 IMG=cirros-0.3.4-x86_64-disk.img
 RAW=$(echo $IMG | sed s/img/raw/g)
 URL=http://download.cirros-cloud.net/0.3.4/$IMG
@@ -42,15 +36,6 @@ if [ ! -f $RAW ]; then
     fi
     echo "Could not find raw image $raw; converting."
     qemu-img convert -f qcow2 -O raw $IMG $RAW
-fi
-# -------------------------------------------------------
-if [ $SMALL -eq 1 ]; then
-    NAME=myfile
-    RAW=/tmp/$NAME
-    if [[ ! -e $RAW ]]; then
-        echo $NAME > $RAW
-    fi
-    echo "Using a small file to test with: $RAW"
 fi
 # -------------------------------------------------------
 OLD_ID=$(openstack image show $NAME -f value -c id)
@@ -84,7 +69,8 @@ if [[ $PATCH == "import-multi-stores" ]]; then
 fi
 
 if [[ $PATCH == "copy-existing-image" ]]; then
-    echo "- Copy $NAME between multiple stores $STORES with curl"
+    # Untested
+    echo "- Copy $NAME between multiple stores (central and dcn0) with curl"
     set -o xtrace
     curl -g -i -X POST $ENDPOINT/v2/images/$ID/import -H "User-Agent: python-glanceclient" -H "Content-Type: application/json" -H "X-Auth-Token: $TOKEN" -d '{"method": {"name": "copy-image"}, "stores": ["central", "dcn0"]}'
     set +o xtrace
@@ -123,30 +109,3 @@ sudo podman exec ceph-mon-$(hostname) rbd -p images ls -l
 
 echo "- Use RBD to list images on dcn0"
 sudo podman exec ceph-mon-$(hostname) rbd --id dcn0.glance --keyring /etc/ceph/client.dcn0.glance.keyring --conf /etc/ceph/dcn0.conf -p images ls -l
-
-echo "- Use qemu-img info on rbd path of image ID on central ceph cluster"
-sudo qemu-img info rbd:images/image-$ID
-
-# I think there's a problem because the images don't show up with ^ 
-
-# Todo: get locations and set them with 'glance location-add'
-
-if [ $CINDER -eq 1 ]; then
-    # Use (working) cinder to show how the above commands should look
-    echo -e "\n\n"
-    echo "- Use Cinder to contrast RBD and qemu-img info on volumes pool"
-    VOLID=$(openstack volume show test-volume -f value -c id)
-    if [[ ! -z $VOLID ]]; then
-	echo "- Found existing Cinder volume: $VOLID"
-    else
-	echo "- Creating 1 GB Cinder volume"
-	openstack volume create --size 1 test-volume
-	echo "sleeping 20 seconds"
-	sleep 20
-    fi
-    echo "- Use RBD to list volumes on central"
-    sudo podman exec ceph-mon-`hostname` rbd -p volumes ls -l
-
-    echo "- Use qemu-img info on rbd path of volume ID on central ceph cluster"
-    sudo qemu-img info rbd:volumes/volume-$VOLID
-fi
