@@ -229,7 +229,7 @@ to restart and display its list of available hosts.
 ```
 ### Can I import an image into more than one store?
 
-Yes, run [use-multistore-glance.sh](use-multistore-glance.sh).
+Yes, run [use-multistore-glance.sh](validate/use-multistore-glance.sh).
 The example output is at: http://paste.openstack.org/show/787129/
 
 If you then boot an instance in the dcn0 AZ, you can observe it used 
