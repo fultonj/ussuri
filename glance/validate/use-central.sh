@@ -3,7 +3,7 @@
 OVERALL=1
 CINDER=1
 NOVA=1
-IMAGE=cirros # assumes that this image is already in place
+IMAGE=$(cat IMAGE)
 
 function run_on_mon {
     # since it will be run on the controller

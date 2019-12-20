@@ -25,7 +25,7 @@ esac
 echo "Testing feature $PATCH on stores central and dcn0"
 # -------------------------------------------------------
 # Get image if missing
-NAME=cirros
+NAME=$(cat IMAGE)
 IMG=cirros-0.3.4-x86_64-disk.img
 RAW=$(echo $IMG | sed s/img/raw/g)
 URL=http://download.cirros-cloud.net/0.3.4/$IMG

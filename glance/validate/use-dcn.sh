@@ -5,8 +5,7 @@ NOVA=1
 DEPS=1
 CINDER=0
 PUBLIC=0
-IMAGE=cirros
-CEPH=1
+IMAGE=$(cat IMAGE)
 
 if [[ ! -f control-planerc ]]; then
     echo "Could not find control-planerc to authenticate. Exiting"
@@ -232,12 +231,4 @@ if [[ $NOVA -eq 1 ]]; then
             echo -e "\nssh -o \"UserKnownHostsFile /dev/null\" -o \"StrictHostKeyChecking no\" -i ~/demokp-${AZ}.pem cirros@$FLOATING_IP"
         fi
     fi
-fi
-
-if [[ $CEPH -eq 1 ]]; then
-    echo "Display RBD images pool of $AZ cluster"
-    sudo podman exec ceph-mon-`hostname` rbd -p images ls -l --cluster $AZ
-    echo "Display RBD vms pool of $AZ cluster"
-    sudo podman exec ceph-mon-`hostname` rbd -p vms ls -l --cluster $AZ
-    echo "Parent of instance should be from images pool"
 fi
