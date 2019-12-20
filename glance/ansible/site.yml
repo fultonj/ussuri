@@ -6,37 +6,40 @@
   tasks:
     - include_tasks: tasks/prepare.yml
 
-- name: Extract Ceph data from DCN servers
+- name: Extract keyring and config from all Ceph clusters
   gather_facts: false
-  hosts: dcn0-distributedcomputehci-0 #dcn1-distributedcomputehci-0
+  hosts: control-plane-controller-0 dcn0-distributedcomputehci-0 #dcn1-distributedcomputehci-0
   become: true
   tags: pull
   tasks:
     - include_tasks: tasks/make_client.yml
       vars:
-        dcn: "{{ item.dcn }}"
-        host: "{{ item.host }}"
+        ceph_cluster_name: "{{ item.ceph_cluster_name }}"
+        ceph_cluster_host: "{{ item.ceph_cluster_host }}"
       loop:
-        - { dcn: 'dcn0', host: 'dcn0-distributedcomputehci-0' }
-        #- { dcn: 'dcn1', host: 'dcn1-distributedcomputehci-0' }
-        
-- name: Configure central control plane as DCN Ceph cluster client
+        - { ceph_cluster_name: 'dcn0', ceph_cluster_host: 'dcn0-distributedcomputehci-0' }
+        #- { ceph_cluster_name: 'dcn1', ceph_cluster_host: 'dcn1-distributedcomputehci-0' }
+        - { ceph_cluster_name: 'ceph', ceph_cluster_host: 'control-plane-controller-0' }
+
+- name: Configure all Ceph clients
   gather_facts: false
   become: true
-  hosts: control-plane-controller-0
+  hosts: control-plane-controller-0 dcn0-distributedcomputehci-0 #dcn1-distributedcomputehci-0
   tags: push
   tasks:
     - include_tasks: tasks/install_client.yml
       vars:
-        dcn: "{{ item }}"
+        ceph_cluster_name: "{{ item.ceph_cluster_name }}"
+        ceph_cluster_host: "{{ item.ceph_cluster_host }}"
       loop:
-        - dcn0
-        #- dcn1
+        - { ceph_cluster_name: 'dcn0', ceph_cluster_host: 'dcn0-distributedcomputehci-0' }
+        - { ceph_cluster_name: 'ceph', ceph_cluster_host: 'control-plane-controller-0' }
+        #- { ceph_cluster_name: 'dcn1', ceph_cluster_host: 'dcn1-distributedcomputehci-0' }
 
-- name: Configure central control plane with extra glance backends
+- name: Configure glance with backends
   gather_facts: false
   become: true
-  hosts: control-plane-controller-0
+  hosts: control-plane-controller-0 dcn0-distributedcomputehci-0 #dcn1-distributedcomputehci-0
   tags:
     - glance
     - glance_backends
@@ -45,9 +48,9 @@
       vars:
         glance_conf: "/var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf"
         rc: /home/heat-admin/control-planerc
-        dcns:
+        dcn_list:
           - dcn0
-          #- dcn1
+          # - dcn1
 
 - name: Configure all glance services with experimental feature
   gather_facts: false

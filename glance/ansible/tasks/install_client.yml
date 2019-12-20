@@ -1,73 +1,84 @@
 ---
-- name: set conf path fact
-  set_fact:
-    conf: "/etc/ceph/{{ dcn }}.conf"
+- when:
+    # does not need to be configured to talk to itself
+    - ceph_cluster_host != inventory_hostname
+    # dcn nodes do not talk to eachother
+    - not (ceph_cluster_host|regex_search("^dcn") and
+           inventory_hostname|regex_search("^dcn"))
+  block:
+  - name: State what is about to happen
+    debug:
+      msg: "configure {{ inventory_hostname }} to use ceph cluster: {{ ceph_cluster_name }}"
 
-- name: upload control-planerc (ignore attrs were not transferred)
-  synchronize:
-    mode: push
-    dest: "/home/heat-admin/control-planerc"
-    src: "dcn_ceph_data/control-planerc"
+  - name: Set conf path fact
+    set_fact:
+      conf: "/etc/ceph/{{ ceph_cluster_name }}.conf"
 
-- name: upload ceph configuration files (ignore attrs were not transferred)
-  synchronize:
-    mode: push
-    dest: "{{ conf }}"
-    src: "dcn_ceph_data/{{ dcn }}.conf"
+  - name: Upload control-planerc (ignore attrs were not transferred)
+    synchronize:
+      mode: push
+      dest: "/home/heat-admin/control-planerc"
+      src: "dcn_ceph_data/control-planerc"
 
-- name: set keyring path fact
-  set_fact:
-    keyring: "/etc/ceph/client.{{ dcn }}.glance.keyring"
+  - name: Upload ceph configuration files (ignore attrs were not transferred)
+    synchronize:
+      mode: push
+      dest: "{{ conf }}"
+      src: "dcn_ceph_data/{{ ceph_cluster_name }}.conf"
 
-- name: add client section in conf file with path to keyring
-  ini_file:
-    path: "{{ conf }}"
-    section: client
-    option: keyring
-    value: "{{ keyring }}"
-    
-- name: chown dcn conf file
-  shell: "chown root:root {{ conf }}"
-  
-- name: upload ceph keyrings
-  synchronize:
-    mode: push
-    dest: "{{ keyring }}"
-    src: "dcn_ceph_data/client.{{ dcn }}.glance.keyring"
+  - name: Set keyring path fact
+    set_fact:
+      keyring: "/etc/ceph/client.{{ ceph_cluster_name }}.glance.keyring"
 
-- name: chown dcn keyring
-  shell: "chown 167:167 {{ keyring }}"
+  - name: Add client section in conf file with path to keyring
+    ini_file:
+      path: "{{ conf }}"
+      section: client
+      option: keyring
+      value: "{{ keyring }}"
 
-- name: chcon dcn conf and key files
-  shell: "chcon system_u:object_r:container_file_t:s0 {{ item }}"
-  loop:
-    - "{{ keyring }}"
-    - "{{ conf }}"
+  - name: chown dcn conf file
+    shell: "chown root:root {{ conf }}"
 
-- name: collect list of /etc/ceph
-  shell: "ls -l /etc/ceph/"
-  register: ls_ceph
+  - name: Upload ceph keyrings
+    synchronize:
+      mode: push
+      dest: "{{ keyring }}"
+      src: "dcn_ceph_data/client.{{ ceph_cluster_name }}.glance.keyring"
 
-- name: show /etc/ceph
-  debug:
-    msg: "{{ ls_ceph.stdout_lines }}"
-  
-- name: set rbd command fact
-  set_fact:
-    rbd: "podman exec ceph-mon-`hostname` rbd --conf {{ conf }} --id {{ dcn }}.glance --keyring {{ keyring }}"
+  - name: chown dcn keyring
+    shell: "chown 167:167 {{ keyring }}"
 
-- name: Test ceph client connection by writing an object
-  shell: "{{ rbd }} create --size 1024 images/test_object_from_central"
-  register: ceph_write
+  - name: chcon dcn conf and key files
+    shell: "chcon system_u:object_r:container_file_t:s0 {{ item }}"
+    loop:
+      - "{{ keyring }}"
+      - "{{ conf }}"
 
-- name: Test ceph client connection by writing an object
-  shell: "{{ rbd }} ls images"
-  register: ceph_read
+  - name: Collect list of /etc/ceph
+    shell: "ls -l /etc/ceph/"
+    register: ls_ceph
 
-- name: show ceph client test results
-  debug:
-    msg: "Write (should be empty): {{ ceph_write.stdout_lines }} | Read: {{ ceph_read.stdout_lines }}"
+  - name: Show /etc/ceph
+    debug:
+      msg: "{{ ls_ceph.stdout_lines }}"
 
-- name: Clean up after testing by deleteing test object
-  shell: "{{ rbd }} rm images/test_object_from_central"
-  register: ceph_write
+  - name: Set rbd command fact
+    set_fact:
+      rbd: "podman exec ceph-mon-`hostname` rbd --conf {{ conf }} --id {{ ceph_cluster_name }}.glance --keyring {{ keyring }}"
+
+  - name: Test ceph client connection by writing an object
+    shell: "{{ rbd }} create --size 1024 images/test_object_from_{{ inventory_hostname }}"
+    register: ceph_write
+
+  - name: Test ceph client connection by reading an object
+    shell: "{{ rbd }} ls images"
+    register: ceph_read
+
+  - name: Show ceph client test results
+    debug:
+      msg: "Write (should be empty): {{ ceph_write.stdout_lines }} | Read: {{ ceph_read.stdout_lines }}"
+
+  - name: Clean up after testing by deleteing test object
+    shell: "{{ rbd }} rm images/test_object_from_{{ inventory_hostname }}"
+    register: ceph_write
