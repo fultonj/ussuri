@@ -1,6 +1,7 @@
 ---
 - when:
     # does not need to be configured to talk to itself
+    - ceph_cluster_host is defined
     - ceph_cluster_host != inventory_hostname
     # dcn nodes do not talk to eachother
     - not (ceph_cluster_host|regex_search("^dcn") and
@@ -50,10 +51,12 @@
     shell: "chown 167:167 {{ keyring }}"
 
   - name: chcon dcn conf and key files
-    shell: "chcon system_u:object_r:container_file_t:s0 {{ item }}"
+    shell: "chcon system_u:object_r:container_file_t:s0 {{ inner_item }}"
     loop:
       - "{{ keyring }}"
       - "{{ conf }}"
+    loop_control:
+      loop_var: inner_item
 
   - name: Collect list of /etc/ceph
     shell: "ls -l /etc/ceph/"
