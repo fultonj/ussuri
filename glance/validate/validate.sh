@@ -26,6 +26,10 @@ for FILE in $FILES; do
         if [[ $FILE != "control-planerc" && $FILE != "IMAGE" ]]; then
             echo "Running $FILE ..."
             ssh -q -o "StrictHostKeyChecking no" heat-admin@$CONTROLLER "bash $FILE"
+            if [[ $? -gt 0 ]]; then
+                echo "Aborting. Run of $FILE failed."
+                exit 1
+            fi
         fi
     fi
 done

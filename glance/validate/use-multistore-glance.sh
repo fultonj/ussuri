@@ -24,6 +24,13 @@ esac
 
 echo "Testing feature $PATCH on stores central and dcn0"
 # -------------------------------------------------------
+echo "Check if glance is working"
+glance image-list
+if [[ $? -gt 0 ]]; then
+    echo "Aborting. Not even 'glance image-list' works."
+    exit 1
+fi
+# -------------------------------------------------------
 # Get image if missing
 NAME=$(cat IMAGE)
 IMG=cirros-0.3.4-x86_64-disk.img
