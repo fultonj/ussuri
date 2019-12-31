@@ -19,7 +19,7 @@
       loop:
         - { ceph_cluster_name: 'dcn0', ceph_cluster_host: 'dcn0-distributedcomputehci-0' }
         #- { ceph_cluster_name: 'dcn1', ceph_cluster_host: 'dcn1-distributedcomputehci-0' }
-        - { ceph_cluster_name: 'ceph', ceph_cluster_host: 'control-plane-controller-0' }
+        - { ceph_cluster_name: 'central', ceph_cluster_host: 'control-plane-controller-0' }
 
 - name: Configure all Ceph clients
   gather_facts: false
@@ -33,7 +33,7 @@
         ceph_cluster_host: "{{ item.ceph_cluster_host }}"
       loop:
         - { ceph_cluster_name: 'dcn0', ceph_cluster_host: 'dcn0-distributedcomputehci-0' }
-        - { ceph_cluster_name: 'ceph', ceph_cluster_host: 'control-plane-controller-0' }
+        - { ceph_cluster_name: 'central', ceph_cluster_host: 'control-plane-controller-0' }
         #- { ceph_cluster_name: 'dcn1', ceph_cluster_host: 'dcn1-distributedcomputehci-0' }
 
 - name: Configure glance with backends
