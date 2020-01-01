@@ -39,16 +39,16 @@
     section: glance_store
     state: absent
 
-- name: Set default_backend
+- name: Set default_backend and central central_rbd_store_user
   set_fact:
     default_backend: central
-    rbd_store_user: openstasck
+    central_rbd_store_user: openstack # central uses default key from initial install
   when: inventory_hostname == "control-plane-controller-0"
 
-- name: Set default backend for dcn hosts based on hostname
+- name: Set default_backend and central_rbd_store_user for dcn hosts based on hostname
   set_fact:
     default_backend: "{{ inventory_hostname.split('-')[0] }}"
-    rbd_store_user: ceph.glance # from ceph cluster name of make_client.yml
+    central_rbd_store_user: central.glance # from ceph cluster name of make_client.yml
   when: inventory_hostname is regex("^dcn[0-9]+")
 
 - name: Add new glance_store and central sections
@@ -62,10 +62,10 @@
       [central]
       store_description = "central RBD backend"
       rbd_store_pool = images
-      rbd_store_user = {{ rbd_store_user }}
-      rbd_store_ceph_conf = /etc/ceph/ceph.conf
+      rbd_store_user = {{ central_rbd_store_user }}
+      rbd_store_ceph_conf = /etc/ceph/central.conf
 
-- name: Add new DCN sections
+- name: Add new DCN sections for central node
   blockinfile:
     path: "{{ glance_conf }}"
     block: |
@@ -76,6 +76,22 @@
       rbd_store_ceph_conf = /etc/ceph/{{ item }}.conf
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item }}"
   loop: "{{ dcns }}"
+  when:
+    - inventory_hostname == "control-plane-controller-0"
+
+- name: Add DCN section for the DCN node
+  blockinfile:
+    path: "{{ glance_conf }}"
+    block: |
+      [{{ item }}]
+      store_description = "{{ item }} RBD backend"
+      rbd_store_pool = images
+      rbd_store_user = openstack
+      rbd_store_ceph_conf = /etc/ceph/{{ item }}.conf
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item }}"
+  loop: "{{ dcns }}"
+  when:
+    - inventory_hostname is regex("^dcn[0-9]+")
 
 - name: restart glance container
   shell: "systemctl restart tripleo_glance_api.service"
