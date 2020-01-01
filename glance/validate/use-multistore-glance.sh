@@ -89,7 +89,7 @@ echo "Looking at glance tasks"
 glance task-list | head -5
 
 echo "Show newest task"
-TASK_ID=$(glance task-list | head -4 | grep processing | awk {'print $2'})
+TASK_ID=$(glance task-list | head -4 | egrep "success|processing" | awk {'print $2'})
 glance task-show $TASK_ID
 echo "Confirm image ID in task"
 glance task-show $TASK_ID | grep $ID
@@ -112,7 +112,7 @@ while [ 1 ]; do
 done
 
 echo "- Use RBD to list images on central"
-sudo podman exec ceph-mon-$(hostname) rbd -p images ls -l
+sudo podman exec ceph-mon-$(hostname) rbd --cluster central -p images ls -l
 
 echo "- Use RBD to list images on dcn0"
 sudo podman exec ceph-mon-$(hostname) rbd --id dcn0.glance --keyring /etc/ceph/client.dcn0.glance.keyring --conf /etc/ceph/dcn0.conf -p images ls -l

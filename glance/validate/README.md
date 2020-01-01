@@ -1,7 +1,7 @@
 # Validate Glance in DCN Deployment
 
-Run [validate.sh](validate.sh) on undercloud to execute the following
-on the overcloud:
+Run [validate.sh](validate.sh) on undercloud to configure the
+overcloud so you can run the following:
 
 - [use-multistore-glance.sh](use-multistore-glance.sh)
   - If an image named cirros is found delete it

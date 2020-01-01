@@ -23,19 +23,10 @@ for FILE in $FILES; do
         exit 1
     else
         scp -q -o "StrictHostKeyChecking no" $FILE heat-admin@$CONTROLLER:/home/heat-admin/
-        if [[ $FILE != "control-planerc" && $FILE != "IMAGE" ]]; then
-            echo "Running $FILE ..."
-            ssh -q -o "StrictHostKeyChecking no" heat-admin@$CONTROLLER "bash $FILE"
-            if [[ $? -gt 0 ]]; then
-                echo "Aborting. Run of $FILE failed."
-                exit 1
-            fi
-        fi
     fi
 done
 
-echo "Echo checking Ceph on $DCN_NAME"
-DCN=$(openstack server list -c Networks -c Name -f value | grep $DCN_NAME | awk {'print $2'} | sed s/ctlplane=//g)
-CMD0="sudo podman exec ceph-mon-\$(hostname) rbd -p images ls -l --cluster $DCN_NAME"
-CMD1="sudo podman exec ceph-mon-\$(hostname) rbd -p vms ls -l --cluster $DCN_NAME"
-ssh -q -o "StrictHostKeyChecking no" heat-admin@$DCN "$CMD0; $CMD1"
+echo -e "Files transferred. To continue do the following:\n"
+echo "  ssh heat-admin@$CONTROLLER"
+echo "  bash use-multistore-glance.sh; bash use-central.sh; bash use-dcn.sh"
+echo ""
