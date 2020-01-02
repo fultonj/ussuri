@@ -22,3 +22,11 @@ fi
 if [[ -d config-download ]]; then
     rm -v -rf config-download
 fi
+
+# delete exported control-plane file if it exsits
+if [[ -e ~/control-plane-export.yaml ]]; then
+    rm -v ~/control-plane-export.yaml
+fi
+
+# delete all RC files
+find . -name ${CLOUD}rc -exec rm -f {} \;
