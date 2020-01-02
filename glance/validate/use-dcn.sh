@@ -42,7 +42,7 @@ if [[ $MKAZ -eq 1 ]]; then
     if ! openstack aggregate show $HOST_AGGREGATE >null 2>&1; then
         echo "Creating a host aggregate for $AZ"
         openstack aggregate create $HOST_AGGREGATE --zone $AZ
-        for H in $(openstack hypervisor list -f value -c "Hypervisor Hostname"); do
+        for H in $(openstack hypervisor list -f value -c "Hypervisor Hostname" | grep $AZ); do
             echo "Adding $H to $HOST_AGGREGATE"
             openstack aggregate add host $HOST_AGGREGATE $H
         done
@@ -103,7 +103,7 @@ if [[ $NOVA -eq 1 ]]; then
             openstack network create --internal private-${AZ}
         fi
         PRI_SUBNET_ID=$(openstack network show private-${AZ} -c subnets -f value)
-        if [[ -z $PRI_SUBNET_ID ]]; then
+        if [[ $PRI_SUBNET_ID == '[]' ]]; then
             openstack subnet create private-net-${AZ} \
                       --subnet-range $PRIVATE_NETWORK_CIDR \
                       --network private-${AZ}

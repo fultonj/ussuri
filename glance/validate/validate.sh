@@ -1,7 +1,19 @@
 #!/bin/bash
 
 IMAGE=cirros
-DCN_NAME=dcn0
+
+case "$1" in
+        control)
+            # validate the control plane works before attempting dcn deploy
+            FILES="control-planerc use-control-plane.sh"
+            JUST_CONTROL=1
+            ;;
+         
+        *)
+            # validate dcn deploy works (cow boots on dcn) with multistore glance
+            FILES="IMAGE control-planerc use-multistore-glance.sh use-central.sh use-dcn.sh"
+            JUST_CONTROL=0
+esac
 
 source ~/stackrc
 
@@ -16,22 +28,20 @@ fi
 echo $IMAGE > IMAGE
 CONTROLLER=$(openstack server list -c Networks -c Name -f value | grep controller-0 | awk {'print $2'} | sed s/ctlplane=//g)
 
-FILES="IMAGE control-planerc use-multistore-glance.sh use-central.sh use-dcn.sh"
 for FILE in $FILES; do
     if [[ ! -e $FILE ]]; then
         echo "$FILE is missing. Aborting"
         exit 1
     else
         scp -q -o "StrictHostKeyChecking no" $FILE heat-admin@$CONTROLLER:/home/heat-admin/
-        if [[ $FILE != "control-planerc" && $FILE != "IMAGE" ]]; then
-            echo "Running $FILE ..."
-            ssh -q -o "StrictHostKeyChecking no" heat-admin@$CONTROLLER "bash $FILE"
-        fi
     fi
 done
 
-echo "Echo checking Ceph on $DCN_NAME"
-DCN=$(openstack server list -c Networks -c Name -f value | grep $DCN_NAME | awk {'print $2'} | sed s/ctlplane=//g)
-CMD0="sudo podman exec ceph-mon-\$(hostname) rbd -p images ls -l --cluster $DCN_NAME"
-CMD1="sudo podman exec ceph-mon-\$(hostname) rbd -p vms ls -l --cluster $DCN_NAME"
-ssh -q -o "StrictHostKeyChecking no" heat-admin@$DCN "$CMD0; $CMD1"
+if [[ $JUST_CONTROL -eq 1 ]]; then
+    ssh -q -o "StrictHostKeyChecking no" heat-admin@$CONTROLLER "bash use-control-plane.sh"
+else
+    echo -e "Files transferred. To continue do the following:\n"
+    echo "  ssh heat-admin@$CONTROLLER"
+    echo "  bash use-multistore-glance.sh; bash use-central.sh; bash use-dcn.sh"
+    echo ""
+fi

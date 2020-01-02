@@ -102,6 +102,9 @@ if [[ $CONF -eq 1 ]]; then
          # -e validate_ntp=false \
          # -e ping_test_ips=false \
 
+         # When using the options below be sure to include this:
+         # -e gather_facts=true -e @$DIR/global_vars.yaml \
+
          # Just re-run ceph
          # --tags external_deploy_steps
 

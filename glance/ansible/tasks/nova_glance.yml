@@ -2,6 +2,9 @@
 - name: Get IPs of glance-api servers listening on port 9292
   shell: "netstat -an | grep 9292 | awk {'print $4'}"
   register: netstat_glance_port
+  until: (netstat_glance_port.stdout_lines|length) > 0
+  retries: 5
+  delay: 5
   # we'd prefer to be setting this to the haproxy in front of glance
 
 - when:

@@ -7,7 +7,7 @@ IMAGE=$(cat IMAGE)
 
 function run_on_mon {
     # since it will be run on the controller
-    sudo podman exec ceph-mon-$(hostname) $1
+    sudo podman exec ceph-mon-$(hostname) $1 --cluster central
 }
 
 source control-planerc
@@ -54,7 +54,11 @@ if [ $NOVA -eq 1 ]; then
     openstack keypair create demokp_central > ~/demokp_central.pem 
     chmod 600 ~/demokp_central.pem
 
-    openstack server create --flavor m1.tiny --image $IMAGE --key-name demokp_central vm_central --nic net-id=$netid
+    # have not yet created AZs, so specify non-dcn hypervisor
+    HYPERVISOR=$(openstack hypervisor list -f value -c "Hypervisor Hostname" | grep -v dcn)
+
+    openstack server create --hypervisor-hostname $HYPERVISOR --flavor m1.tiny --image $IMAGE --key-name demokp_central vm_central --nic net-id=$netid
+
     openstack server list
     if [[ $(openstack server list -c Status -f value) == "BUILD" ]]; then
         echo "Waiting one minute for building server to boot"
