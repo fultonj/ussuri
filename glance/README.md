@@ -260,5 +260,12 @@ node's local Glance and not the central Glance.
 
 ## Next
 
-- Configure edgeN glance to read/write to central ceph
-- Write TripleO patches to make the above possible with just TripleO.
+- Implement [multiceph](../multiceph) so that
+  [make_client](ansible/tasks/make_client.yml) and
+  [install_client](ansible/tasks/install_client.yml)
+  are not necessary.
+- Use new
+  [HAProxyEdge and GlanceApiEdge](https://review.opendev.org/#/c/699880)
+  services in [dcn0 deployment](glance/dcn0/deploy.sh).
+- Write TripleO glance patches to make this deployment possible
+  without the extra tasks in [ansible](ansible) directory.
