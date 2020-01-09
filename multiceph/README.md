@@ -6,8 +6,11 @@ This directory of scripts allows me to develop the blueprint
 ## Deployment
 
 - Prerequisite: three centos7 servers (accessible via ssh stack@cent{0,1,2})
-- Create external ceph clusters on cent{0,1} with [ceph/deploy.sh](ceph/deploy.sh)
-- todo: Run [deploy.sh](deploy.sh) with [basecase.yaml](basecase.yaml) on cent2
+- From host which can ssh into cent{0,1}
+  - Create external ceph clusters on cent{0,1} with [ceph/deploy.sh](ceph/deploy.sh)
+- From cent2
+  - Run [boostrap.sh](boostrap.sh)
+  - todo: Run [deploy.sh](deploy.sh) with [basecase.yaml](basecase.yaml) on cent2
 
 ## Usecases
 
