@@ -1,0 +1,99 @@
+cluster: HOST
+ceph_conf_overrides:
+  global:
+    osd_pool_default_pg_num: 32
+    osd_pool_default_pgp_num: 32
+    osd_pool_default_size: 1
+ceph_container_image: ceph/daemon
+ceph_container_image_tag: v4.0.1-stable-4.0-nautilus-centos-7-x86_64
+ceph_container_registry: docker.io
+ceph_origin: distro
+ceph_stable: true
+cluster_network: 192.168.122.0/24
+containerized_deployment: true
+configure_firewall: true
+generate_fsid: true
+ip_version: ipv4
+keys:
+  - caps:
+      mgr: allow *
+      mon: profile rbd
+      osd: profile rbd pool=volumes, profile rbd pool=backups, profile rbd pool=vms,
+        profile rbd pool=images
+    key: AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q==
+    mode: '0600'
+    name: client.openstack
+  - caps:
+      mds: allow *
+      mgr: allow *
+      mon: allow r, allow command 'auth del', allow command 'auth caps', allow
+        command 'auth get', allow command 'auth get-or-create'
+      osd: allow rw
+    key: AQCwmeRcAAAAABAAiglHZveUQUmoSsYbZcbMEA==
+    mode: '0600'
+    name: client.manila
+  - caps:
+      mgr: allow *
+      mon: allow rw
+      osd: allow rwx
+    key: AQCwmeRcAAAAABAAvd9OK2qeXNaD4rL/wP7D0Q==
+    mode: '0600'
+    name: client.radosgw
+monitor_address_block: 192.168.122.0/24
+ntp_service_enabled: false
+openstack_config: true
+openstack_keys:
+  - caps:
+      mgr: allow *
+      mon: profile rbd
+      osd: profile rbd pool=volumes, profile rbd pool=backups, profile rbd pool=vms,
+        profile rbd pool=images
+    key: AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q==
+    mode: '0600'
+    name: client.openstack
+  - caps:
+      mds: allow *
+      mgr: allow *
+      mon: allow r, allow command 'auth del', allow command 'auth caps', allow
+        command 'auth get', allow command 'auth get-or-create'
+      osd: allow rw
+    key: AQCwmeRcAAAAABAAiglHZveUQUmoSsYbZcbMEA==
+    mode: '0600'
+    name: client.manila
+  - caps:
+      mgr: allow *
+      mon: allow rw
+      osd: allow rwx
+    key: AQCwmeRcAAAAABAAvd9OK2qeXNaD4rL/wP7D0Q==
+    mode: '0600'
+    name: client.radosgw
+openstack_pools:
+  - application: rbd
+    name: images
+    pg_num: 32
+    rule_name: replicated_rule
+  - application: rbd
+    name: backups
+    pg_num: 32
+    rule_name: replicated_rule
+  - application: rbd
+    name: vms
+    pg_num: 32
+    rule_name: replicated_rule
+  - application: rbd
+    name: volumes
+    pg_num: 32
+    rule_name: replicated_rule
+pools: []
+public_network: 192.168.122.0/24
+user_config: true
+dashboard_enabled: false
+container_binary: 'podman'
+mon_host_v1: { 'enabled': False }
+osd_scenario: lvm
+osd_objectstore: bluestore
+lvm_volumes:
+  - data: data-lv2
+    data_vg: vg2
+    db: db-lv2
+    db_vg: vg2

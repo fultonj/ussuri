@@ -1,0 +1,8 @@
+[mons]
+HOST ansible_user=stack
+
+[osds]
+HOST ansible_user=stack
+
+[mgrs]
+HOST ansible_user=stack
