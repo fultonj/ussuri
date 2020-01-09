@@ -9,7 +9,7 @@ This directory of scripts allows me to develop the blueprint
 - From host which can ssh into cent{0,1}
   - Create external ceph clusters on cent{0,1} with [ceph/deploy.sh](ceph/deploy.sh)
 - From cent2
-  - Run [boostrap.sh](boostrap.sh)
+  - Run [bootstrap.sh](bootstrap.sh)
   - todo: Run [deploy.sh](deploy.sh) with [basecase.yaml](basecase.yaml) on cent2
 
 ## Usecases

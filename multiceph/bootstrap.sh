@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 NIC=1
 REPO=1
-INSTALL=0
+INSTALL=1
 CEPH_PREP=1
 CONTAINERS=0
 
