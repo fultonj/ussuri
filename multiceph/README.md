@@ -13,9 +13,9 @@ This directory of scripts allows me to develop the blueprint
 
 ### Architecture
 
-1. ceph0: standalone ceph deployment
-2. ceph1: standalone ceph deployment
-3. tripleo-standalone: [standalone](https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/standalone.html) tripleo deployment
+1. cent0: standalone ceph deployment
+2. cent1: standalone ceph deployment
+3. ceph2: [standalone](https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/standalone.html) tripleo deployment
 
 ### Usecase 1: Two External
 
@@ -24,11 +24,11 @@ clusters.
 
 Success criteria:
 1. tripleo-standalone has the following files:
-   - /etc/ceph/ceph0.conf
-   - /etc/ceph/ceph1.conf
-   - /etc/ceph/ceph0.client.openstack.keyring
-   - /etc/ceph/ceph1.client.openstack.keyring
-2. tripleo-standalone can use RBD to RW to pools on ceph0 and ceph1
+   - /etc/ceph/cent0.conf
+   - /etc/ceph/cent1.conf
+   - /etc/ceph/cent0.client.openstack.keyring
+   - /etc/ceph/cent1.client.openstack.keyring
+2. tripleo-standalone can use RBD to RW to pools on cent0 and cent1
 
 ### Usecase 2: One Internal and One External
 
@@ -39,11 +39,11 @@ clusters.
 Success criteria:
 1. tripleo-standalone has the following files:
    - /etc/ceph/ceph.conf
-   - /etc/ceph/ceph1.conf
+   - /etc/ceph/cent0.conf
    - /etc/ceph/ceph.client.openstack.keyring
-   - /etc/ceph/ceph1.client.openstack.keyring
+   - /etc/ceph/cent0.client.openstack.keyring
 2. tripleo-standalone can use RBD to RW to pools on the internal ceph
-   cluster and the external ceph1 cluster
+   cluster and the external ceph cluster on cent0
 
 ### Usecase 3: Apply the feature to a DCN deployment
 
