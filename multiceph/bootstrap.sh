@@ -3,7 +3,7 @@ NIC=1
 REPO=1
 INSTALL=1
 CEPH_PREP=1
-CONTAINERS=0
+CONTAINERS=1
 
 export FETCH=/tmp/ceph_ansible_fetch
 
@@ -54,10 +54,6 @@ if [[ $CEPH_PREP -eq 1 ]]; then
 fi
 
 if [[ $CONTAINERS -eq 1 ]]; then
-    # if you already have another undercloud which created this 
-    # and hosts a local registry, then skip this step
-    if [[ ! -e containers-env-file.yaml ]]; then
-        openstack tripleo container image prepare default \
-                  --output-env-file $HOME/containers-env-file.yaml
-    fi
+    openstack tripleo container image prepare default \
+              --output-env-file $HOME/containers-env-file.yaml
 fi
