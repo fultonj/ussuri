@@ -28,10 +28,10 @@ clusters.
 Success criteria:
 1. controller0 has the following files:
    - /etc/ceph/ceph0.conf
-   - /etc/ceph/cent1.conf
+   - /etc/ceph/ceph1.conf
    - /etc/ceph/ceph0.client.openstack.keyring
-   - /etc/ceph/cent1.client.openstack.keyring
-2. controller0 can use RBD to RW to pools on ceph0 and cent1
+   - /etc/ceph/ceph1.client.openstack.keyring
+2. controller0 can use RBD to RW to pools on ceph0 and ceph1
 
 ### Usecase 2: One Internal and One External
 
