@@ -71,10 +71,13 @@ if [[ $EXTERNAL_CEPH -eq 1 ]]; then
     cat <<EOF > $HOME/external_ceph.yaml
 parameter_defaults:
   # ssh'd into deployed cent0 and read it from conf
-  CephClusterFSID: '4b5c8c0a-ff60-454b-a1b4-9747aa737d19'
+  CephClusterFSID: '1d9c75c0-3c09-4675-82ba-fbaf3a022da6'
   # directly from ceph/all.yml client.openstack
   CephClientKey: 'AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=='
-  CephExternalMonHost: 'cent0'
+  CephExternalMonHost: '192.168.122.251'
+  CephClusterName: 'cent0'
+  CephAnsibleExtraConfig:
+    mon_host_v1: { 'enabled': False }
 EOF
 fi
 
@@ -83,11 +86,11 @@ if [[ $EXTERNAL_CEPH -eq 2 ]]; then
 parameter_defaults:
   CephMultiBackendsHash:
     ceph0:
-      CephClusterFSID: '4b5c8c0a-ff60-454b-a1b4-9747aa737d19'
+      CephClusterFSID: '1d9c75c0-3c09-4675-82ba-fbaf3a022da6'
       CephClientKey: 'AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=='
       CephExternalMonHost: 'cent0'
     ceph1:
-      CephClusterFSID: 'AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=='
+      CephClusterFSID: '4b5c8c0a-ff60-454b-a1b4-9747aa737d19'
       CephClientKey: 'AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=='
       CephExternalMonHost: 'cent1'
 EOF
