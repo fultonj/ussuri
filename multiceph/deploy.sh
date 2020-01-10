@@ -106,6 +106,9 @@ fi
 
 sudo sh -c "echo $(hostname) > /etc/hostname ; hostname -F /etc/hostname"
 
+# iptables hack
+sudo iptables -I INPUT 1 -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+
 sudo openstack tripleo deploy \
   --templates ~/templates \
   --local-ip=$IP/$NETMASK \
