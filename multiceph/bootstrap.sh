@@ -10,6 +10,8 @@ CONTAINERS=1
 export FETCH=/tmp/ceph_ansible_fetch
 
 if [[ $HOSTS -eq 1 ]]; then
+    # https://bugzilla.redhat.com/show_bug.cgi?id=1501193
+    sudo restorecon /etc/machine-info
     sudo sh -c "echo $(hostname) > /etc/hostname ; hostname -F /etc/hostname"
     DST=/tmp/hosts
     cat /dev/null > $DST
