@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export INTERFACE=eth0
-export IP=$(ip a s $INTERFACE | grep 192 | awk {'print $2'} | sed s/\\/24//g)
+export IP=192.168.24.254
 export NETMASK=24
 export DNS_SERVERS=192.168.122.1
 export NTP_SERVERS=pool.ntp.org
@@ -33,6 +33,15 @@ parameter_defaults:
   StandaloneHomeDir: $HOME
   StandaloneLocalMtu: 1400
   NovaComputeLibvirtType: qemu
+  PasswordAuthentication: 'yes'
+  StandaloneExtraConfig:
+    tripleo::firewall::firewall_rules:
+      '004 accept ssh from libvirt default subnet 192.168.122.0/24 ipv4':
+        dport: [22]
+        proto: tcp
+        source: 192.168.122.0/24
+        action: accept
+  LocalCephAnsibleFetchDirectoryBackup: /tmp/ceph_ansible_fetch
 EOF
 
 if [[ $INTERNAL_CEPH -eq 1 ]]; then
@@ -53,7 +62,6 @@ parameter_defaults:
   CephPoolDefaultPgNum: 32
   CephPoolDefaultSize: 1
   CephAnsiblePlaybookVerbosity: 3
-  LocalCephAnsibleFetchDirectoryBackup: /tmp/ceph_ansible_fetch
 EOF
 fi
 
@@ -73,15 +81,11 @@ if [[ $EXTERNAL_CEPH -eq 2 ]]; then
 parameter_defaults:
   CephMultiBackendsHash:
     ceph0:
-      # ssh'd into deployed cent0 and read it from conf
       CephClusterFSID: '4b5c8c0a-ff60-454b-a1b4-9747aa737d19'
-      # directly from ceph/all.yml client.openstack
       CephClientKey: 'AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=='
       CephExternalMonHost: 'cent0'
     ceph1:
-      # ssh'd into deployed cent1 and read it from conf
       CephClusterFSID: 'AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=='
-      # directly from ceph/all.yml client.openstack
       CephClientKey: 'AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=='
       CephExternalMonHost: 'cent1'
 EOF
