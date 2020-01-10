@@ -9,7 +9,7 @@ ceph_container_image_tag: v4.0.1-stable-4.0-nautilus-centos-7-x86_64
 ceph_container_registry: docker.io
 ceph_origin: distro
 ceph_stable: true
-cluster_network: 192.168.122.0/24
+cluster_network: 192.168.24.0/24
 containerized_deployment: true
 configure_firewall: true
 generate_fsid: true
@@ -39,7 +39,7 @@ keys:
     key: AQCwmeRcAAAAABAAvd9OK2qeXNaD4rL/wP7D0Q==
     mode: '0600'
     name: client.radosgw
-monitor_address_block: 192.168.122.0/24
+monitor_address_block: 192.168.24.0/24
 ntp_service_enabled: false
 openstack_config: true
 openstack_keys:
@@ -85,10 +85,9 @@ openstack_pools:
     pg_num: 32
     rule_name: replicated_rule
 pools: []
-public_network: 192.168.122.0/24
+public_network: 192.168.24.0/24
 user_config: true
 dashboard_enabled: false
-container_binary: 'podman'
 mon_host_v1: { 'enabled': False }
 osd_scenario: lvm
 osd_objectstore: bluestore

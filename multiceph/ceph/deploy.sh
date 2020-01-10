@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export HOST=cent1
+export HOST=ceph1
 export TAG=4.0.6
 
 echo "Configuring $HOST so ceph-ansible can be run on it"
