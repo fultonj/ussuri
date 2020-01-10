@@ -35,6 +35,7 @@ parameter_defaults:
   NovaComputeLibvirtType: qemu
   PasswordAuthentication: 'yes'
   StandaloneExtraConfig:
+    cinder::backend_host: ''
     tripleo::firewall::firewall_rules:
       '004 accept ssh from libvirt default subnet 192.168.122.0/24 ipv4':
         dport: [22]
@@ -42,6 +43,7 @@ parameter_defaults:
         source: 192.168.122.0/24
         action: accept
   LocalCephAnsibleFetchDirectoryBackup: /tmp/ceph_ansible_fetch
+  ContainerHealthcheckDisabled: true
 EOF
 
 if [[ $INTERNAL_CEPH -eq 1 ]]; then
