@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+
+HOSTS=1
 NIC=1
 REPO=1
 INSTALL=1
@@ -7,12 +9,23 @@ CONTAINERS=1
 
 export FETCH=/tmp/ceph_ansible_fetch
 
+if [[ $HOSTS -eq 1 ]]; then
+    sudo sh -c "echo $(hostname) > /etc/hostname ; hostname -F /etc/hostname"
+    DST=/tmp/hosts
+    cat /dev/null > $DST
+    echo "192.168.122.251 cent0.example.com cent0" >> $DST
+    echo "192.168.122.250 cent1.example.com cent1" >> $DST
+    echo "192.168.122.249 cent2.example.com cent2" >> $DST
+    sudo mv -f $DST /etc/hosts
+fi
+
 if [[ $NIC -eq 1 ]]; then
     DEV=eth0
     IP=192.168.24.254
     if [[ $(ip a s $DEV | grep $IP | wc -l) -eq 0 ]]; then
         echo "Assigning $IP to $DEV"
         DST=/tmp/ifcfg-$DEV
+        cat /dev/null > $DST
         echo "DEVICE=eth0" >> $DST
         echo "BOOTPROTO=static" >> $DST
         echo "ONBOOT=yes" >> $DST
