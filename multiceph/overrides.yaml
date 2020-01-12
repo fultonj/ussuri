@@ -1,0 +1,29 @@
+---
+parameter_defaults:
+  ContainerHealthcheckDisabled: true
+  NtpServer: pool.ntp.org
+  ControllerCount: 1
+  ComputeCount: 1
+  CephStorageCount: 0
+  ControllerSchedulerHints:
+    'capabilities:node': '0-controller-%index%'
+  ComputeSchedulerHints:
+    'capabilities:node': '0-compute-%index%'
+  CephStorageSchedulerHints:
+    'capabilities:node': '0-ceph-%index%'
+  OvercloudControlFlavor: baremetal
+  OvercloudComputeFlavor: baremetal
+  OvercloudCephStorageFlavor: baremetal
+  # Ceph External
+  CephClusterFSID: '1d9c75c0-3c09-4675-82ba-fbaf3a022da6'
+  CephClientKey: 'AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=='
+  CephExternalMonHost: '192.168.24.250'
+  CephAnsiblePlaybookVerbosity: 3
+  LocalCephAnsibleFetchDirectoryBackup: /tmp/fetch_dir
+  CephAnsibleEnvironmentVariables:
+    ANSIBLE_HOST_KEY_CHECKING: 'False'
+    ANSIBLE_PRIVATE_KEY_FILE: '/home/stack/.ssh/id_rsa'
+    ANSIBLE_FILTER_PLUGINS: /usr/share/ceph-ansible/plugins/filter/
+  CephAnsibleExtraConfig:
+    mon_host_v1: { 'enabled': False }
+  CephClusterName: 'ceph0'
