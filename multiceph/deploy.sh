@@ -101,6 +101,10 @@ if [[ $CONF -eq 1 ]]; then
          --private-key $DIR/ssh_private_key \
 	 $DIR/deploy_steps_playbook.yaml
 
+         # For Start at task:
+         # --start-at-task 'External deployment step 2'
+         # -e gather_facts=true -e $DIR/global_vars.yaml \
+    
          # -e validate_controllers_icmp=false \
          # -e validate_gateways_icmp=false \
          # -e validate_fqdn=false \
