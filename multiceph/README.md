@@ -8,6 +8,7 @@ This directory of scripts allows me to develop the blueprint
 - Prerequisite: two centos7 servers (accessible via ssh stack@cent{0,1})
 - From host which can ssh to cent{0,1} create ceph clusters with [ceph/deploy.sh](ceph/deploy.sh)
 - From undercloud provided by tripleo-lab run [deploy.sh](deploy.sh)
+  and [validate.sh](validate.sh)
 
 ## Usecases
 
