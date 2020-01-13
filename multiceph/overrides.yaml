@@ -27,8 +27,14 @@ parameter_defaults:
   CephClusterName: 'ceph0'
   CephMultiBackendsHash:
     - ceph1:
-        CephClusterName: 'ceph1'
-        CephClusterFSID: 'e2cba068-5f14-4b0f-b047-acf375c0004a'
-        CephExternalMonHost: '192.168.24.251'
-        # if same as ceph0 it is coincidence; it does not need to be
-        CephClientKey: 'AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=='
+        cluster: 'ceph1'
+        fsid: 'e2cba068-5f14-4b0f-b047-acf375c0004a'
+        external_cluster_mon_ips: '192.168.24.251'
+        openstack_keys:
+          - name: "client.openstack"
+            caps:
+              mgr: "allow *"
+              mon: "profile rbd"
+              osd: "osd: profile rbd pool=volumes, profile rbd pool=backups, profile rbd pool=vms, profile rbd pool=images"
+            key: "AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=="
+            mode: "0600"
