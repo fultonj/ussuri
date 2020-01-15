@@ -52,7 +52,7 @@ Success criteria:
 2. controller0 can use RBD to RW to pools on the internal ceph
    cluster and the external ceph cluster on ceph0
 
-**Status** [verified]
+**Status** [verified](https://github.com/fultonj/ussuri/commit/b54d30839717fb12c1b6950323e2378a4171df19)
 
 ### Usecase 3: Apply the feature to a DCN deployment
 
