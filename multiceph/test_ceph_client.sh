@@ -24,11 +24,11 @@ if [[ ! -e /usr/bin/crudini ]]; then
 fi
 
 MON=$(crudini --get $CONF global 'mon host')
-ping -q -c 1 $MON > /dev/null 2>&1
-if [[ $? -gt 0 ]]; then
-    echo "Unable to ping host: $MON exiting"
-    exit 1
-fi
+# ping -q -c 1 $MON > /dev/null 2>&1
+# if [[ $? -gt 0 ]]; then
+#     echo "Unable to ping host: $MON exiting"
+#     exit 1
+# fi
 
 echo -e "\nCeph commands will be like:\n"
 echo "sudo $RBD ls $POOL"

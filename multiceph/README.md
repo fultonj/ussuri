@@ -35,6 +35,8 @@ Success criteria:
    - /etc/ceph/ceph1.client.openstack.keyring
 2. controller0 can use RBD to RW to pools on ceph0 and ceph1
 
+**Status** [verified](https://github.com/fultonj/ussuri/commit/fc288b7dd3f7af125598956ade75dcfd15cbc309)
+
 ### Usecase 2: One Internal and One External
 
 tripleo deploys an overcloud with its own internal ceph
@@ -44,11 +46,13 @@ clusters.
 Success criteria:
 1. controller0 has the following files:
    - /etc/ceph/ceph.conf
-   - /etc/ceph/ceph0.conf
+   - /etc/ceph/ceph1.conf
    - /etc/ceph/ceph.client.openstack.keyring
-   - /etc/ceph/ceph0.client.openstack.keyring
+   - /etc/ceph/ceph1.client.openstack.keyring
 2. controller0 can use RBD to RW to pools on the internal ceph
    cluster and the external ceph cluster on ceph0
+
+**Status** [verified]
 
 ### Usecase 3: Apply the feature to a DCN deployment
 
@@ -103,3 +107,5 @@ keyring.
 
 The third usecase should be demonstrated by modifying
 the [glance](../glance) usecase.
+
+**Status** to do

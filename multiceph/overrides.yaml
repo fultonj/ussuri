@@ -4,7 +4,8 @@ parameter_defaults:
   NtpServer: pool.ntp.org
   ControllerCount: 1
   ComputeCount: 1
-  CephStorageCount: 0
+  CephStorageCount: 1
+  # CephStorageCount: 0
   ControllerSchedulerHints:
     'capabilities:node': '0-controller-%index%'
   ComputeSchedulerHints:
@@ -14,23 +15,33 @@ parameter_defaults:
   OvercloudControlFlavor: baremetal
   OvercloudComputeFlavor: baremetal
   OvercloudCephStorageFlavor: baremetal
-  # Ceph External for first cluster ceph0
-  CephClusterFSID: '1d9c75c0-3c09-4675-82ba-fbaf3a022da6'
-  CephClientKey: 'AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=='
-  CephExternalMonHost: '192.168.24.250'
+
+  ## Ceph External for first cluster ceph0
+  # CephClusterFSID: '1d9c75c0-3c09-4675-82ba-fbaf3a022da6'
+  # CephClientKey: 'AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=='
+  # CephExternalMonHost: '192.168.24.250'
+
+  ## Ceph Internal
+  CephAnsibleDisksConfig:
+    osd_scenario: lvm
+    osd_objectstore: bluestore
+    devices:
+      - /dev/sdb
+
   CephAnsiblePlaybookVerbosity: 3
   LocalCephAnsibleFetchDirectoryBackup: /tmp/fetch_dir
   CephAnsibleEnvironmentVariables:
     ANSIBLE_HOST_KEY_CHECKING: 'False'
     ANSIBLE_PRIVATE_KEY_FILE: '/home/stack/.ssh/id_rsa'
     ANSIBLE_FILTER_PLUGINS: /usr/share/ceph-ansible/plugins/filter/
+    ANSIBLE_LOG_PATH: "config-download/ceph-ansible/ceph_ansible_command.log"
   CephClusterName: 'ceph0'
   CephMultiBackendsHash:
     - ceph1:
         cluster: 'ceph1'
         fsid: 'e2cba068-5f14-4b0f-b047-acf375c0004a'
         external_cluster_mon_ips: '192.168.24.251'
-        openstack_keys:
+        openstack_keys: &openstack_keys
           - name: "client.openstack"
             caps:
               mgr: "allow *"
@@ -38,3 +49,5 @@ parameter_defaults:
               osd: "osd: profile rbd pool=volumes, profile rbd pool=backups, profile rbd pool=vms, profile rbd pool=images"
             key: "AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=="
             mode: "0600"
+        keys: *openstack_keys
+        dashboard_enabled: false

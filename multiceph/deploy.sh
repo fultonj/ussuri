@@ -31,12 +31,15 @@ if [[ $HEAT -eq 1 ]]; then
          -e ~/templates/environments/low-memory-usage.yaml \
          -e ~/templates/environments/enable-swap.yaml \
          -e ~/templates/environments/podman.yaml \
-         -e ~/templates/environments/ceph-ansible/ceph-ansible-external.yaml \
+         -e ~/templates/environments/ceph-ansible/ceph-ansible.yaml \
          -e ~/containers-env-file.yaml \
          -e ~/domain.yaml \
          -e overrides.yaml \
          --stack-only \
          --libvirt-type qemu 2>&1 | tee -a ~/install-overcloud.log
+   
+    # environments/ceph-ansible/ceph-ansible-{,external}.yaml are mutually exclusive
+    #    -e ~/templates/environments/ceph-ansible/ceph-ansible-external.yaml \
 
     # remove --stack-only to make DOWN and CONF unnecessary
 fi
@@ -104,7 +107,7 @@ if [[ $CONF -eq 1 ]]; then
          # For Start at task:
          # --start-at-task 'External deployment step 2'
          # -e gather_facts=true -e $DIR/global_vars.yaml \
-    
+
          # -e validate_controllers_icmp=false \
          # -e validate_gateways_icmp=false \
          # -e validate_fqdn=false \
