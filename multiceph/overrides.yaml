@@ -37,29 +37,27 @@ parameter_defaults:
     ANSIBLE_LOG_PATH: "/home/stack/ceph-install-workflow.log"
   CephClusterName: 'ceph'
   CephExternalMultiConfig:
-    - ceph0:
-        cluster: 'ceph0'
-        fsid: 'af25554b-42f6-4d2b-9b9b-d08a1132d3e8'
-        external_cluster_mon_ips: '192.168.24.250'
-        keys:
-          - name: "client.openstack"
-            caps:
-              mgr: "allow *"
-              mon: "profile rbd"
-              osd: "osd: profile rbd pool=volumes, profile rbd pool=backups, profile rbd pool=vms, profile rbd pool=images"
-            key: "AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=="
-            mode: "0600"
-        dashboard_enabled: false
-    - ceph1:
-        cluster: 'ceph1'
-        fsid: 'e2cba068-5f14-4b0f-b047-acf375c0004a'
-        external_cluster_mon_ips: '192.168.24.251'
-        keys:
-          - name: "client.openstack"
-            caps:
-              mgr: "allow *"
-              mon: "profile rbd"
-              osd: "osd: profile rbd pool=volumes, profile rbd pool=backups, profile rbd pool=vms, profile rbd pool=images"
-            key: "AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=="
-            mode: "0600"
-        dashboard_enabled: false
+    - cluster: 'ceph0'
+      fsid: 'af25554b-42f6-4d2b-9b9b-d08a1132d3e8'
+      external_cluster_mon_ips: '192.168.24.250'
+      keys:
+        - name: "client.openstack"
+          caps:
+            mgr: "allow *"
+            mon: "profile rbd"
+            osd: "osd: profile rbd pool=volumes, profile rbd pool=backups, profile rbd pool=vms, profile rbd pool=images"
+          key: "AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=="
+          mode: "0600"
+      dashboard_enabled: false
+    - cluster: 'ceph1'
+      fsid: 'e2cba068-5f14-4b0f-b047-acf375c0004a'
+      external_cluster_mon_ips: '192.168.24.251'
+      keys:
+        - name: "client.openstack"
+          caps:
+            mgr: "allow *"
+            mon: "profile rbd"
+            osd: "osd: profile rbd pool=volumes, profile rbd pool=backups, profile rbd pool=vms, profile rbd pool=images"
+          key: "AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=="
+          mode: "0600"
+      dashboard_enabled: false
