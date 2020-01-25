@@ -107,7 +107,10 @@ if [[ $CONF -eq 1 ]]; then
          # For Start at task:
          # --start-at-task 'External deployment step 2'
          # -e gather_facts=true -e $DIR/global_vars.yaml \
-
+         # --tags external_deploy_steps \
+         # --skip-tag container_image_prepare \
+         # --skip-tags run_ceph_ansible \
+        
          # -e validate_controllers_icmp=false \
          # -e validate_gateways_icmp=false \
          # -e validate_fqdn=false \
