@@ -66,9 +66,12 @@ if [[ $GLANCE -eq 1 ]]; then
     if [ ! -f $RAW ]; then
         if [ ! -f $IMG ]; then
             echo "Could not find qemu image $img; downloading a copy."
-            curl -# https://download.cirros-cloud.net/0.4.0/$IMG > $IMG
+            curl -L -# https://download.cirros-cloud.net/0.4.0/$IMG > $IMG
         fi
         echo "Could not find raw image $RAW; converting."
+        if [[ ! -e /bin/qemu-img ]]; then
+            sudo yum install qemu-img -y
+        fi
         qemu-img convert -f qcow2 -O raw $IMG $RAW
     fi
     openstack image create $IMAGE --container-format bare --disk-format raw --public --file $RAW

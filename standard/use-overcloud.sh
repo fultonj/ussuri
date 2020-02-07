@@ -45,15 +45,18 @@ if [ $CINDER -eq 1 ]; then
 fi
 
 if [ $GLANCE -eq 1 ]; then
-    img=cirros-0.3.4-x86_64-disk.img
+    img=cirros-0.4.0-x86_64-disk.img
     raw=$(echo $img | sed s/img/raw/g)
-    url=http://download.cirros-cloud.net/0.3.4/$img
+    url=http://download.cirros-cloud.net/0.4.0/$img
     if [ ! -f $raw ]; then
 	if [ ! -f $img ]; then
 	    echo "Could not find qemu image $img; downloading a copy."
-	    curl -# $url > $img
+	    curl -L -# $url > $img
 	fi
 	echo "Could not find raw image $raw; converting."
+        if [[ ! -e /bin/qemu-img ]]; then
+            sudo yum install qemu-img -y
+        fi
 	qemu-img convert -f qcow2 -O raw $img $raw
     fi
 

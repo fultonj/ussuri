@@ -33,15 +33,18 @@ fi
 # -------------------------------------------------------
 # Get image if missing
 NAME=$(cat IMAGE)
-IMG=cirros-0.3.4-x86_64-disk.img
+IMG=cirros-0.4.0-x86_64-disk.img
 RAW=$(echo $IMG | sed s/img/raw/g)
-URL=http://download.cirros-cloud.net/0.3.4/$IMG
+URL=http://download.cirros-cloud.net/0.4.0/$IMG
 if [ ! -f $RAW ]; then
     if [ ! -f $IMG ]; then
         echo "Could not find qemu image $img; downloading a copy."
-        curl -# $URL > $IMG
+        curl -L -# $URL > $IMG
     fi
     echo "Could not find raw image $raw; converting."
+    if [[ ! -e /bin/qemu-img ]]; then
+        sudo yum install qemu-img -y
+    fi
     qemu-img convert -f qcow2 -O raw $IMG $RAW
 fi
 # -------------------------------------------------------
