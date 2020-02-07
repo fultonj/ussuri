@@ -16,11 +16,19 @@ fi
 echo "Standing up control-plane deployment"
 pushd control-plane
 bash deploy.sh
+if [[ $? -gt 0 ]]; then
+    echo "Control-plane deployment failed. Aborting."
+    exit 1
+fi
 popd
 
 echo "Standing up dcn0 deployment"
 pushd dcn0
 bash deploy.sh
+if [[ $? -gt 0 ]]; then
+    echo "DCN deployment failed. Aborting."
+    exit 1
+fi
 popd
 
 echo "Standing up dcn1 deployment"
