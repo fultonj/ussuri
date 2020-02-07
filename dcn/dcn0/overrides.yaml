@@ -12,3 +12,4 @@ parameter_defaults:
   CephClusterName: dcn0
   NovaAZAttach: false
   ManageNetworks: false
+  CephAnsibleRepo: tripleo-centos-ceph-nautilus

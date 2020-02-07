@@ -52,3 +52,4 @@ parameter_defaults:
     osd_recovery_op_priority: 3
     osd_recovery_max_active: 3
     osd_max_backfills: 1
+  CephAnsibleRepo: tripleo-centos-ceph-nautilus
