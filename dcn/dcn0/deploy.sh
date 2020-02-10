@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CACHE=1
-EXPORT=0
+EXPORT=1
 HEAT=1
 DOWN=1
 CONF=1
@@ -12,11 +12,8 @@ DIR=config-download
 
 source ~/stackrc
 # -------------------------------------------------------
-if [[ ! -e distributed_compute_hci.yaml ]]; then
-    openstack overcloud roles generate DistributedComputeHCI -o distributed_compute_hci.yaml
-    if [[ $CACHE -eq 1 ]]; then
-        echo "    - OS::TripleO::Services::GlanceApi" >> distributed_compute_hci.yaml
-    fi
+if [[ ! -e ~/distributed_compute_hci.yaml ]]; then
+    openstack overcloud roles generate DistributedComputeHCI -o ~/distributed_compute_hci.yaml
 fi
 # -------------------------------------------------------
 if [[ $EXPORT -eq 1 ]]; then
@@ -41,7 +38,7 @@ if [[ $HEAT -eq 1 ]]; then
     time openstack overcloud deploy \
          --stack $STACK \
          --templates ~/templates/ \
-         -r distributed_compute_hci.yaml \
+         -r ~/distributed_compute_hci.yaml \
          -n ~/ussuri/network-data.yaml \
          -e ~/templates/environments/net-multiple-nics.yaml \
          -e ~/templates/environments/network-isolation.yaml \
@@ -54,9 +51,9 @@ if [[ $HEAT -eq 1 ]]; then
          -e ~/templates/environments/cinder-volume-active-active.yaml \
          -e ~/containers-env-file.yaml \
          -e ~/control-plane-export.yaml \
-         -e ceph.yaml \
-         -e overrides.yaml \
-         -e glance_cache.yaml \
+         -e ./ceph.yaml \
+         -e ./overrides.yaml \
+         -e ./glance_cache.yaml \
          --stack-only \
          --libvirt-type qemu 2>&1 | tee -a ~/install-overcloud.log
 
