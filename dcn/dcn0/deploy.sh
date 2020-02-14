@@ -51,9 +51,9 @@ if [[ $HEAT -eq 1 ]]; then
          -e ~/templates/environments/cinder-volume-active-active.yaml \
          -e ~/containers-env-file.yaml \
          -e ~/control-plane-export.yaml \
-         -e ./ceph.yaml \
-         -e ./overrides.yaml \
-         -e ./glance_cache.yaml \
+         -e ~/ussuri/dcn/dcn0/ceph.yaml \
+         -e ~/ussuri/dcn/dcn0/overrides.yaml \
+         -e ~/ussuri/dcn/dcn0/glance_cache.yaml \
          --stack-only \
          --libvirt-type qemu 2>&1 | tee -a ~/install-overcloud.log
 
