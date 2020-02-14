@@ -1,6 +1,8 @@
-# Glance Experiments
+# Glance Proof of Concept 1
 
-Experiments of deploying Glance within DCN contexts.
+Experiments of deploying Glance within DCN contexts during the start
+of the ussuri cycle before TripleO could deploy it DCN contexts. 
+Unless you enjoy mid-cycle history see [glance](../glance/).
 
 ## Glance Cache vs Glance Multistore
 
