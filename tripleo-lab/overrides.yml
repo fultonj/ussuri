@@ -9,6 +9,9 @@ undercloud_config:
   - section: DEFAULT
     option: clean_nodes
     value: true
+  - section: DEFAULT
+    option: undercloud_enable_paunch
+    value: false
 vms:
   - name: undercloud
     cpu: 4
