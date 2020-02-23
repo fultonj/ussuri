@@ -2,9 +2,9 @@
 parameter_defaults:
   ContainerHealthcheckDisabled: true
   NtpServer: pool.ntp.org
-  ControllerCount: 1
-  ComputeCount: 1
-  CephStorageCount: 1
+  ControllerCount: 3
+  ComputeCount: 2
+  CephStorageCount: 3
   ControllerSchedulerHints:
     'capabilities:node': '0-controller-%index%'
   ComputeSchedulerHints:
@@ -16,9 +16,10 @@ parameter_defaults:
   OvercloudCephStorageFlavor: baremetal
   # Ceph
   CephAnsiblePlaybookVerbosity: 3
-  CephPoolDefaultSize: 1
-  CephPoolDefaultPgNum: 32
-  LocalCephAnsibleFetchDirectoryBackup: /tmp/fetch_dir
+  CephPoolDefaultSize: 3
+  CephPoolDefaultPgNum: 128
+  # testing fix to https://review.opendev.org/#/q/topic:bug/1863809
+  # LocalCephAnsibleFetchDirectoryBackup: /tmp/fetch_dir
   CephAnsibleEnvironmentVariables:
     ANSIBLE_HOST_KEY_CHECKING: 'False'
     ANSIBLE_PRIVATE_KEY_FILE: '/home/stack/.ssh/id_rsa'
