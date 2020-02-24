@@ -94,10 +94,12 @@ if [[ $CONF -eq 1 ]]; then
     export DEFAULT_ACTION_PLUGIN_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins:$DEFAULT_ACTION_PLUGIN_PATH:/usr/share/ansible/plugins/action:/usr/share/ceph-ansible/plugins/actions"
     export DEFAULT_CALLBACK_PLUGIN_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/modules:$DEFAULT_CALLBACK_PLUGIN_PATH:/usr/share/ansible/plugins/callback:/usr/share/ceph-ansible/plugins/callback"
     export DEFAULT_FILTER_PLUGIN_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/filter:$DEFAULT_FILTER_PLUGIN_PATH:/usr/share/ansible/plugins/filter:/usr/share/ceph-ansible/plugins/filter"
+    export ANSIBLE_FILTER_PLUGINS="$DEFAULT_FILTER_PLUGIN_PATH:$ANSIBLE_FILTER_PLUGINS"
     export DEFAULT_MODULE_UTILS_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/module_utils:$DEFAULT_MODULE_UTILS_PATH:/usr/share/ansible/plugins/module_utils"
     export ANSIBLE_LOG_PATH="ansible.log"
     echo "NEXT: $(date)" >> ansible.log
-
+    #ansible-config dump |grep FILTER_PLUGIN_PATH
+    
     time ansible-playbook-3 \
 	 -v \
 	 --ssh-extra-args "-o StrictHostKeyChecking=no" --timeout 240 \
@@ -106,15 +108,16 @@ if [[ $CONF -eq 1 ]]; then
          --private-key $DIR/ssh_private_key \
 	 $DIR/deploy_steps_playbook.yaml
 
+         # Just re-run ceph
+         # -e gather_facts=true -e @$DIR/global_vars.yaml \
+         # --tags external_deploy_steps \
+    
          # -e validate_controllers_icmp=false \
          # -e validate_gateways_icmp=false \
          # -e validate_fqdn=false \
          # -e validate_ntp=false \
          # -e ping_test_ips=false \
-
-         # Just re-run ceph
-         # --tags external_deploy_steps
-
+        
          # Test validations
          # --tags opendev-validation-ceph
     

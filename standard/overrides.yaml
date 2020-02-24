@@ -17,7 +17,7 @@ parameter_defaults:
   # Ceph
   CephAnsiblePlaybookVerbosity: 3
   CephPoolDefaultSize: 3
-  CephPoolDefaultPgNum: 128
+  CephPoolDefaultPgNum: 32
   # testing fix to https://review.opendev.org/#/q/topic:bug/1863809
   # LocalCephAnsibleFetchDirectoryBackup: /tmp/fetch_dir
   CephAnsibleEnvironmentVariables:
