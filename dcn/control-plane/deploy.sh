@@ -76,6 +76,7 @@ if [[ $CONF -eq 1 ]]; then
     export DEFAULT_ACTION_PLUGIN_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins:$DEFAULT_ACTION_PLUGIN_PATH:/usr/share/ansible/plugins/action:/usr/share/ceph-ansible/plugins/actions"
     export DEFAULT_CALLBACK_PLUGIN_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/modules:$DEFAULT_CALLBACK_PLUGIN_PATH:/usr/share/ansible/plugins/callback:/usr/share/ceph-ansible/plugins/callback"
     export DEFAULT_FILTER_PLUGIN_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/filter:$DEFAULT_FILTER_PLUGIN_PATH:/usr/share/ansible/plugins/filter:/usr/share/ceph-ansible/plugins/filter"
+    export ANSIBLE_FILTER_PLUGINS="$DEFAULT_FILTER_PLUGIN_PATH:$ANSIBLE_FILTER_PLUGINS"
     export DEFAULT_MODULE_UTILS_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/module_utils:$DEFAULT_MODULE_UTILS_PATH:/usr/share/ansible/plugins/module_utils"
     export ANSIBLE_LOG_PATH="ansible.log"
     echo "NEXT: $(date)" >> ansible.log
