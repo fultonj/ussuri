@@ -34,11 +34,15 @@ be deployed in the following stacks and roles.
 
 ## How to deploy it with TripleO
 
-- Apply [glance patch](patch_glance/) to glance container image
-  (because the merged glance change is not yet in TripleO upstream)
-- Use the following unmerged TripleO patches:
-  - https://review.opendev.org/#/c/704373
-  - https://review.opendev.org/#/c/704374
+- The RDO glance image has the necessary patches
+  <!--
+  - E.g. `sudo podman exec -ti glance_api grep store_exceptions
+    /usr/lib/python2.7/site-packages/glance/async_/flows/api_image_import.py`
+    turns up things it should from [this patch](https://review.opendev.org/#/c/667132/25/glance/async_/flows/api_image_import.py)
+  -->
+- Use a copy of THT containing [glance multistore for THT](https://review.opendev.org/#/c/704374) (don't forget to rebase this patch against THT master)
+- Modify the overcloud image so that `/etc/puppet/modules/puppet-tripleo` contains [glance multistore support for puppet-tripleo](https://review.opendev.org/#/c/704373)
+
 
 <!--
 - Tag nodes with [ironic.sh](ironic.sh)
