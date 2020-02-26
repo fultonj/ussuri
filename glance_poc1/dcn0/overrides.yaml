@@ -13,5 +13,5 @@ parameter_defaults:
   NovaAZAttach: false
   ManageNetworks: false
   CephAnsibleRepo: tripleo-centos-ceph-nautilus
-  EnablePaunch: False
+  EnablePaunch: True
   ConfigDebug: True

@@ -10,5 +10,5 @@ parameter_defaults:
     'capabilities:node': '0-controller-%index%'
   GlanceBackend: swift
   CephAnsibleRepo: tripleo-centos-ceph-nautilus
-  EnablePaunch: False
+  EnablePaunch: True
   ConfigDebug: True

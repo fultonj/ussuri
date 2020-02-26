@@ -62,5 +62,5 @@ parameter_defaults:
           mode: "0600"
       dashboard_enabled: false
   CephAnsibleRepo: tripleo-centos-ceph-nautilus
-  EnablePaunch: False
+  EnablePaunch: True
   ConfigDebug: True
