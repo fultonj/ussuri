@@ -63,3 +63,4 @@ parameter_defaults:
       dashboard_enabled: false
   CephAnsibleRepo: tripleo-centos-ceph-nautilus
   EnablePaunch: False
+  ConfigDebug: True

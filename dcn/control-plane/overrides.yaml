@@ -11,3 +11,4 @@ parameter_defaults:
   GlanceBackend: swift
   CephAnsibleRepo: tripleo-centos-ceph-nautilus
   EnablePaunch: False
+  ConfigDebug: True
