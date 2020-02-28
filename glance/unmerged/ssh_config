@@ -1,3 +1,2 @@
-Host 192.168.122.*
-   StrictHostKeyChecking no
-   UserKnownHostsFile /dev/null
+StrictHostKeyChecking no
+UserKnownHostsFile /dev/null

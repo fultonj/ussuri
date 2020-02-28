@@ -3,7 +3,7 @@ PULL=1
 UPDATE=1
 PUSH=1
 # -------------------------------------------------------
-SSH_ENV='./ssh_config'
+SSH_ENV='ssh_config'
 IMAGE='overcloud-full.qcow2'
 IMG_PATH='/home/stack/overcloud_imgs'
 PASSWORD='redhat'
@@ -61,8 +61,8 @@ if [ $UPDATE -eq 1 ]; then
     if [[ ! -e $MY_PUPPET ]]; then
         echo "FAIL: $MY_PUPPET is missing"
     fi
-    virt-customize -a $IMAGE --upload $MY_PUPPET:/etc/puppet/modules/
-    CMD='rm /etc/puppet/modules/tripleo; tar xf /etc/puppet/modules/tripleo.tar.gz'
+    virt-customize -a $IMAGE --upload $MY_PUPPET:/
+    CMD='tar xf /tripleo.tar.gz; rm -f /tripleo.tar.gz /etc/puppet/modules/tripleo ; mv /tripleo /etc/puppet/modules/'
     virt-customize --selinux-relabel -a $IMAGE --run-command "$CMD"
     rm -f $MY_PUPPET
 
@@ -75,11 +75,11 @@ fi
 # -------------------------------------------------------
 if [ $PUSH -eq 1 ]; then
     echo "Pushing up new copy of $IMAGE"
-    scp -F $SSH_ENV $IMAGE stack@undercloud:$IMG_PATH/$IMAGE 2> /dev/null
+    scp -F $SSH_ENV $IMAGE stack@undercloud:$IMG_PATH/$IMAGE
 
-    echo "Deleting local copy of $IMAGE"
-    rm -f $IMAGE
+    #echo "Deleting local copy of $IMAGE"
+    #rm -f $IMAGE
 
-    echo "Uploading new image to Undercloud Glance (with tripleo-lab script)"
-    ssh -A -F $SSH_ENV stack@undercloud "bash push-oc-img"
+    #echo "Uploading new image to Undercloud Glance (with tripleo-lab script)"
+    #ssh -A -F $SSH_ENV stack@undercloud "bash push-oc-img"
 fi
