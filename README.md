@@ -13,10 +13,7 @@ Ussuri cycle.
 git clone git@github.com:fultonj/ussuri.git
 pushd ussuri/init
 ./git-init.sh tht
-./containers.sh   # or alternatives below
+./containers.sh
 popd
 ```
-- Deploy a [standard](standard) or [dcn](dcn) deployment.
-- If deploying experimental multibackend [glance](glance), use
-  [glance-container-patch.sh](glance/patch_glance/glance-container-patch.sh)
-  in place of [containers.sh](init/containers.sh).
+- Deploy a [standard](standard), [dcn](dcn), or [glance](glance) deployment.

@@ -6,7 +6,14 @@ What patches are missing to make the POC work and how do I apply them?
 
 - Modify the overcloud image so that `/etc/puppet/modules/puppet-tripleo` contains [glance multistore support for puppet-tripleo](https://review.opendev.org/#/c/704373)
 - I use [overcloud-image-tweak.sh](overcloud-image-tweak.sh) to do this
-  
+
+## python-tripleoclient
+- The undercloud may need https://review.opendev.org/#/c/710171
+```
+cd /usr/lib/python2.7/site-packages/tripleoclient/workflows
+vim plan_management.py +140
+```
+
 ## TripleO Heat Templates (THT)
 
 There are no missing tht patches at this time. 
