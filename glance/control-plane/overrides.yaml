@@ -1,0 +1,17 @@
+---
+parameter_defaults:
+  ContainerHealthcheckDisabled: true
+  NtpServer: pool.ntp.org
+  ControllerCount: 1
+  ComputeCount: 0
+  ComputeHCICount: 1
+  OvercloudControlFlavor: baremetal
+  OvercloudComputeFlavor: baremetal
+  OvercloudComputeHCIFlavor: baremetal
+  ControllerSchedulerHints:
+    'capabilities:node': '0-controller-%index%'
+  ComputeHCISchedulerHints:
+    'capabilities:node': '0-ceph-%index%'
+  CephAnsibleRepo: tripleo-centos-ceph-nautilus
+  EnablePaunch: True
+  ConfigDebug: True

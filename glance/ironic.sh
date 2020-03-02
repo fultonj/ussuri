@@ -8,10 +8,10 @@ MAP[oc0-controller-0]="0-controller-0"  # Controller
 MAP[oc0-controller-1]="0-controller-1"  # Controller
 MAP[oc0-controller-2]="0-controller-2"  # Controller
 MAP[oc0-ceph-0]="0-ceph-0"              # ComputeHCI
-MAP[oc0-ceph-1]="1-dcn-hci-0"           # DistributedComputeHCI
-MAP[oc0-ceph-2]="1-dcn-hci-scaleup-0"   # DistributedComputeHCIScaleUp
-MAP[oc0-ceph-3]="2-dcn-hci-0"           # DistributedComputeHCI
-MAP[oc0-ceph-4]="2-dcn-hci-scaleup-0"   # DistributedComputeHCIScaleUp
+MAP[oc0-ceph-1]="0-dcn-hci-0"           # DistributedComputeHCI
+MAP[oc0-ceph-2]="0-dcn-hci-scaleup-0"   # DistributedComputeHCIScaleUp
+MAP[oc0-ceph-3]="1-dcn-hci-0"           # DistributedComputeHCI
+MAP[oc0-ceph-4]="1-dcn-hci-scaleup-0"   # DistributedComputeHCIScaleUp
 
 for K in "${!MAP[@]}"; do
     echo "$K ---> ${MAP[$K]}";

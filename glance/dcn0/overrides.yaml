@@ -1,0 +1,21 @@
+---
+parameter_defaults:
+  ContainerHealthcheckDisabled: true
+  NtpServer: pool.ntp.org
+  ControllerCount: 0
+  ComputeCount: 0
+  DistributedComputeHCICount: 1
+  DistributedComputeHCIFlavor: baremetal
+  DistributedComputeHCISchedulerHints:
+    'capabilities:node': '0-dcn-hci-%index%'
+  DistributedComputeHCIScaleUpCount: 1
+  DistributedComputeHCIScaleUpFlavor: baremetal
+  DistributedComputeHCIScaleUpSchedulerHints:
+    'capabilities:node': '0-dcn-hci-scaleup-%index%'
+  CinderStorageAvailabilityZone: dcn0
+  CephClusterName: dcn0
+  NovaAZAttach: false
+  ManageNetworks: false
+  CephAnsibleRepo: tripleo-centos-ceph-nautilus
+  EnablePaunch: True
+  ConfigDebug: True
