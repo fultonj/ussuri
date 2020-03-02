@@ -35,9 +35,9 @@ be deployed in the following stacks and roles.
 ## How to deploy it with TripleO
 
 - Pull in missing [unmerged changes](unmerged)
-<!--
 - Tag nodes with [ironic.sh](ironic.sh)
-- [control-plane/deploy.sh](control-plane/deploy.sh)
-- [dcn0/deploy.sh](dcn0/deploy.sh)
-- Use [dcnN.sh](dcnN.sh) to deploy dcn1 (or as many as you like)
+
+<!--
+- Deploy control-plane with [control-plane/deploy.sh](control-plane/deploy.sh)
+- Deploy dcn0 with [dcn0/deploy.sh](dcn0/deploy.sh)
 -->
