@@ -115,7 +115,8 @@ for PARAM in "${PARAMS[@]}"; do
         prep_multi_config
         # start todo(fultonj) make this real
         # for SOURCE in "${SOURCES[@]}"; do
-        #     CLUSTER=# read from stack $SOURCE 
+        #     CLUSTER=# read from stack $SOURCE
+        #               for stack control-plane it's central
         #     KEY=# read from stack $SOURCE 
         #     FSID=# read from stack $SOURCE 
         #     EXTERNAL_CLUSTER_MON_IPS=# read from stack $SOURCE 
