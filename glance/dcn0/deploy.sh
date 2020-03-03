@@ -1,6 +1,5 @@
 #!/bin/bash
 
-EXPORT=1
 HEAT=1
 DOWN=1
 CONF=1
@@ -13,21 +12,6 @@ source ~/stackrc
 # -------------------------------------------------------
 if [[ ! -e ~/dcn_roles.yaml ]]; then
     openstack overcloud roles generate DistributedComputeHCI DistributedComputeHCIScaleUp -o ~/dcn_roles.yaml
-fi
-# -------------------------------------------------------
-if [[ $EXPORT -eq 1 ]]; then
-    if [[ -e ~/control-plane-export.yaml ]]; then
-        echo "Removing exported control plane data (~/control-plane-export.yaml)"
-        rm -f ~/control-plane-export.yaml
-    fi
-    openstack overcloud export \
-              --config-download-dir ../control-plane/config-download/ \
-              --stack control-plane \
-              --output-file ~/control-plane-export.yaml
-    if [[ ! -e ~/control-plane-export.yaml ]]; then
-        echo "Unable to create ~/control-plane-export.yaml. Aborting."
-        exit 1
-    fi
 fi
 # -------------------------------------------------------
 if [[ $HEAT -eq 1 ]]; then
@@ -50,8 +34,8 @@ if [[ $HEAT -eq 1 ]]; then
          -e ~/templates/environments/cinder-volume-active-active.yaml \
          -e ~/containers-env-file.yaml \
          -e ~/control-plane-export.yaml \
+         -e ~/dcn_ceph_keys.yaml \
          -e ~/ussuri/glance/dcn0/ceph.yaml \
-         -e ~/ussuri/glance/dcn0/ceph_keys.yaml \
          -e ~/ussuri/glance/dcn0/nova-az.yaml \
          -e ~/ussuri/glance/dcn0/overrides.yaml \
          --stack-only \
