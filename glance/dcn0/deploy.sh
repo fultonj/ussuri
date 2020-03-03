@@ -11,7 +11,7 @@ DIR=config-download
 source ~/stackrc
 # -------------------------------------------------------
 if [[ ! -e ~/dcn_roles.yaml ]]; then
-    openstack overcloud roles generate DistributedComputeHCI DistributedComputeHCIScaleUp -o ~/dcn_roles.yaml
+    openstack overcloud roles generate DistributedComputeHCI DistributedComputeHCIScaleOut -o ~/dcn_roles.yaml
 fi
 # -------------------------------------------------------
 if [[ $HEAT -eq 1 ]]; then

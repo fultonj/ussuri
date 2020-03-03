@@ -8,9 +8,9 @@ parameter_defaults:
   DistributedComputeHCIFlavor: baremetal
   DistributedComputeHCISchedulerHints:
     'capabilities:node': '0-dcn-hci-%index%'
-  DistributedComputeHCIScaleUpCount: 1
-  DistributedComputeHCIScaleUpFlavor: baremetal
-  DistributedComputeHCIScaleUpSchedulerHints:
+  DistributedComputeHCIScaleOutCount: 1
+  DistributedComputeHCIScaleOutFlavor: baremetal
+  DistributedComputeHCIScaleOutSchedulerHints:
     'capabilities:node': '0-dcn-hci-scaleup-%index%'
   CinderStorageAvailabilityZone: dcn0
   CephClusterName: dcn0
