@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # 
-# Based on the input of the first argument $1 (1,2,3) one of the following:
+# Based on input of first argument $1 (1,2,3) does one of the following:
 #
-#   1. control-plane/ceph_keys.yaml with CephExtraKeys
-#   2. dcn0/ceph_keys.yaml with CephExtraKeys and CephExternalMultiConfig
-#   3. control-plane/ceph_keys_update.yaml with CephExternalMultiConfig
+#   1. make control-plane/ceph_keys.yaml with CephExtraKeys
+#   2. make dcn0/ceph_keys.yaml with CephExtraKeys and CephExternalMultiConfig
+#   3. make control-plane/ceph_keys_update.yaml with CephExternalMultiConfig
 #
 # as described in https://bugzilla.redhat.com/show_bug.cgi?id=1808424
 # so that the deployer can do the following:
@@ -94,8 +94,8 @@ cat <<EOF >> $TARGET
 EOF
 }
 
+prep_target
 for PARAM in "${PARAMS[@]}"; do
-    prep_target
     NAME="client.glance"
     if [[ $PARAM == 'CephExtraKeys' ]]; then
         # generate random key
