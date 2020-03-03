@@ -9,7 +9,7 @@ be deployed in the following stacks and roles.
 
 ```
 +------------------+
-| control-plane    |    GlanceBackend: RBD | CephClusterName: central
+| control-plane    |    GlanceBackend: RBD | CephClusterName: control-plane
 +------------------+
 | oc0-controller-0 |    Controller (Glance + Mon)
 | oc0-controller-1 |    Controller (Glance + Mon)

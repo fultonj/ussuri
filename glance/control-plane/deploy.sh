@@ -33,9 +33,9 @@ if [[ $HEAT -eq 1 ]]; then
          -e ~/templates/environments/ceph-ansible/ceph-ansible.yaml \
          -e ~/containers-env-file.yaml \
          -e ~/domain.yaml \
-         -e ~/ussuri/glance/control-plane/overrides.yaml \
          -e ~/ussuri/glance/control-plane/ceph.yaml \
          -e ~/ussuri/glance/control-plane/ceph_keys.yaml \
+         -e ~/ussuri/glance/control-plane/overrides.yaml \
          --stack-only \
          --libvirt-type qemu 2>&1 | tee -a ~/install-overcloud.log
 

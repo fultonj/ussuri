@@ -15,3 +15,4 @@ parameter_defaults:
   CephAnsibleRepo: tripleo-centos-ceph-nautilus
   EnablePaunch: True
   ConfigDebug: True
+  CephClusterName: control-plane
