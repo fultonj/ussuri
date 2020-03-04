@@ -54,13 +54,6 @@ esac
 
 echo "Creating $TARGET with ${PARAMS[@]}"
 
-function random_key() {
-    # from https://github.com/ceph/ceph-deploy/blob/master/ceph_deploy/new.py#L21
-    # the following works with both py2 and py3
-    local MYKEY=$(python -c 'import os,struct,time,base64; key = os.urandom(16); header = struct.pack("<hiih", 1, int(time.time()), 0, len(key)) ; print(base64.b64encode(header + key).decode())')
-    echo $MYKEY
-}
-
 function prep_target() {
 cat <<EOF > $TARGET
 parameter_defaults:
@@ -103,6 +96,20 @@ cat <<EOF >> $TARGET
 EOF
 }
 
+function random_key() {
+    # from https://github.com/ceph/ceph-deploy/blob/master/ceph_deploy/new.py#L21
+    # the following works with both py2 and py3
+    local MYKEY=$(python -c 'import os,struct,time,base64; key = os.urandom(16); header = struct.pack("<hiih", 1, int(time.time()), 0, len(key)) ; print(base64.b64encode(header + key).decode())')
+    echo $MYKEY
+}
+
+function get_from_yaml() {
+    # In retrospect I should have written this entire shell script in
+    # Python but for now I'll just tape this together so I can move on
+    local MYVAR=$(python get_from_yaml.py -y $FILE -k $MYKEY)
+    echo $MYVAR
+}
+
 prep_target
 for PARAM in "${PARAMS[@]}"; do
     NAME="client.glance"
@@ -114,17 +121,16 @@ for PARAM in "${PARAMS[@]}"; do
         echo "Each entry in CephExternalMultiConfig will come from ${STACKS[@]}"
         prep_multi_config
         for STACK in "${STACKS[@]}"; do
-            PLAN="/home/stack/${STACK}-export.yaml"
-            CA="$STACK/config-download/ceph-ansible/group_vars/all.yml"
-            # start todo(fultonj)
-            # Replace these greps with a call to an external python script
-            # script which can parse $PLAN and $CA to get the data
-            CLUSTER=$(grep cluster $CA | grep -v network | awk {'print $2'})
-            FSID=$(grep fsid $CA | grep -v generate_fsid | awk {'print $2'})
-            EXTERNAL_CLUSTER_MON_IPS=$(grep storage $PLAN | grep controller | egrep -v "mgmt|swift" | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}")
-            # BUG: this KEY declaration won't work when $1 is 3
-            KEY=$(grep key $STACK/ceph_keys.yaml | awk {'print $2'} | sed s/\"//g)
-            # end todo(fultonj)
+            FILE="$(pwd)/$STACK/config-download/ceph-ansible/group_vars/all.yml"
+            MYKEY=fsid
+            FSID=$(get_from_yaml)
+            MYKEY=cluster
+            CLUSTER=$(get_from_yaml)
+            MYKEY=key
+            KEY=$(get_from_yaml)
+            FILE="$(pwd)/$STACK/config-download/inventory.yaml"
+            MYKEY=external_cluster_mon_ips
+            EXTERNAL_CLUSTER_MON_IPS=$(get_from_yaml)
             make_multi_config
         done
     fi
