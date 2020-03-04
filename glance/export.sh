@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ~/stackrc
+
 if [ $# -eq 0 ]; then
     STACK=control-plane
 else

@@ -41,10 +41,10 @@ be deployed in the following stacks and roles.
 - Create `~/control-plane-export.yaml` with [export.sh](export.sh)
 - Create `~/dcn_ceph_keys.yaml` with `ceph_keys.sh 2`
 - Deploy dcn0 with [dcn0/deploy.sh](dcn0/deploy.sh)
+- Deploy dcn1 with [dcnN.sh](dcnN.sh)
 
 ### Planned but not yet confirmed to work
 
-- Deploy dcn1 with [dcnN.sh](dcnN.sh)
 - Create `~/dcn0-export.yaml` with `./export.sh dcn0`
 - Create `~/dcn1-export.yaml` with `./export.sh dcn1`
 - Create `control-plane/ceph_keys_update.yaml` with `ceph_keys.sh 3`
