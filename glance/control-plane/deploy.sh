@@ -6,7 +6,6 @@ CONF=1
 
 STACK=control-plane
 DIR=config-download
-#DIR=$(date +%b%d_%H.%M)
 
 source ~/stackrc
 # -------------------------------------------------------
@@ -39,6 +38,9 @@ if [[ $HEAT -eq 1 ]]; then
          --stack-only \
          --libvirt-type qemu 2>&1 | tee -a ~/install-overcloud.log
 
+    # For stack updates when central will use dcn{0,1} ceph clusters
+    # -e ~/ussuri/glance/control-plane/ceph_keys_update.yaml \
+    
     # remove --stack-only to make DOWN and CONF unnecessary
 fi
 # -------------------------------------------------------
@@ -96,19 +98,8 @@ if [[ $CONF -eq 1 ]]; then
 	 -i $DIR/inventory.yaml \
          --private-key $DIR/ssh_private_key \
 	 $DIR/deploy_steps_playbook.yaml
-
-         # -e validate_controllers_icmp=false \
-         # -e validate_gateways_icmp=false \
-         # -e validate_fqdn=false \
-         # -e validate_ntp=false \
-         # -e ping_test_ips=false \
-
-         # Just re-run ceph
-         # --tags external_deploy_steps
-
-         # Test validations
-         # --tags opendev-validation-ceph
     
-         # Pick up after good ceph install (need to test this)
-         # --tags step2,step3,step4,step5,post_deploy_steps,external --skip-tags ceph
+    # For stack updates when central will use dcn{0,1} ceph clusters:
+    # -e gather_facts=true -e @$DIR/global_vars.yaml \
+    # --tags external_deploy_steps \
 fi
