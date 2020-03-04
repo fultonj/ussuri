@@ -44,7 +44,7 @@ be deployed in the following stacks and roles.
 
 ### Planned but not yet confirmed to work
 
-- Deploy dcn1 with dcnN.sh
+- Deploy dcn1 with [dcnN.sh](dcnN.sh)
 - Create `~/dcn0-export.yaml` with `./export.sh dcn0`
 - Create `~/dcn1-export.yaml` with `./export.sh dcn1`
 - Create `control-plane/ceph_keys_update.yaml` with `ceph_keys.sh 3`

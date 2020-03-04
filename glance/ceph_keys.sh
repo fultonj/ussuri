@@ -116,10 +116,15 @@ for PARAM in "${PARAMS[@]}"; do
         for STACK in "${STACKS[@]}"; do
             PLAN="/home/stack/${STACK}-export.yaml"
             CA="$STACK/config-download/ceph-ansible/group_vars/all.yml"
-            KEY=$(grep key $STACK/ceph_keys.yaml | awk {'print $2'} | sed s/\"//g)
+            # start todo(fultonj)
+            # Replace these greps with a call to an external python script
+            # script which can parse $PLAN and $CA to get the data
             CLUSTER=$(grep cluster $CA | grep -v network | awk {'print $2'})
             FSID=$(grep fsid $CA | grep -v generate_fsid | awk {'print $2'})
             EXTERNAL_CLUSTER_MON_IPS=$(grep storage $PLAN | grep controller | egrep -v "mgmt|swift" | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}")
+            # BUG: this KEY declaration won't work when $1 is 3
+            KEY=$(grep key $STACK/ceph_keys.yaml | awk {'print $2'} | sed s/\"//g)
+            # end todo(fultonj)
             make_multi_config
         done
     fi
