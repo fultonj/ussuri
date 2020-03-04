@@ -18,5 +18,3 @@ if [[ ! -e ~/${STACK}-export.yaml ]]; then
     echo "Unable to create ~/${STACK}-export.yaml. Aborting."
     exit 1
 fi
-
-

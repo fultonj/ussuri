@@ -8,27 +8,41 @@ fi
 
 echo "Testing if $HOSTNAME can be a client to the ceph cluster called $NAME"
 
-SVC=openstack
+# -----
+# Uncomment one of the following for POD
+# If you're not using podman and do want to install the RBD client
+# POD=""
+# If you're using podman and don't want to install the RBD client
+POD="podman exec ceph-mon-$HOSTNAME"
+# -----
+
+# Set to >0 if you want to test pinging the monitor host
+PING=0
+
+SVC=glance
 POOL=images
 CONF=/etc/ceph/$NAME.conf
 ID=$SVC
 KEY=/etc/ceph/$NAME.client.$SVC.keyring
-RBD="rbd --conf $CONF --keyring $KEY --id $ID --cluster $NAME"
+RBD="$POD rbd --conf $CONF --keyring $KEY --id $ID --cluster $NAME"
 DATA=$(date | md5sum | cut -c-12)
 
-if [[ ! -e /usr/bin/rbd ]]; then
-    sudo yum install -y ceph-common
+if [[ -z POD ]]; then
+    if [[ ! -e /usr/bin/rbd ]]; then
+        sudo yum install -y ceph-common
+    fi
 fi
-if [[ ! -e /usr/bin/crudini ]]; then
-    sudo yum install -y crudini
+if [[ $PING -gt 0 ]]; then
+    if [[ ! -e /usr/bin/crudini ]]; then
+        sudo yum install -y crudini
+    fi
+    MON=$(crudini --get $CONF global 'mon host')
+    ping -q -c 1 $MON > /dev/null 2>&1
+    if [[ $? -gt 0 ]]; then
+        echo "Unable to ping host: $MON exiting"
+        exit 1
+    fi
 fi
-
-MON=$(crudini --get $CONF global 'mon host')
-# ping -q -c 1 $MON > /dev/null 2>&1
-# if [[ $? -gt 0 ]]; then
-#     echo "Unable to ping host: $MON exiting"
-#     exit 1
-# fi
 
 echo -e "\nCeph commands will be like:\n"
 echo "sudo $RBD ls $POOL"

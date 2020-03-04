@@ -40,13 +40,21 @@ be deployed in the following stacks and roles.
 - Deploy control-plane with [control-plane/deploy.sh](control-plane/deploy.sh)
 - Create `~/control-plane-export.yaml` with [export.sh](export.sh)
 - Create `~/dcn_ceph_keys.yaml` with `ceph_keys.sh 2`
+- Deploy dcn0 with [dcn0/deploy.sh](dcn0/deploy.sh)
 
 ### Planned but not yet confirmed to work
 
-- Deploy dcn0 with [dcn0/deploy.sh](dcn0/deploy.sh)
 - Deploy dcn1 with dcnN.sh
 - Create `~/dcn0-export.yaml` with `./export.sh dcn0`
 - Create `~/dcn1-export.yaml` with `./export.sh dcn1`
 - Create `control-plane/ceph_keys_update.yaml` with `ceph_keys.sh 3`
 - Update control-plane/deploy.sh to use `control-plane/ceph_keys_update.yaml`
 - Re-run control-plane/deploy.sh
+
+## Verifications
+
+- Verify a DCN node at $IP can use the central ceph cluster
+```
+scp ../multiceph/test_ceph_client.sh heat-admin@$IP:/home/heat-admin/
+ssh $IP "bash /home/heat-admin/test_ceph_client.sh central"
+```
