@@ -43,16 +43,24 @@ be deployed in the following stacks and roles.
 - Deploy dcn0 with [dcn0/deploy.sh](dcn0/deploy.sh)
 - Deploy dcn1 with [dcnN.sh](dcnN.sh)
 - Create `control-plane/ceph_keys_update.yaml` with `ceph_keys.sh 3`
-
-### Planned but not yet confirmed to work
-
 - Update control-plane/deploy.sh to use `control-plane/ceph_keys_update.yaml`
 - Re-run control-plane/deploy.sh
 
 ## Verifications
 
-- Verify a DCN node at $IP can use the central ceph cluster
+- Verify any DCN node at $IP can use the central ceph cluster
 ```
 scp ../multiceph/test_ceph_client.sh heat-admin@$IP:/home/heat-admin/
 ssh $IP "bash /home/heat-admin/test_ceph_client.sh central"
 ```
+
+- Verify the control-plane node at $IP can use any DCN ceph cluster
+```
+scp ../multiceph/test_ceph_client.sh heat-admin@$IP:/home/heat-admin/
+ssh $IP "bash /home/heat-admin/test_ceph_client.sh dcn0"
+ssh $IP "bash /home/heat-admin/test_ceph_client.sh dcn1"
+```
+
+## Todo
+
+- Update templates to include multi-glance backend configuration
