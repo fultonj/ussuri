@@ -44,6 +44,7 @@ be deployed in the following stacks and roles.
 - Deploy dcn1 with [dcnN.sh](dcnN.sh)
 - Create `control-plane/ceph_keys_update.yaml` with `ceph_keys.sh 3`
 - Update control-plane/deploy.sh to use `control-plane/ceph_keys_update.yaml`
+- Update control-plane/deploy.sh to use [control-plane/glance_update.yaml](control-plane/glance_update.yaml)
 - Re-run control-plane/deploy.sh
 
 ## Verifications
@@ -61,6 +62,11 @@ ssh $IP "bash /home/heat-admin/test_ceph_client.sh dcn0"
 ssh $IP "bash /home/heat-admin/test_ceph_client.sh dcn1"
 ```
 
+- Were multiple glance backends configured at central Controller or dcn DistributedComputeHCI at $IP?
+```
+ssh $IP "sudo tail /var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf"
+```
+
 ## Todo
 
-- Update templates to include multi-glance backend configuration
+- Add script to upload image to multiple backends

@@ -1,0 +1,11 @@
+---
+parameter_defaults:
+  GlanceBackend: rbd
+  GlanceStoreDescription: 'dcn0 rbd glance store'
+  CephClusterName: dcn0
+  GlanceMultistoreConfig:
+    central:
+      GlanceBackend: rbd
+      GlanceStoreDescription: 'central rbd glance store'
+      CephClientUserName: 'glance'
+      CephClusterName: central

@@ -32,11 +32,13 @@ if [[ $HEAT -eq 1 ]]; then
          -e ~/templates/environments/podman.yaml \
          -e ~/templates/environments/ceph-ansible/ceph-ansible.yaml \
          -e ~/templates/environments/cinder-volume-active-active.yaml \
+         -e ~/templates/environments/dcn-hci.yaml \
          -e ~/containers-env-file.yaml \
          -e ~/control-plane-export.yaml \
          -e ~/dcn_ceph_keys.yaml \
          -e ~/ussuri/glance/dcn0/ceph.yaml \
          -e ~/ussuri/glance/dcn0/nova-az.yaml \
+         -e ~/ussuri/glance/dcn0/glance.yaml \
          -e ~/ussuri/glance/dcn0/overrides.yaml \
          --stack-only \
          --libvirt-type qemu 2>&1 | tee -a ~/install-overcloud.log

@@ -38,8 +38,9 @@ if [[ $HEAT -eq 1 ]]; then
          --stack-only \
          --libvirt-type qemu 2>&1 | tee -a ~/install-overcloud.log
 
-    # For stack updates when central will use dcn{0,1} ceph clusters
+    # For stack updates when central glance will use dcn{0,1} ceph clusters
     # -e ~/ussuri/glance/control-plane/ceph_keys_update.yaml \
+    # -e ~/ussuri/glance/control-plane/glance_update.yaml \
     
     # remove --stack-only to make DOWN and CONF unnecessary
 fi
@@ -97,9 +98,13 @@ if [[ $CONF -eq 1 ]]; then
 	 --become \
 	 -i $DIR/inventory.yaml \
          --private-key $DIR/ssh_private_key \
+         -e gather_facts=true -e @$DIR/global_vars.yaml \
 	 $DIR/deploy_steps_playbook.yaml
-    
+
+    # Do not use these yet for updates to central; need to identify glance tags
     # For stack updates when central will use dcn{0,1} ceph clusters:
     # -e gather_facts=true -e @$DIR/global_vars.yaml \
     # --tags external_deploy_steps \
+    # --tags tag_for_glance? \
+
 fi
