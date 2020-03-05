@@ -105,7 +105,6 @@ and as a result, access to the external ceph cluster at the
 DCN site is also configured using the `client.glance.central`
 keyring.
 
-The third usecase should be demonstrated by modifying
-the [glance](../glance) usecase.
+The third usecase has been demonstrated by the [glance](../glance) usecase.
 
-**Status** to do
+**Status** verified
