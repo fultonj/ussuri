@@ -36,13 +36,14 @@ be deployed in the following stacks and roles.
 
 - Pull in missing [unmerged changes](unmerged)
 - Tag nodes with [ironic.sh](ironic.sh)
-- Create `control-plane/ceph_keys.yaml` with `ceph_keys.sh 1`
-- Deploy control-plane with [control-plane/deploy.sh](control-plane/deploy.sh)
-- Create `~/control-plane-export.yaml` with [export.sh](export.sh)
-- Create `~/dcn_ceph_keys.yaml` with `ceph_keys.sh 2`
-- Deploy dcn0 with [dcn0/deploy.sh](dcn0/deploy.sh)
-- Deploy dcn1 with [dcnN.sh](dcnN.sh)
-- Create `control-plane/ceph_keys_update.yaml` with `ceph_keys.sh 3`
+- Run [master.sh](master.sh) which does the following:
+  - Create `control-plane/ceph_keys.yaml` with `ceph_keys.sh 1`
+  - Deploy control-plane with [control-plane/deploy.sh](control-plane/deploy.sh)
+  - Create `~/control-plane-export.yaml` with [export.sh](export.sh)
+  - Create `~/dcn_ceph_keys.yaml` with `ceph_keys.sh 2`
+  - Deploy dcn0 with [dcn0/deploy.sh](dcn0/deploy.sh)
+  - Deploy dcn1 with [dcnN.sh](dcnN.sh)
+  - Create `control-plane/ceph_keys_update.yaml` with `ceph_keys.sh 3`
 - Update control-plane/deploy.sh to use `control-plane/ceph_keys_update.yaml`
 - Update control-plane/deploy.sh to use [control-plane/glance_update.yaml](control-plane/glance_update.yaml)
 - Re-run control-plane/deploy.sh
