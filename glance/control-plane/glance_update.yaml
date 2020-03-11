@@ -1,5 +1,7 @@
 ---
 parameter_defaults:
+  ControllerExtraConfig:
+    glance::api::enabled_import_methods: 'glance-direct,web-download,copy-image'
   GlanceBackend: rbd
   GlanceStoreDescription: 'central rbd glance store'
   CephClusterName: central

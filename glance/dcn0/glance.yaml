@@ -1,5 +1,7 @@
 ---
 parameter_defaults:
+  DistributedComputeHCIExtraConfig:
+    glance::api::enabled_import_methods: 'glance-direct,web-download,copy-image'
   GlanceBackend: rbd
   GlanceStoreDescription: 'dcn0 rbd glance store'
   CephClusterName: dcn0

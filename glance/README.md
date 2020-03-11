@@ -74,10 +74,3 @@ ssh $IP "bash /home/heat-admin/test_ceph_client.sh dcn1"
 ```
 ssh $IP "sudo tail /var/lib/config-data/puppet-generated/glance_api/etc/glance/glance-api.conf"
 ```
-
-## Todo
-
-- Modify templates to configure all three glance services with
-  `enabled_import_methods = [glance-direct,web-download,copy-image]`
-
-The current templates work but only after the above configuration is added by hand.
