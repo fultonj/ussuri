@@ -54,6 +54,8 @@ be deployed in the following stacks and roles.
   with [import-multi-stores](https://review.opendev.org/#/c/667132)
   and then copy that image to `dcn1`
   with [copy-existing-image](https://review.opendev.org/#/c/696457).
+  A successful example looks
+  like [use-multistore-glance.log](use-multistore-glance.log).
 
 - Verify any DCN node at $IP can use the central ceph cluster
 ```
