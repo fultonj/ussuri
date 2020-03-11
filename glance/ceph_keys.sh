@@ -93,6 +93,9 @@ cat <<EOF >> $TARGET
           key: "$KEY"
           mode: "0600"
       dashboard_enabled: false
+      ceph_conf_overrides:
+        client:
+          keyring: /etc/ceph/$CLUSTER.client.glance.keyring
 EOF
 }
 
@@ -139,5 +142,5 @@ done
 if [[ -e $TARGET ]]; then
     ls -l $TARGET
     cat $TARGET
-    # rm -v $TARGET
+    #rm -v $TARGET
 fi
