@@ -7,9 +7,10 @@ parameter_defaults:
     ANSIBLE_SSH_RETRIES: '6'
     ANSIBLE_HOST_KEY_CHECKING: 'False'
   CephConfigOverrides:
-    osd_recovery_op_priority: 3
-    osd_recovery_max_active: 3
-    osd_max_backfills: 1
+    mon:
+      osd_recovery_op_priority: 3
+      osd_recovery_max_active: 3
+      osd_max_backfills: 1
   CephAnsibleDisksConfig:
     osd_scenario: lvm
     osd_objectstore: bluestore
@@ -17,4 +18,3 @@ parameter_defaults:
       - /dev/sdb
   CephAnsibleExtraConfig:
     ceph_osd_docker_cpu_limit: 1
-    mon_host_v1: { 'enabled': False }
