@@ -1,12 +1,30 @@
 ---
 parameter_defaults:
-  NeutronMechanismDrivers: ovn
   ContainerImagePrepare:
   - push_destination: 192.168.24.1:8787
     set:
-      ceph_image: daemon
-      ceph_namespace: docker.io/ceph
-      ceph_tag: v4.0.0-stable-4.0-nautilus-centos-7-x86_64
-      name_prefix: centos-binary
-      namespace: docker.io/tripleomaster
-      tag: current-tripleo
+        ceph_alertmanager_image: alertmanager
+        ceph_alertmanager_namespace: docker.io/prom
+        ceph_alertmanager_tag: v0.16.2
+        ceph_grafana_image: grafana
+        ceph_grafana_namespace: docker.io/grafana
+        ceph_grafana_tag: 5.2.4
+        ceph_image: daemon
+        ceph_namespace: docker.io/ceph
+        ceph_node_exporter_image: node-exporter
+        ceph_node_exporter_namespace: docker.io/prom
+        ceph_node_exporter_tag: v0.17.0
+        ceph_prometheus_image: prometheus
+        ceph_prometheus_namespace: docker.io/prom
+        ceph_prometheus_tag: v2.7.2
+        ceph_tag: v4.0.10-stable-4.0-nautilus-centos-7-x86_64
+        name_prefix: centos-binary-
+        name_suffix: ''
+        namespace: docker.io/tripleomaster
+        neutron_driver: ovn
+        rhel_containers: false
+        # http://lists.openstack.org/pipermail/openstack-discuss/2020-March/013296.html
+        #tag: current-tripleo
+        tag: 3621159be13b41f8ead2e873b357f4a5
+    ContainerImagePrepareDebug: true
+    ContainerImageRegistryCredentials: {}
