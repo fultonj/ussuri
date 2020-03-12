@@ -14,7 +14,7 @@ if [[ $KILL -eq 1 ]]; then
         openstack stack list
         for STACK in $(openstack stack list -f value -c "Stack Name"); do
             pushd $STACK
-            bash ../kill.sh $STACK
+            bash ../../kill.sh $STACK
             popd
         done
     fi
