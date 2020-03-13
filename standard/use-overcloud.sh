@@ -9,7 +9,7 @@ DIR=config-download
 
 function run_on_mon {
     # since it will be run on the controller
-    sudo podman exec ceph-mon-overcloud-controller-0 $1
+    sudo podman exec ceph-mon-$HOSTNAME $1
     # ansible --private-key $DIR/ssh_private_key -i $DIR/inventory.yaml overcloud-controller-0 -b -m shell -a "podman exec ceph-mon-overcloud-controller-0 $1"
 }
 
