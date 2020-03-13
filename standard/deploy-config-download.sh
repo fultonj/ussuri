@@ -13,10 +13,12 @@ source ~/stackrc
 # -------------------------------------------------------
 if [[ $COMPUTE -eq 1 ]]; then
     # tag 3 ceph nodes as compute nodes
-    for i in 5 4 3; do
-        k=$(($i-3))
+    for i in 5; do
+        #k=$(($i-3))
+        k=0
         openstack baremetal node set oc0-ceph-$i \
-          --property capabilities="node:0-compute-$k,boot_option:local"
+                  --property capabilities="node:0-compute-$k,boot_option:local"
+        openstack baremetal node show oc0-ceph-5 | grep properties
     done
 fi
 # -------------------------------------------------------
