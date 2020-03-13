@@ -61,6 +61,6 @@ parameter_defaults:
           key: "AQCwmeRcAAAAABAA6SQU/bGqFjlfLro5KxrB1Q=="
           mode: "0600"
       dashboard_enabled: false
-  CephAnsibleRepo: tripleo-centos-ceph-nautilus
-  EnablePaunch: True
+  CephAnsibleRepo: storage8-ceph-nautilus
+  EnablePaunch: False
   ConfigDebug: True

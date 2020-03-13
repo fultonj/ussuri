@@ -9,6 +9,6 @@ parameter_defaults:
   ControllerSchedulerHints:
     'capabilities:node': '0-controller-%index%'
   GlanceBackend: swift
-  CephAnsibleRepo: tripleo-centos-ceph-nautilus
-  EnablePaunch: True
+  CephAnsibleRepo: storage8-ceph-nautilus
+  EnablePaunch: False
   ConfigDebug: True
