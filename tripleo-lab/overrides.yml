@@ -21,7 +21,7 @@ undercloud_config:
     value: false
   - section: DEFAULT
     option: undercloud_enable_paunch
-    value: true
+    value: false
 vms:
   - name: undercloud
     cpu: 4
