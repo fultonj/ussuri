@@ -102,14 +102,14 @@ EOF
 function random_key() {
     # from https://github.com/ceph/ceph-deploy/blob/master/ceph_deploy/new.py#L21
     # the following works with both py2 and py3
-    local MYKEY=$(python -c 'import os,struct,time,base64; key = os.urandom(16); header = struct.pack("<hiih", 1, int(time.time()), 0, len(key)) ; print(base64.b64encode(header + key).decode())')
+    local MYKEY=$(python3 -c 'import os,struct,time,base64; key = os.urandom(16); header = struct.pack("<hiih", 1, int(time.time()), 0, len(key)) ; print(base64.b64encode(header + key).decode())')
     echo $MYKEY
 }
 
 function get_from_yaml() {
     # In retrospect I should have written this entire shell script in
     # Python but for now I'll just tape this together so I can move on
-    local MYVAR=$(python get_from_yaml.py -y $FILE -k $MYKEY)
+    local MYVAR=$(python3 get_from_yaml.py -y $FILE -k $MYKEY)
     echo $MYVAR
 }
 
