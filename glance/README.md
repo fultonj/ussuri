@@ -21,14 +21,14 @@ be deployed in the following stacks and roles.
 | dcn0             |    Standard DCN + GlanceBackend: RBD | CephClusterName: dcn0
 +------------------+
 | oc0-ceph-1       |    DistributedComputeHCI (Glance + Nova + Mon + OSD)
-| oc0-ceph-2       |    DistributedComputeHCIScaleUp (HaProxy + Nova + OSD)
+| oc0-ceph-2       |    DistributedComputeHCIScaleOut (HaProxy + Nova + OSD)
 +------------------+
 
 +------------------+
 | dcn1             |    Standard DCN + GlanceBackend: RBD | CephClusterName: dcn1
 +------------------+
 | oc0-ceph-3       |    DistributedComputeHCI (Glance + Nova + Mon + OSD)
-| oc0-ceph-4       |    DistributedComputeHCIScaleUp (HaProxy + Nova + OSD)
+| oc0-ceph-4       |    DistributedComputeHCIScaleOut (HaProxy + Nova + OSD)
 +------------------+
 ```
 
