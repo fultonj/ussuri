@@ -5,7 +5,7 @@ CINDER=1
 NOVA=1
 IMAGE=cirros
 
-RC=control-plane/control-planerc
+RC=../control-plane/control-planerc
 if [[ ! -e $RC ]]; then
     echo "$RC is missing. Aborting."
     exit 1

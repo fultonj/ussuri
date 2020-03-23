@@ -1,5 +1,5 @@
 #!/bin/bash
-RC=control-plane/control-planerc
+RC=../control-plane/control-planerc
 if [[ -e $RC ]]; then
     source $RC
 else
@@ -49,7 +49,7 @@ echo "- List available stores"
 glance stores-info
 
 echo "- Create image"
-glance --verbose image-create-via-import --disk-format raw --container-format bare --name $NAME
+glance --verbose image-create-via-import --disk-format qcow2 --container-format bare --name $NAME
 ID=$(openstack image show $NAME -c id -f value)
 
 echo "- Upload image data to staging"

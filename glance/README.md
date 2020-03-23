@@ -47,7 +47,7 @@ be deployed in the following stacks and roles.
 - Update control-plane/deploy.sh to use [control-plane/glance_update.yaml](control-plane/glance_update.yaml)
 - Re-run control-plane/deploy.sh
 
-## Verifications
+## Validations
 
 The scripts below maybe used to: 
 
@@ -58,34 +58,34 @@ The scripts below maybe used to:
 
 ### Glance
 
-- Use [use-multistore-glance.sh](use-multistore-glance.sh) to import
+- Use [use-multistore-glance.sh](validations/use-multistore-glance.sh) to import
   an image into both `default_backend` and `dcn0`
   with [import-multi-stores](https://review.opendev.org/#/c/667132)
   and then copy that image to `dcn1`
   with [copy-existing-image](https://review.opendev.org/#/c/696457).
   A successful example looks
-  like [use-multistore-glance.log](use-multistore-glance.log).
+  like [use-multistore-glance.log](validations/use-multistore-glance.log).
 
 ### Cinder/Nova on Central
 
-- [use-central.sh](use-central.sh)
+- [use-central.sh](validations/use-central.sh)
 
 ### Cinder/Nova on DCN
 
-- [use-dcn.sh](use-dcn.sh)
+- [use-dcn.sh](validations/use-dcn.sh)
 - To test dcn1, update AZ from "dcn0" to "dcn1"
 
 ### Ceph
 
 - Verify any DCN node at $IP can use the central ceph cluster
 ```
-scp ../multiceph/test_ceph_client.sh heat-admin@$IP:/home/heat-admin/
+scp ../../multiceph/test_ceph_client.sh heat-admin@$IP:/home/heat-admin/
 ssh $IP "bash /home/heat-admin/test_ceph_client.sh central"
 ```
 
 - Verify the control-plane node at $IP can use any DCN ceph cluster
 ```
-scp ../multiceph/test_ceph_client.sh heat-admin@$IP:/home/heat-admin/
+scp ../../multiceph/test_ceph_client.sh heat-admin@$IP:/home/heat-admin/
 ssh $IP "bash /home/heat-admin/test_ceph_client.sh dcn0"
 ssh $IP "bash /home/heat-admin/test_ceph_client.sh dcn1"
 ```
