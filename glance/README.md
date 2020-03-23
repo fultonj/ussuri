@@ -73,6 +73,7 @@ The scripts below maybe used to:
 ### Cinder/Nova on DCN
 
 - [use-dcn.sh](validations/use-dcn.sh)
+- [dcn-pet.sh](validations/dcn-pet.sh)
 - To test dcn1, update AZ from "dcn0" to "dcn1"
 
 ### Ceph
