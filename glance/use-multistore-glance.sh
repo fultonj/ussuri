@@ -19,19 +19,25 @@ fi
 # Get image if missing
 NAME=cirros
 IMG=cirros-0.4.0-x86_64-disk.img
-RAW=$(echo $IMG | sed s/img/raw/g)
 URL=http://download.cirros-cloud.net/0.4.0/$IMG
-if [ ! -f $RAW ]; then
-    if [ ! -f $IMG ]; then
-        echo "Could not find qemu image $img; downloading a copy."
-        curl -L -# $URL > $IMG
-    fi
-    echo "Could not find raw image $raw; converting."
-    if [[ ! -e /bin/qemu-img ]]; then
-        sudo yum install qemu-img -y
-    fi
-    qemu-img convert -f qcow2 -O raw $IMG $RAW
+if [ ! -f $IMG ]; then
+    echo "Could not find qemu image $img; downloading a copy."
+    curl -L -# $URL > $IMG
 fi
+# -------------------------------------------------------
+# Upload raw version of image
+# RAW=$(echo $IMG | sed s/img/raw/g)
+# if [ ! -f $RAW ]; then
+#     echo "Could not find raw image $raw; converting."
+#     if [[ ! -e /bin/qemu-img ]]; then
+#         sudo yum install qemu-img -y
+#     fi
+#     qemu-img convert -f qcow2 -O raw $IMG $RAW
+#     # only refer to RAW image
+#      if [ -f $RAW ]; then
+#          IMG=$RAW
+#      fi
+# fi
 # -------------------------------------------------------
 OLD_ID=$(openstack image show $NAME -f value -c id)
 if [[ ! -z $OLD_ID ]]; then 
@@ -47,9 +53,9 @@ glance --verbose image-create-via-import --disk-format raw --container-format ba
 ID=$(openstack image show $NAME -c id -f value)
 
 echo "- Upload image data to staging"
-glance --verbose image-stage $ID --file $RAW
+glance --verbose image-stage $ID --file $IMG
 if [[ $? -gt 0 ]]; then
-    echo "Aborting. Unable to: glance image-stage $ID --file $RAW";
+    echo "Aborting. Unable to: glance image-stage $ID --file $IMG";
     exit 1;
 fi
 
