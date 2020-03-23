@@ -34,7 +34,6 @@ be deployed in the following stacks and roles.
 
 ## How to deploy it with TripleO
 
-- Pull in missing [unmerged changes](unmerged)
 - Tag nodes with [ironic.sh](ironic.sh)
 - Run [master.sh](master.sh) which does the following:
   - Create `control-plane/ceph_keys.yaml` with `ceph_keys.sh 1`
@@ -50,6 +49,15 @@ be deployed in the following stacks and roles.
 
 ## Verifications
 
+The scripts below maybe used to: 
+
+- Import an image into the central, dcn0 and dcn1 locations
+- Boot an instance and create a volume in the central location
+- Boot an instance and create a volume in the dcn0 or dcn1 location
+- Verify all necessary Ceph client configurations
+
+### Glance
+
 - Use [use-multistore-glance.sh](use-multistore-glance.sh) to import
   an image into both `default_backend` and `dcn0`
   with [import-multi-stores](https://review.opendev.org/#/c/667132)
@@ -57,6 +65,17 @@ be deployed in the following stacks and roles.
   with [copy-existing-image](https://review.opendev.org/#/c/696457).
   A successful example looks
   like [use-multistore-glance.log](use-multistore-glance.log).
+
+### Cinder/Nova on Central
+
+- [use-central.sh](use-central.sh)
+
+### Cinder/Nova on DCN
+
+- [use-dcn.sh](use-dcn.sh)
+- To test dcn1, update AZ from "dcn0" to "dcn1"
+
+### Ceph
 
 - Verify any DCN node at $IP can use the central ceph cluster
 ```
