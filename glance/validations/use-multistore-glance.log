@@ -1,29 +1,28 @@
-Testing import-multi-stores and copy-existing-image
-Check if glance is working
+- Check if glance is working
 +--------------------------------------+--------+
 | ID                                   | Name   |
 +--------------------------------------+--------+
-| 1eb682a2-2090-44b4-9834-5c93c363fc45 | cirros |
+| c8fd6c94-4d63-43ca-a0c4-809d88280dc3 | cirros |
 +--------------------------------------+--------+
 - Clean out old image
 - List available stores
 +----------+----------------------------------------------------------------------------------+
 | Property | Value                                                                            |
 +----------+----------------------------------------------------------------------------------+
-| stores   | [{"default": "true", "id": "default_backend", "description": "central rbd glance |
-|          | store"}, {"id": "http", "read-only": "true"}, {"id": "dcn0", "description":      |
+| stores   | [{"id": "default_backend", "description": "central rbd glance store", "default": |
+|          | "true"}, {"id": "http", "read-only": "true"}, {"id": "dcn0", "description":      |
 |          | "dcn0 rbd glance store"}, {"id": "dcn1", "description": "dcn1 rbd glance         |
 |          | store"}]                                                                         |
 +----------+----------------------------------------------------------------------------------+
-- Create image
+- Create image in central and dcn0
 +------------------+--------------------------------------+
 | Property         | Value                                |
 +------------------+--------------------------------------+
 | checksum         | None                                 |
 | container_format | bare                                 |
-| created_at       | 2020-03-11T01:33:32Z                 |
-| disk_format      | raw                                  |
-| id               | 8083c7e7-32d8-4f7a-b1da-0ed7884f1076 |
+| created_at       | 2020-03-23T19:52:43Z                 |
+| disk_format      | qcow2                                |
+| id               | fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e |
 | locations        | []                                   |
 | min_disk         | 0                                    |
 | min_ram          | 0                                    |
@@ -31,96 +30,83 @@ Check if glance is working
 | os_hash_algo     | None                                 |
 | os_hash_value    | None                                 |
 | os_hidden        | False                                |
-| owner            | 183de498f558442097a2796518761639     |
+| owner            | af5114b7d1b9437cb31ec5853e10d09b     |
 | protected        | False                                |
 | size             | None                                 |
-| status           | queued                               |
+| status           | uploading                            |
+| stores           | default_backend,dcn0                 |
 | tags             | []                                   |
-| updated_at       | 2020-03-11T01:33:32Z                 |
+| updated_at       | 2020-03-23T19:52:43Z                 |
 | virtual_size     | Not available                        |
 | visibility       | shared                               |
 +------------------+--------------------------------------+
-- Upload image data to staging
-- Get token
-- Get glance endpoint
-Import image cirros into both central and dcn0 (import-multi-stores) with curl
-HTTP/1.1 202 Accepted
-Content-Type: text/html; charset=UTF-8
-Content-Length: 0
-X-Openstack-Request-Id: req-ccc1bc77-4073-4192-9ff1-ee86eb29779a
-Date: Wed, 11 Mar 2020 01:33:41 GMT
-
-+------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Field            | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-+------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| checksum         | ba3cd24377dde5dfdd58728894004abb                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| container_format | bare                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| created_at       | 2020-03-11T01:33:32Z                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| disk_format      | raw                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| file             | /v2/images/8083c7e7-32d8-4f7a-b1da-0ed7884f1076/file                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| id               | 8083c7e7-32d8-4f7a-b1da-0ed7884f1076                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| min_disk         | 0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| min_ram          | 0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| name             | cirros                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| owner            | 183de498f558442097a2796518761639                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| properties       | direct_url='rbd://d25504ce-459f-432d-b6fa-79854d786f2b/images/8083c7e7-32d8-4f7a-b1da-0ed7884f1076/snap', locations='[{u'url': u'rbd://d25504ce-459f-432d-b6fa-79854d786f2b/images/8083c7e7-32d8-4f7a-b1da-0ed7884f1076/snap', u'metadata': {u'store': u'default_backend'}}]', os_glance_failed_import='', os_glance_importing_to_stores='dcn0', os_hash_algo='sha512', os_hash_value='b795f047a1b10ba0b7c95b43b2a481a59289dc4cf2e49845e60b194a911819d3ada03767bbba4143b44c93fd7f66c96c5a621e28dff51d1196dae64974ce240e', os_hidden='False', stores='default_backend' |
-| protected        | False                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| schema           | /v2/schemas/image                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| size             | 46137344                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| status           | importing                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| tags             |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| updated_at       | 2020-03-11T01:33:44Z                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| virtual_size     | 46137344                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| visibility       | shared                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-+------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-Looking at glance tasks
-+--------------------------------------+------------------+---------+----------------------------------+
-| ID                                   | Type             | Status  | Owner                            |
-+--------------------------------------+------------------+---------+----------------------------------+
-| 4f526436-82af-4c2c-accb-d7f1ecc32ab5 | api_image_import | success | 183de498f558442097a2796518761639 |
-| de58f6f6-605f-4f5f-85d8-794df6e531d3 | api_image_import | success | 183de498f558442097a2796518761639 |
-Show newest task
-+------------+----------------------------------------------------------------------------------+
-| Property   | Value                                                                            |
-+------------+----------------------------------------------------------------------------------+
-| created_at | 2020-03-11T01:33:41Z                                                             |
-| expires_at | 2020-03-13T01:33:46Z                                                             |
-| id         | 4f526436-82af-4c2c-accb-d7f1ecc32ab5                                             |
-| input      | {"import_req": {"stores": ["default_backend", "dcn0"], "method": {"name":        |
-|            | "glance-direct"}}, "image_id": "8083c7e7-32d8-4f7a-b1da-0ed7884f1076",           |
-|            | "backend": ["default_backend", "dcn0"]}                                          |
-| message    |                                                                                  |
-| owner      | 183de498f558442097a2796518761639                                                 |
-| result     | {"image_id": "8083c7e7-32d8-4f7a-b1da-0ed7884f1076"}                             |
-| status     | success                                                                          |
-| type       | api_image_import                                                                 |
-| updated_at | 2020-03-11T01:33:46Z                                                             |
-+------------+----------------------------------------------------------------------------------+
-Confirm image ID in task
-|            | "glance-direct"}}, "image_id": "8083c7e7-32d8-4f7a-b1da-0ed7884f1076",           |
-| result     | {"image_id": "8083c7e7-32d8-4f7a-b1da-0ed7884f1076"}                             |
-Waiting for image to finish uploading or importing...
-- Use RBD to list images on central
+- Confirm image was converted from qcow2 to raw
+| disk_format                   | raw                                                                              |
++--------------------------------------+--------+--------+
+| ID                                   | Name   | Status |
++--------------------------------------+--------+--------+
+| fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e | cirros | active |
++--------------------------------------+--------+--------+
+central
 NAME                                      SIZE   PARENT FMT PROT LOCK 
-8083c7e7-32d8-4f7a-b1da-0ed7884f1076      44 MiB          2           
-8083c7e7-32d8-4f7a-b1da-0ed7884f1076@snap 44 MiB          2 yes       
-- Use RBD to list images on dcn0
+fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e      44 MiB          2           
+fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e@snap 44 MiB          2 yes       
+
+dcn0
 NAME                                      SIZE   PARENT FMT PROT LOCK 
-8083c7e7-32d8-4f7a-b1da-0ed7884f1076      44 MiB          2           
-8083c7e7-32d8-4f7a-b1da-0ed7884f1076@snap 44 MiB          2 yes       
+fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e      44 MiB          2           
+fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e@snap 44 MiB          2 yes       
 
-Copy image cirros from central into dcn1 (copy-existing-image) with curl
+dcn1
 
-HTTP/1.1 202 Accepted
-Content-Type: text/html; charset=UTF-8
-Content-Length: 0
-X-Openstack-Request-Id: req-f7609ed3-b531-4a4e-81c3-8dbd9cb5e0d5
-Date: Wed, 11 Mar 2020 01:34:01 GMT
-
-Waiting 5 seconds for image to finish copying...
-- Use RBD to list images on dcn1
+Copy the image from the default store to the dcn1 store:
++-------------------------------+----------------------------------------------------------------------------------+
+| Property                      | Value                                                                            |
++-------------------------------+----------------------------------------------------------------------------------+
+| checksum                      | ba3cd24377dde5dfdd58728894004abb                                                 |
+| container_format              | bare                                                                             |
+| created_at                    | 2020-03-23T19:52:43Z                                                             |
+| direct_url                    | rbd://3161a3b4-e5ff-42a0-9f53-860403b29a33/images/fe0ee52a-d108-4a22-ad56-f3c9fc |
+|                               | 7ca18e/snap                                                                      |
+| disk_format                   | raw                                                                              |
+| id                            | fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e                                             |
+| locations                     | [{"url": "rbd://3161a3b4-e5ff-42a0-9f53-860403b29a33/images/fe0ee52a-d108-4a22-a |
+|                               | d56-f3c9fc7ca18e/snap", "metadata": {"store": "default_backend"}}, {"url": "rbd: |
+|                               | //539e2b96-316e-4c23-b7df-035a3037ddd1/images/fe0ee52a-d108-4a22-ad56-f3c9fc7ca1 |
+|                               | 8e/snap", "metadata": {"store": "dcn0"}}]                                        |
+| min_disk                      | 0                                                                                |
+| min_ram                       | 0                                                                                |
+| name                          | cirros                                                                           |
+| os_glance_failed_import       |                                                                                  |
+| os_glance_importing_to_stores |                                                                                  |
+| os_hash_algo                  | sha512                                                                           |
+| os_hash_value                 | b795f047a1b10ba0b7c95b43b2a481a59289dc4cf2e49845e60b194a911819d3ada03767bbba4143 |
+|                               | b44c93fd7f66c96c5a621e28dff51d1196dae64974ce240e                                 |
+| os_hidden                     | False                                                                            |
+| owner                         | af5114b7d1b9437cb31ec5853e10d09b                                                 |
+| protected                     | False                                                                            |
+| size                          | 46137344                                                                         |
+| status                        | active                                                                           |
+| stores                        | default_backend,dcn0                                                             |
+| tags                          | []                                                                               |
+| updated_at                    | 2020-03-23T19:52:47Z                                                             |
+| virtual_size                  | 46137344                                                                         |
+| visibility                    | shared                                                                           |
++-------------------------------+----------------------------------------------------------------------------------+
+central
 NAME                                      SIZE   PARENT FMT PROT LOCK 
-8083c7e7-32d8-4f7a-b1da-0ed7884f1076      44 MiB          2           
-8083c7e7-32d8-4f7a-b1da-0ed7884f1076@snap 44 MiB          2 yes       
-Show properties of 8083c7e7-32d8-4f7a-b1da-0ed7884f1076 to see the stores
-| properties       | direct_url='rbd://d25504ce-459f-432d-b6fa-79854d786f2b/images/8083c7e7-32d8-4f7a-b1da-0ed7884f1076/snap', locations='[{u'url': u'rbd://d25504ce-459f-432d-b6fa-79854d786f2b/images/8083c7e7-32d8-4f7a-b1da-0ed7884f1076/snap', u'metadata': {u'store': u'default_backend'}}, {u'url': u'rbd://0c10d6b5-a455-4c4d-bd53-8f2b9357c3c7/images/8083c7e7-32d8-4f7a-b1da-0ed7884f1076/snap', u'metadata': {u'store': u'dcn0'}}, {u'url': u'rbd://8649d6c3-dcb3-4aae-8c19-8c2fe5a853ac/images/8083c7e7-32d8-4f7a-b1da-0ed7884f1076/snap', u'metadata': {u'store': u'dcn1'}}]', os_glance_failed_import='', os_glance_importing_to_stores='', os_hash_algo='sha512', os_hash_value='b795f047a1b10ba0b7c95b43b2a481a59289dc4cf2e49845e60b194a911819d3ada03767bbba4143b44c93fd7f66c96c5a621e28dff51d1196dae64974ce240e', os_hidden='False', stores='default_backend,dcn0,dcn1' |
+fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e      44 MiB          2           
+fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e@snap 44 MiB          2 yes       
+
+dcn0
+NAME                                      SIZE   PARENT FMT PROT LOCK 
+fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e      44 MiB          2           
+fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e@snap 44 MiB          2 yes       
+
+dcn1
+NAME                                      SIZE   PARENT FMT PROT LOCK 
+fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e      44 MiB          2           
+fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e@snap 44 MiB          2 yes       
+
+- Show properties of fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e to see the stores
+| properties       | direct_url='rbd://3161a3b4-e5ff-42a0-9f53-860403b29a33/images/fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e/snap', locations='[{'url': 'rbd://3161a3b4-e5ff-42a0-9f53-860403b29a33/images/fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e/snap', 'metadata': {'store': 'default_backend'}}, {'url': 'rbd://539e2b96-316e-4c23-b7df-035a3037ddd1/images/fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e/snap', 'metadata': {'store': 'dcn0'}}, {'url': 'rbd://7504a91e-5a0f-4408-bb55-33c3ee2c67e9/images/fe0ee52a-d108-4a22-ad56-f3c9fc7ca18e/snap', 'metadata': {'store': 'dcn1'}}]', os_glance_failed_import='', os_glance_importing_to_stores='', os_hash_algo='sha512', os_hash_value='b795f047a1b10ba0b7c95b43b2a481a59289dc4cf2e49845e60b194a911819d3ada03767bbba4143b44c93fd7f66c96c5a621e28dff51d1196dae64974ce240e', os_hidden='False', stores='default_backend,dcn0,dcn1' |
