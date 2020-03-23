@@ -7,6 +7,7 @@ NOVA=1
 DEPS=1
 CINDER=1
 PUBLIC=0
+SCALEOUT=1
 
 IMAGE=cirros
 
@@ -35,6 +36,15 @@ if [[ $PUBLIC -eq 1 ]]; then
     export GATEWAY=192.168.24.1
     export PUBLIC_NET_START=192.168.24.40
     export PUBLIC_NET_END=192.168.24.50
+fi
+
+if [[ $SCALEOUT -eq 1 ]]; then
+    NODE="${AZ}-distributedcomputehci-0.localdomain"
+    echo "The SCALEOUT=1 option is enabled, removing $NODE from nova scheduler"
+    # openstack compute service list
+    openstack compute service set $NODE nova-compute --disable
+    openstack compute service list
+    echo "Nova test will only be run on the DistributedComputeHCIScaleOut node"
 fi
 
 if [[ $SHOWAZ -eq 1 ]]; then
@@ -248,4 +258,11 @@ if [[ $NOVA -eq 1 ]]; then
             echo -e "\nssh -o \"UserKnownHostsFile /dev/null\" -o \"StrictHostKeyChecking no\" -i ~/demokp-${AZ}.pem cirros@$FLOATING_IP"
         fi
     fi
+fi
+
+if [[ $SCALEOUT -eq 1 ]]; then
+    echo "Adding $NODE back to the nova scheduler"
+    # openstack compute service list
+    openstack compute service set $NODE nova-compute --enable
+    openstack compute service list
 fi
