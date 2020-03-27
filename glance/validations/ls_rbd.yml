@@ -1,0 +1,32 @@
+---
+- name: Lists contents of pool on cluster
+  gather_facts: false
+  vars:
+    pool: images
+  hosts:
+    - control-plane-controller-0
+    - dcn0-distributedcomputehci-0
+    - dcn1-distributedcomputehci-0
+  tasks:
+    - name: Set cluster name for central
+      set_fact:
+        cluster: central
+      when: inventory_hostname == "control-plane-controller-0"
+
+    - name: Set cluster name for dcn hosts
+      set_fact:
+        cluster: "{{ inventory_hostname.split('-')[0] }}"
+      when: inventory_hostname is regex("^dcn[0-9]+")
+
+    - name: Set rbd command fact
+      set_fact:
+        rbd: "podman exec ceph-mon-{{ inventory_hostname }} rbd --cluster {{ cluster }}"
+
+    - name: get list pool output
+      become: true
+      shell: "{{ rbd }} ls -l {{ pool }}"
+      register: ls_output
+
+    - name: show pool output
+      debug:
+        msg: "{{ ls_output.stdout_lines }}"
