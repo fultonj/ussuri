@@ -3,6 +3,8 @@
   gather_facts: false
   vars:
     pool: images
+    show_output: true
+    save_output: false
   hosts:
     - control-plane-controller-0
     - dcn0-distributedcomputehci-0
@@ -30,3 +32,11 @@
     - name: show pool output
       debug:
         msg: "{{ ls_output.stdout_lines }}"
+      when: show_output
+
+    - name: save pool output
+      copy:
+        content: "{{ inventory_hostname }}:{{ pool }}\n\n{{ ls_output.stdout }}\n"
+        dest: "{{ lookup('env', 'PWD') }}/ls_rbd_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+      when: save_output
