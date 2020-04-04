@@ -35,28 +35,31 @@ if [[ $CLEAN -eq 1 ]]; then
         openstack server delete $ID;
     done
 
-    # echo "Deleting previous Cinder volume(s)"
-    # for ID in $(openstack volume list -f value -c ID); do
-    #     openstack volume delete $ID;
-    # done
+    echo "Deleting previous Cinder volume(s)"
+    for ID in $(openstack volume list -f value -c ID); do
+        openstack volume delete $ID;
+    done
 fi
 
 if [[ $CINDER -eq 1 ]]; then
     echo "Creating Cinder volume $VOLUME_NAME from $IMG_ID"
     openstack volume create --size 8 --availability-zone $AZ $VOLUME_NAME --image $IMG_ID
+    VOL_ID=$(openstack volume show -f value -c id $VOLUME_NAME)
+    if [[ $? != 0 ]]; then
+        echo "Unable to find volume: $VOLUME_NAME. Aborting."
+        exit 1
+    fi
 fi
 
-VOL_ID=$(openstack volume show -f value -c id $VOLUME_NAME)
-if [[ $? != 0 ]]; then
-    echo "Unable to find volume: $VOLUME_NAME. Aborting."
-    exit 1
-fi
 
 if [[ $NOVA -eq 1 ]]; then
     echo "Creating Nova server $SERVER_NAME from $VOL_ID"
-    openstack server create --flavor tiny --key-name demokp-${AZ} --network private-${AZ} --security-group basic --availability-zone $AZ --volume $VOL_ID $SERVER_NAME 
-
-    #openstack server create --flavor tiny --image $IMG_ID --key-name demokp-${AZ} --network private-${AZ} --security-group basic --availability-zone $AZ --boot-from-volume 4 $SERVER_NAME
+    if [[ $CINDER -eq 1 ]]; then
+        openstack server create --flavor tiny --key-name demokp-${AZ} --network private-${AZ} --security-group basic --availability-zone $AZ --volume $VOL_ID $SERVER_NAME
+    else
+        # have nova ask cinder to create the volume
+        openstack server create --flavor tiny --image $IMG_ID --key-name demokp-${AZ} --network private-${AZ} --security-group basic --availability-zone $AZ --boot-from-volume 4 $SERVER_NAME
+    fi
 
     STATUS=$(openstack server show $SERVER_NAME -f value -c status)
     echo "Server status: $STATUS (waiting)"
