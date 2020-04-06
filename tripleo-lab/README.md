@@ -12,8 +12,6 @@ I run the following on
 
  cp ~/ussuri/tripleo-lab/overrides.yml environments/overrides.yml
 
- cp ~/ussuri/tripleo-lab/overcloud.yml roles/undercloud/tasks/overcloud.yaml
-
  ansible-playbook --become -i inventory.yaml builder.yaml -e @environments/overrides.yml --skip-tags validations,metrics 
 ```
 
