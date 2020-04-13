@@ -23,7 +23,7 @@ def parse_opts(argv):
 def parse_yaml(yaml_file):
     with open(yaml_file, 'r') as f:
         try:
-            the_data = yaml.load(f)
+            the_data = yaml.safe_load(f)
             return the_data
         except Exception:
             raise RuntimeError(
@@ -33,7 +33,7 @@ def parse_yaml(yaml_file):
 
 def get_key(keys):
     for key in keys:
-        if key['name'] == 'client.glance':
+        if key['name'] == 'client.external':
             return key['key']
     return 'not found'
 

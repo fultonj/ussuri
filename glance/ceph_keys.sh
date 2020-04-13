@@ -10,20 +10,20 @@
 # so that the deployer can do the following:
 #
 # A. Deploy central using CephExtraKeys to create a ceph key for the central
-#    glance pool which may by used by any DCN node
+#    ceph pools which may by used by any DCN node
 #
 # B. Deploy dcn0 with it's own ceph cluster and the ability to use the key
 #    from stepA to access a second ceph cluster via CephExternalMultiConfig
-#    and also create a key with CephExtraKeys that can access the glance
-#    pool on the dcn0 ceph cluster
+#    and also create a key with CephExtraKeys that can access the ceph
+#    pools on the dcn0 ceph cluster
 #
 # C. Deploy dcn1 with it's own ceph cluster and the ability to use the key
 #    from stepA to access a second ceph cluster via CephExternalMultiConfig
-#    and also create a key with CephExtraKeys that can access the glance
-#    pool on the dcn1 ceph cluster
+#    and also create a key with CephExtraKeys that can access the ceph
+#    pools on the dcn1 ceph cluster
 #
 # D. Update central and pass CephExternalMultiConfig with the keys created
-#    from steps B and C so it can write to the glance pools at the DCN sites
+#    from steps B and C so it can write to the ceph pools at the DCN sites
 #    via CephExternalMultiConfig
 #
 # The above is another way to implement the pattern described in
@@ -95,7 +95,7 @@ cat <<EOF >> $TARGET
       dashboard_enabled: false
       ceph_conf_overrides:
         client:
-          keyring: /etc/ceph/$CLUSTER.client.glance.keyring
+          keyring: /etc/ceph/$CLUSTER.client.external.keyring
 EOF
 }
 
