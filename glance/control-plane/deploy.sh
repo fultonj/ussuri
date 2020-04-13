@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HEAT=1
+HEAT=1 
 DOWN=1
 CONF=1
 
@@ -107,5 +107,10 @@ if [[ $CONF -eq 1 ]]; then
     # -e gather_facts=true -e @$DIR/global_vars.yaml \
     # --tags external_deploy_steps \
     # --tags tag_for_glance? \
+
+    # Pick up after a good ceph deployment
+    #     -e gather_facts=true -e @$DIR/global_vars.yaml \
+    #     --start-at-task 'External deployment step 2' \
+    #     --skip-tags run_ceph_ansible \
 
 fi
