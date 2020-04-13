@@ -67,7 +67,7 @@ cat <<EOF >> $TARGET
         caps:
           mgr: "allow *"
           mon: "profile rbd"
-          osd: "profile rbd pool=images"
+          osd: "profile rbd pool=vms, profile rbd pool=volumes, profile rbd pool=images"
         key: "$KEY"
         mode: "0600"
 EOF
@@ -89,7 +89,7 @@ cat <<EOF >> $TARGET
           caps:
             mgr: "allow *"
             mon: "profile rbd"
-            osd: "profile rbd pool=images"
+            osd: "profile rbd pool=vms, profile rbd pool=volumes, profile rbd pool=images"
           key: "$KEY"
           mode: "0600"
       dashboard_enabled: false
@@ -115,7 +115,7 @@ function get_from_yaml() {
 
 prep_target
 for PARAM in "${PARAMS[@]}"; do
-    NAME="client.glance"
+    NAME="client.external"
     if [[ $PARAM == 'CephExtraKeys' ]]; then
         KEY=$(random_key)
         make_extra_keys
