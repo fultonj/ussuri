@@ -7,7 +7,11 @@ CONF=1
 
 STACK=overcloud
 DIR=config-download
-#DIR=$(date +%b%d_%H.%M)
+
+export ANSIBLE_CONFIG=/home/stack/ansible.cfg
+if [[ ! -e $ANSIBLE_CONFIG ]]; then
+    bash /home/stack/ussuri/ansible_cfg.sh
+fi
 
 source ~/stackrc
 # -------------------------------------------------------
@@ -48,6 +52,7 @@ if [[ $HEAT -eq 1 ]]; then
 fi
 # -------------------------------------------------------
 if [[ $DOWN -eq 1 ]]; then
+    echo "Get status of $STACK from Heat"
     STACK_STATUS=$(openstack stack list -c "Stack Name" -c "Stack Status" \
 	-f value | grep $STACK | awk {'print $2'});
     if [[ ! ($STACK_STATUS == "CREATE_COMPLETE" || 
@@ -68,11 +73,15 @@ if [[ $DOWN -eq 1 ]]; then
 	    echo "No inventory. Giving up."
 	    exit 1
 	fi
-        cp -a ~/.ssh/id_rsa ssh_private_key
-	ansible --private-key ssh_private_key \
-	    --ssh-extra-args "-o StrictHostKeyChecking=no" \
-	    -i inventory.yaml all -m ping
+        echo "Ensure ~/.ssh/id_rsa_tripleo exists"
+	if [[ ! -e ~/.ssh/id_rsa_tripleo ]]; then
+            cp ~/.ssh/id_rsa ~/.ssh/id_rsa_tripleo
+        fi
+        echo "Test ansible ping"
+        echo "Running ansible with ANSIBLE_CONFIG=$ANSIBLE_CONFIG"
+	ansible -i inventory.yaml all -m ping
 	popd
+        echo "export ANSIBLE_CONFIG=/home/stack/ansible.cfg"
 	echo "pushd $DIR"
 	echo 'ansible -i inventory.yaml all -m shell -b -a "hostname"'
     fi
@@ -87,21 +96,7 @@ if [[ $CONF -eq 1 ]]; then
     #echo "about to execute the following plays:"
     #ansible-playbook $DIR/deploy_steps_playbook.yaml --list-tasks
 
-    # include library/roles from tripleo-validations, tripleo-common, tripleo-ansible
-    # in the home directory. Need to include the ones in home dir before /usr/share
-    
-    
-    export ANSIBLE_ROLES_PATH="/home/stack/tripleo-ansible/tripleo_ansible/roles:$ANSIBLE_ROLES_PATH:/usr/share/openstack-tripleo-common/:/usr/share/openstack-tripleo-validations/roles:/usr/share/ansible/roles:/usr/share/ceph-ansible/roles"
-    export ANSIBLE_LIBRARY="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/modules:$ANSIBLE_LIBRARY:/usr/share/openstack-tripleo-validations/library:/usr/share/ansible-modules/:/usr/share/ansible/plugins/modules/:/usr/share/ceph-ansible/library"
-    export DEFAULT_ACTION_PLUGIN_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins:$DEFAULT_ACTION_PLUGIN_PATH:/usr/share/ansible/plugins/action:/usr/share/ceph-ansible/plugins/actions"
-    export DEFAULT_CALLBACK_PLUGIN_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/modules:$DEFAULT_CALLBACK_PLUGIN_PATH:/usr/share/ansible/plugins/callback:/usr/share/ceph-ansible/plugins/callback"
-    export DEFAULT_FILTER_PLUGIN_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/filter:$DEFAULT_FILTER_PLUGIN_PATH:/usr/share/ansible/plugins/filter:/usr/share/ceph-ansible/plugins/filter"
-    export ANSIBLE_FILTER_PLUGINS="$DEFAULT_FILTER_PLUGIN_PATH:$ANSIBLE_FILTER_PLUGINS"
-    export DEFAULT_MODULE_UTILS_PATH="/home/stack/tripleo-ansible/tripleo_ansible/ansible_plugins/module_utils:$DEFAULT_MODULE_UTILS_PATH:/usr/share/ansible/plugins/module_utils"
-    export ANSIBLE_LOG_PATH="ansible.log"
-    echo "NEXT: $(date)" >> ansible.log
-    #ansible-config dump |grep FILTER_PLUGIN_PATH
-    
+    echo "Running ansible with ANSIBLE_CONFIG=$ANSIBLE_CONFIG"
     time ansible-playbook-3 \
 	 -v \
 	 --ssh-extra-args "-o StrictHostKeyChecking=no" --timeout 240 \
@@ -114,12 +109,6 @@ if [[ $CONF -eq 1 ]]; then
          # -e gather_facts=true -e @$DIR/global_vars.yaml \
          # --tags external_deploy_steps \
     
-         # -e validate_controllers_icmp=false \
-         # -e validate_gateways_icmp=false \
-         # -e validate_fqdn=false \
-         # -e validate_ntp=false \
-         # -e ping_test_ips=false \
-        
          # Test validations
          # --tags opendev-validation-ceph
     

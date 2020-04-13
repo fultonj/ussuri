@@ -4,7 +4,7 @@ parameter_defaults:
   CephPoolDefaultSize: 1
   CephPoolDefaultPgNum: 32
   CephAnsibleEnvironmentVariables:
-    ANSIBLE_SSH_RETRIES: '6'
+    ANSIBLE_SSH_CONTROL_PATH: '/home/stack/ansible-ssh'
     ANSIBLE_HOST_KEY_CHECKING: 'False'
   CephConfigOverrides:
     mon:

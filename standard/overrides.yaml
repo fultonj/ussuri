@@ -21,9 +21,8 @@ parameter_defaults:
   # testing fix to https://review.opendev.org/#/q/topic:bug/1863809
   # LocalCephAnsibleFetchDirectoryBackup: /tmp/fetch_dir
   CephAnsibleEnvironmentVariables:
+    ANSIBLE_SSH_CONTROL_PATH: '/home/stack/ansible-ssh'
     ANSIBLE_HOST_KEY_CHECKING: 'False'
-    ANSIBLE_PRIVATE_KEY_FILE: '/home/stack/.ssh/id_rsa'
-    ANSIBLE_FILTER_PLUGINS: /usr/share/ceph-ansible/plugins/filter/
   CephAnsibleDisksConfig:
     osd_scenario: lvm
     osd_objectstore: bluestore
