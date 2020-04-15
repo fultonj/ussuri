@@ -7,23 +7,34 @@ CONF=1
 STACK=dcn0
 DIR=config-download
 
+source ~/stackrc
+
+# -------------------------------------------------------
 export ANSIBLE_CONFIG=/home/stack/ansible.cfg
 if [[ ! -e $ANSIBLE_CONFIG ]]; then
     bash /home/stack/ussuri/ansible_cfg.sh
+    if [[ ! -e $ANSIBLE_CONFIG ]]; then
+        echo "Unable to create $ANSIBLE_CONFIG"
+        exit 1;
+    fi
 fi
-
-source ~/stackrc
 # -------------------------------------------------------
 if [[ ! -e ~/dcn_roles.yaml ]]; then
     openstack overcloud roles generate DistributedComputeHCI DistributedComputeHCIScaleOut -o ~/dcn_roles.yaml
 fi
 # -------------------------------------------------------
+# `openstack overcloud -v` should be passed along as
+# `ansible-playbook -vv` for any usage of Ansible (the
+# OpenStack client defaults to no -v being 1 verbosity
+# and --quiet being 0)
+# -------------------------------------------------------
 if [[ $HEAT -eq 1 ]]; then
     if [[ ! -d ~/templates ]]; then
         ln -s /usr/share/openstack-tripleo-heat-templates templates
     fi
-    time openstack overcloud deploy \
+    time openstack overcloud -v deploy \
          --stack $STACK \
+         --override-ansible-cfg $ANSIBLE_CONFIG \
          --templates ~/templates/ \
          -r ~/dcn_roles.yaml \
          -n ~/ussuri/network-data.yaml \
