@@ -5,8 +5,14 @@
 AZ="dcn0"
 IMAGE=cirros
 CLEAN=1
-CINDER=0
+CINDER=1
 NOVA=1
+# -------------------------------------------------------
+# Cinder=0 NOVA=0   not interesting
+# CINDER=1 NOVA=0   not interesting
+# CINDER=1 NOVA=1   works
+# CINDER=0 NOVA=1   not supported
+# -------------------------------------------------------
 
 VOLUME_NAME="pet-volume-${AZ}"
 SERVER_NAME="pet-server-${AZ}"
