@@ -9,5 +9,5 @@ parameter_defaults:
     central:
       GlanceBackend: rbd
       GlanceStoreDescription: 'central rbd glance store'
-      CephClientUserName: 'glance'
+      CephClientUserName: 'external'
       CephClusterName: central
