@@ -19,7 +19,8 @@ POD="podman exec ceph-mon-$HOSTNAME"
 # Set to >0 if you want to test pinging the monitor host
 PING=0
 
-SVC=glance
+#SVC=glance
+SVC=external
 POOL=images
 CONF=/etc/ceph/$NAME.conf
 ID=$SVC
