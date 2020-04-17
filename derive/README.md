@@ -1,6 +1,6 @@
 # Derived Paramters Development
 
-[Mistral is replacing Ansible in TripleO](https://specs.openstack.org/openstack/tripleo-specs/specs/ussuri/mistral-to-ansible.html)
+[Ansible is replacing Mistral in TripleO](https://specs.openstack.org/openstack/tripleo-specs/specs/ussuri/mistral-to-ansible.html)
 so the 
 [deriving TripleO parameters feature](https://specs.openstack.org/openstack/tripleo-specs/specs/pike/tripleo-derive-parameters.html) 
 needs to be updated. [cloudnull](https://github.com/cloudnull) has provided
@@ -28,6 +28,9 @@ An overcloud deployed with network isolation containing:
 - 1 ComputeHCI
 
 ## How to do it
+
+- Use [tripleo-heat-templates patch](https://review.opendev.org/#/c/714217) `git review -d 714217`
+- Use [tripleo-ansible patch](https://review.opendev.org/#/c/719466) `git review -d 719466`
 
 - Use [ironic.sh](ironic.sh) to tag two nodes for the deployment
 - Use [deploy.sh](deploy.sh) to deploy the two nodes
