@@ -3,4 +3,5 @@ resource_registry:
   OS::TripleO::Services::NovaAZConfig: /home/stack/templates/deployment/nova/nova-az-config.yaml
 parameter_defaults:
   NovaComputeAvailabilityZone: dcn0
-  RootStackName: control-plane
+  ExtraConfig:
+    nova::cross_az_attach: false
