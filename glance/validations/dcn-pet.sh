@@ -5,13 +5,14 @@
 AZ="dcn0"
 IMAGE=cirros
 CLEAN=1
-CINDER=1
+CINDER=0
 NOVA=1
 # -------------------------------------------------------
 # Cinder=0 NOVA=0   not interesting
 # CINDER=1 NOVA=0   not interesting
-# CINDER=1 NOVA=1   works
-# CINDER=0 NOVA=1   not supported
+# CINDER=1 NOVA=1   works 
+# CINDER=0 NOVA=1   works provided NovaCrossAZAttach:false
+#                   https://review.opendev.org/#/c/721310
 # -------------------------------------------------------
 
 VOLUME_NAME="pet-volume-${AZ}"
