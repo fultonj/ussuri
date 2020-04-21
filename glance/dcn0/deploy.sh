@@ -46,7 +46,6 @@ if [[ $HEAT -eq 1 ]]; then
          -e ~/templates/environments/enable-swap.yaml \
          -e ~/templates/environments/podman.yaml \
          -e ~/templates/environments/ceph-ansible/ceph-ansible.yaml \
-         -e ~/templates/environments/cinder-volume-active-active.yaml \
          -e ~/templates/environments/dcn-hci.yaml \
          -e ~/containers-env-file.yaml \
          -e ~/control-plane-export.yaml \

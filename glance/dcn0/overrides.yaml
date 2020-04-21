@@ -14,6 +14,7 @@ parameter_defaults:
     'capabilities:node': '0-dcn-hci-scaleup-%index%'
   CinderStorageAvailabilityZone: dcn0
   CephClusterName: dcn0
+  CinderVolumeCluster: dcn0
   NovaAZAttach: false
   ManageNetworks: false
   CephAnsibleRepo: storage8-ceph-nautilus
