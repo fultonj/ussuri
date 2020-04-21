@@ -4,9 +4,9 @@
 # I.   DCN A/A Volume Snapshots?
 SNAP_TO_VOLUME=0
 # II.  DCN Instance (booted from volume) Snapshots to Volumes?
-SNAP_PET_TO_VOLUME=1
+SNAP_PET_TO_VOLUME=0
 # III.  DCN Instance Snapshots to Images?
-SNAP_TO_IMAGE=0
+SNAP_TO_IMAGE=1
 # IV. Push image created from instance snapshot (III) back to central?
 PUSH=0
 # -------------------------------------------------------
@@ -108,7 +108,63 @@ if [[ $SNAP_PET_TO_VOLUME -eq 1 ]]; then
 fi
 # -------------------------------------------------------
 if [[ $SNAP_TO_IMAGE -eq 1 ]]; then
+    # https://docs.openstack.org/nova/rocky/admin/migrate-instance-with-snapshot.html
     echo "Testing SNAP_TO_IMAGE"
+    BASE=myserver-$AZ
+    SNAP=myserver-$AZ-snapshot
+    NOVA_ID=$(openstack server show $BASE -f value -c id)
+    if [[ ! $(echo $NOVA_ID | grep -E "[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}" | wc -l) -eq 1 ]]; then
+        echo "Unable to find $BASE. Please run use-dcn.sh"
+        exit 1
+    fi
+    echo "Found $BASE with UUID $NOVA_ID"
+    IMAGE_ID=$(openstack image show $SNAP -f value -c id)
+    if [[ $(echo $IMAGE_ID | grep -E "[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}" | wc -l) -eq 1 ]]; then
+        echo "Found $SNAP with UUID $IMAGE_ID to be replaced. Deleting."
+        openstack image delete $IMAGE_ID
+    fi
+    echo "Stopping server (to ensure data is flushed to disk for clean snapshot)"
+    openstack server stop $NOVA_ID
+    i=0
+    STATUS=$(openstack server show $NOVA_ID  -f value -c status)
+    echo -n "Waiting for server to stop"
+    while [[ $STATUS == "ACTIVE" ]]; do
+        echo -n "."
+        sleep 1
+        i=$(($i+1))
+        if [[ $i -gt 30 ]]; then break; fi
+        STATUS=$(openstack server show $NOVA_ID  -f value -c status)
+    done
+    echo "."
+    if [[ $STATUS != "SHUTOFF" ]]; then
+        echo "Server is not cleanly SHUTOFF. Exiting."
+        exit 1
+    fi
+    echo "Creating Glance image $SNAP"
+    openstack server image create --name $SNAP $NOVA_ID
+    openstack image list
+    STATUS=$(openstack image show $SNAP -f value -c status)
+    echo -n "Waiting for instance to be ready to boot again"
+    while [[ $STATUS == "queued" ]]; do
+        echo -n "."
+        sleep 1
+        i=$(($i+1))
+        if [[ $i -gt 30 ]]; then break; fi
+        STATUS=$(openstack image show $SNAP -f value -c status)
+    done
+    echo "."
+    if [[ $STATUS != "active" ]]; then
+        echo "Snapshot of image did not become active."
+    else
+        echo "Snapshot should now be complete"
+        openstack image list
+    fi
+    echo "Starting server"
+    openstack server start $NOVA_ID
+    echo -n ".."
+    sleep 2
+    echo "."
+    openstack server list
 fi
 # -------------------------------------------------------
 if [[ $PUSH -eq 1 ]]; then
