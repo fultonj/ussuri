@@ -4,11 +4,11 @@
 # I.   DCN A/A Volume Snapshots?
 SNAP_TO_VOLUME=0
 # II.  DCN Instance (booted from volume) Snapshots to Volumes?
-SNAP_PET_TO_VOLUME=0
+SNAP_PET_TO_VOLUME=1
 # III.  DCN Instance Snapshots to Images?
 SNAP_TO_IMAGE=0
 # IV. Push image created from instance snapshot (III) back to central?
-PUSH=1
+PUSH=0
 # -------------------------------------------------------
 AZ="dcn0"
 IMAGE=cirros
@@ -59,7 +59,7 @@ fi
 if [[ $SNAP_PET_TO_VOLUME -eq 1 ]]; then
     echo "Testing SNAP_PET_TO_VOLUME"
     BASE=pet-server-$AZ
-    SNAP=pet-server-$AZ-snapshot
+    SNAP=pet-server-$AZ-snapshot-$(date "+%Y_%m_%d_%T")
     NOVA_ID=$(openstack server show $BASE -f value -c id)
     if [[ ! $(echo $NOVA_ID | grep -E "[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}" | wc -l) -eq 1 ]]; then
         echo "Unable to find $BASE. Please run dcn-pet.sh"
@@ -68,7 +68,7 @@ if [[ $SNAP_PET_TO_VOLUME -eq 1 ]]; then
     CINDER_ID=$(openstack volume list -f value -c ID -c "Attached to" | grep $NOVA_ID | awk {'print $1'} | head -1)
     echo "Found server: $NOVA_ID"
     echo "Found volume: $CINDER_ID"
-    echo "Stopping server (cannot shapshot while volume is in-use)"
+    echo "Stopping server to quiesce data for clean snapshot"
     openstack server stop $NOVA_ID
     i=0
     STATUS=$(openstack server show $NOVA_ID  -f value -c status)
@@ -86,29 +86,13 @@ if [[ $SNAP_PET_TO_VOLUME -eq 1 ]]; then
         exit 1
     fi
     i=0
-    echo "Detaching volume (cannot snapshot a volume that is in-use)"
-    openstack server remove volume $NOVA_ID $CINDER_ID
-    STATUS=$(openstack volume show $CINDER_ID  -f value -c status)
-    while [[ $STATUS == "in-use" ]]; do
-        echo -n "."
-        sleep 1
-        i=$(($i+1))
-        if [[ $i -gt 3 ]]; then break; fi
-        STATUS=$(openstack volume show $CINDER_ID  -f value -c status)
-    done
-    echo "."
-    if [[ $STATUS != "available" ]]; then
-        echo -e "Unable to create snapshot: cinder volume is not available."
-    else
-        echo "Creating snapshot $SNAP"
-        openstack volume snapshot create $SNAP --volume $CINDER_ID
-    fi
-    echo "Re-attaching volume and starting server"
-    openstack server add volume $NOVA_ID $CINDER_ID
-    openstack server start $NOVA_ID
-    openstack server list
+    echo "Creating snapshot $SNAP"
+    openstack volume snapshot create $SNAP --volume $CINDER_ID --force
     openstack volume list
     openstack volume snapshot list
+    echo "Starting server"
+    openstack server start $NOVA_ID
+    openstack server list
 fi
 # -------------------------------------------------------
 if [[ $SNAP_TO_IMAGE -eq 1 ]]; then
