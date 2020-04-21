@@ -7,12 +7,28 @@ IMAGE=cirros
 CLEAN=1
 CINDER=0
 NOVA=1
+NETNAME="private-${AZ}"
+KEYNAME="demokp-${AZ}"
 # -------------------------------------------------------
 # Cinder=0 NOVA=0   not interesting
 # CINDER=1 NOVA=0   not interesting
 # CINDER=1 NOVA=1   works 
 # CINDER=0 NOVA=1   works provided NovaCrossAZAttach:false
 #                   https://review.opendev.org/#/c/721310
+# -------------------------------------------------------
+# Pets from the edge! (if you already ran snapshots.sh PUSH=1)
+#
+# IMAGE=myserver-dcn0-snapshot
+# CLEAN=0
+# CINDER=1
+# NOVA=1
+# NETNAME="private_network_central"
+# KEYNAME="demokp_central"
+# AZ="nova"
+#
+# AZ is nova for central as per:
+# openstack availability zone list --volume
+# openstack volume service list --long
 # -------------------------------------------------------
 
 VOLUME_NAME="pet-volume-${AZ}"
@@ -30,7 +46,7 @@ if [[ $? != 0 ]]; then
     exit 1
 fi
 
-PRI_NET_ID=$(openstack network show private-${AZ} -c id -f value)
+PRI_NET_ID=$(openstack network show $NETNAME -c id -f value)
 if [[ -z $PRI_NET_ID ]]; then
     echo "Prerequisite failure: use-dcn.sh does not seem to have been run for $AZ yet"
     exit 1
@@ -62,10 +78,10 @@ fi
 if [[ $NOVA -eq 1 ]]; then
     echo "Creating Nova server $SERVER_NAME from $VOL_ID"
     if [[ $CINDER -eq 1 ]]; then
-        openstack server create --flavor tiny --key-name demokp-${AZ} --network private-${AZ} --security-group basic --availability-zone $AZ --volume $VOL_ID $SERVER_NAME
+        openstack server create --flavor tiny --key-name $KEYNAME --network $NETNAME --security-group basic --availability-zone $AZ --volume $VOL_ID $SERVER_NAME
     else
         # have nova ask cinder to create the volume
-        openstack server create --flavor tiny --image $IMG_ID --key-name demokp-${AZ} --network private-${AZ} --security-group basic --availability-zone $AZ --boot-from-volume 4 $SERVER_NAME
+        openstack server create --flavor tiny --image $IMG_ID --key-name $KEYNAME --network $NETNAME --security-group basic --availability-zone $AZ --boot-from-volume 4 $SERVER_NAME
     fi
 
     STATUS=$(openstack server show $SERVER_NAME -f value -c status)

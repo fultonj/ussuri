@@ -216,4 +216,9 @@ if [[ $PUSH -eq 1 ]]; then
     echo ""
     echo "Listing contents of ceph glance pools"
     bash ls_rbd.sh images
+    echo "To boot $SNAP on the central site as a new instance "
+    echo "run use-central.sh with IMAGE=$SNAP"
+    echo ""
+    echo "To boot $SNAP on central as a pet run dcn-pet.sh but"
+    echo "uncomment variables under 'Pets from the edge'"
 fi
