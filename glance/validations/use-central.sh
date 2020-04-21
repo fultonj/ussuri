@@ -3,8 +3,8 @@
 OVERALL=1
 CINDER=1
 NOVA=1
-#IMAGE=cirros
-IMAGE=myserver-dcn0-snapshot
+IMAGE=cirros
+#IMAGE=myserver-dcn0-snapshot
 
 RC=../control-plane/control-planerc
 if [[ ! -e $RC ]]; then
