@@ -16,3 +16,7 @@ parameter_defaults:
   EnablePaunch: False
   ConfigDebug: True
   CephClusterName: central
+  # Don't need the next 2 lines if you have
+  # https://review.opendev.org/#/c/721562
+  # ExtraConfig:
+  #   nova::cross_az_attach: false
