@@ -43,12 +43,12 @@ echo "- Confirm image was converted from qcow2 to raw"
 glance image-show $ID | grep disk_format
 
 openstack image list
-bash ls_all_images.sh
+bash ls_rbd.sh images
 
 echo "Copy the image from the default store to the dcn1 store:"
 
 glance image-import $ID --stores dcn1 --import-method copy-image
-bash ls_all_images.sh
+bash ls_rbd.sh images
 
 echo "- Show properties of $ID to see the stores"
 openstack image show $ID | grep properties
