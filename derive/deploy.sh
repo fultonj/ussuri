@@ -1,23 +1,30 @@
 #!/bin/bash
 
 HEAT=1
-DOWN=1
-CONF=1
+DOWN=0
+CONF=0
 
 STACK=overcloud
 DIR=config-download
 
 source ~/stackrc
 # -------------------------------------------------------
-export ANSIBLE_CONFIG=/home/stack/ansible.cfg
-if [[ ! -e $ANSIBLE_CONFIG ]]; then
-    bash /home/stack/ussuri/ansible_cfg.sh
-    if [[ ! -e $ANSIBLE_CONFIG ]]; then
-        echo "Unable to create $ANSIBLE_CONFIG"
-        exit 1;
-    fi
-fi
+# export ANSIBLE_CONFIG=/home/stack/ansible.cfg
+# if [[ ! -e $ANSIBLE_CONFIG ]]; then
+#     bash /home/stack/ussuri/ansible_cfg.sh
+#     if [[ ! -e $ANSIBLE_CONFIG ]]; then
+#         echo "Unable to create $ANSIBLE_CONFIG"
+#         exit 1;
+#     fi
+# fi
+#         --override-ansible-cfg $ANSIBLE_CONFIG \
 # -------------------------------------------------------
+if [[ -e install-overcloud.log ]]; then
+    if [[ ! -d log ]]; then mkdir log; fi
+    gzip install-overcloud.log
+    mv install-overcloud.log.gz log/install-overcloud.log.gz.$(date +%s)
+fi
+
 if [[ ! -e ~/derive_roles.yaml ]]; then
     openstack overcloud roles generate Controller ComputeHCI -o ~/derive_roles.yaml
 fi
@@ -28,28 +35,21 @@ fi
 # and --quiet being 0)
 # -------------------------------------------------------
 if [[ $HEAT -eq 1 ]]; then
-    if [[ ! -d ~/templates ]]; then
-        ln -s /usr/share/openstack-tripleo-heat-templates templates
-    fi
     time openstack overcloud -v deploy \
          --stack $STACK \
-         --override-ansible-cfg $ANSIBLE_CONFIG \
-         --templates ~/templates/ \
+         --templates /usr/share/openstack-tripleo-heat-templates/ \
          -r ~/derive_roles.yaml \
-         -n ~/ussuri/network-data.yaml \
-         -e ~/templates/environments/net-multiple-nics.yaml \
-         -e ~/templates/environments/network-isolation.yaml \
-         -e ~/templates/environments/network-environment.yaml \
-         -e ~/templates/environments/disable-telemetry.yaml \
-         -e ~/templates/environments/low-memory-usage.yaml \
-         -e ~/templates/environments/enable-swap.yaml \
-         -e ~/templates/environments/podman.yaml \
-         -e ~/templates/environments/ceph-ansible/ceph-ansible.yaml \
+         -p /usr/share/openstack-tripleo-heat-templates/plan-samples/plan-environment-derived-params.yaml \
+         -e /usr/share/openstack-tripleo-heat-templates/environments/disable-telemetry.yaml \
+         -e /usr/share/openstack-tripleo-heat-templates/environments/low-memory-usage.yaml \
+         -e /usr/share/openstack-tripleo-heat-templates/environments/enable-swap.yaml \
+         -e /usr/share/openstack-tripleo-heat-templates/environments/podman.yaml \
+         -e /usr/share/openstack-tripleo-heat-templates/environments/ceph-ansible/ceph-ansible.yaml \
          -e ~/containers-env-file.yaml \
          -e ~/domain.yaml \
          -e ~/ussuri/derive/overrides.yaml \
          --stack-only \
-         --libvirt-type qemu 2>&1 | tee -a ~/install-overcloud.log
+         --libvirt-type qemu 2>&1 | tee -a /home/stack/ussuri/derive/install-overcloud.log
 
     # remove --stack-only to make DOWN and CONF unnecessary
 fi
