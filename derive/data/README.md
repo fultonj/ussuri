@@ -75,7 +75,7 @@ vars:
 Let's look at the parameters we need to mock more closely in the next
 sections.
 
-## tripleo_get_flatten_params
+## mock_params
 
 The `tripleo_get_flatten_stack` task in [cli-derive-parameters.yaml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/playbooks/cli-derive-parameters.yaml@37)
 gets the input paramters from a TripleO deployment.
@@ -84,8 +84,7 @@ I have cloudnull's original [mock_params](https://review.opendev.org/#/c/719466/
 but it doesn't contain anything I would derive HCI parameters for so
 I'm  going to replace it with my own version from my own HCI deployment.
 
-I got [tripleo_get_flatten_params.yaml](tripleo_get_flatten_params.yaml)
-by modifying [cli-derive-parameters.yaml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/playbooks/cli-derive-parameters.yaml@37)
+I got [mock_params](mock_params) by modifying [cli-derive-parameters.yaml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/playbooks/cli-derive-parameters.yaml@37)
 to add a temporary task to save the result:
 
 ```
@@ -103,13 +102,18 @@ I then did a quick conversion:
 ```
 sudo yum install -y npm
 sudo npm install -g json2yaml
-json2yaml /tmp/tripleo_get_flatten_params.json > tripleo_get_flatten_params.yaml
+json2yaml /tmp/tripleo_get_flatten_params.json > mock_params 
 ```
-When I use tripleo_get_flatten_params.yaml in place of mock_params 
-molecule doesn't fail.
+When I use the new mock_params molecule doesn't fail. I will trim it later.
 
 I now need to add more parameters as input in the converge playbook to
 exercise the new role with molecule.
+
+## mock_roles
+
+Updated cloudnull's [mock_roles](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/molecule/mock_roles)
+to use Controller and ComputeHCI as that's a role combination you
+would derive HCI paramters for.
 
 ## playbook_parameters
 
