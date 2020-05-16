@@ -69,3 +69,5 @@ does.
 - Confirm I can see the molecule test update a representation of the deployment plan
 - Trim [mock_params](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/molecule/mock_params) so it isn't so needlessly large
 - Stack a new submission on top of [tripleo-ansible patch](https://review.opendev.org/#/c/719466) which introduces a new ansible module to derive parameters for HCI ([I have not written an ansible module since Nov 2019](https://github.com/openstack/tripleo-validations/commit/70596306b19809da8429486df6d39d1d03cf456f))
+
+I'm working on the first two tasks by focusing on mocking the [data](data).
