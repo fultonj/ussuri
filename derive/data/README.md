@@ -1,7 +1,8 @@
-## Mocking input data for derived parameters role
+## Mocking input data for derived parameters Ansible role
 
-We have a role that derives the parameters and updates the deployment
-plan correctly. 
+We have a new Ansible role called `tripleo_derived_parameters` 
+(see [tasks/main.yml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/tasks/main.yml))
+which derives the parameters and updates the deployment plan correctly.
 
 If you run:
 
@@ -14,24 +15,26 @@ If you run:
 ```
 
 With the new [plan-environment-derived-params.yaml](https://review.opendev.org/#/c/714217/2/plan-samples/plan-environment-derived-params.yaml), 
-then your overcloud will have the cpu allocation ratio and
-reserved memory as computed by Ansible (no Mistral necessary).
+then your overcloud will have the CPU allocation ratio and
+reserved memory as computed by Ansible (without Mistral).
 For now I'm faking the computation by setting the variables 
 directly so I can make sure all the interfaces are working
-and then I'll cycle back to writing an ansible module to do
+and then I'll cycle back to writing an Ansible module to do
 the actual derivation.
 
-With respect to gett all the interfaces are working, the crucial step
+With respect to get all the interfaces are working, a crucial step
 is that Ansible gets the deployment plan updated. In other words if
-you run the following:
+you run the following after the playbook has run:
 
 ```
 swift download overcloud plan-environment.yaml --output /tmp/plan-environment.yaml
 grep derived -A 10 /tmp/plan-environment.yaml
 ```
 
-Then you'll see something like this which is sufficient to make the
-rest of the overcloud deployment do the right thing:
+then you'll see something like this which is sufficient to make the
+rest of the overcloud deployment do the right thing
+(`derived_parameters` in THT [behaves similarly](https://opendev.org/openstack/tripleo-common/src/branch/stable/queens/tripleo_common/actions/templates.py#L400-L403)
+to `parameter_defaults`).
 
 ```
 derived_parameters:
@@ -47,7 +50,7 @@ derived_parameters:
 
 In order to get the above roles updated, the playbook [cli-derive-parameters.yaml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/playbooks/cli-derive-parameters.yaml@37)
 is run whenver `-p ~/templates/plan-samples/plan-environment-derived-params.yaml`
-is passed. This playbook calls the following role like this:
+is passed. This playbook calls the new role like this:
 
 ```
 - name: Derive params for each role
@@ -60,10 +63,10 @@ is passed. This playbook calls the following role like this:
     tripleo_heat_resource_tree: "{{ tripleo_get_flatten_params.stack_data.heat_resource_tree }}"
 ```
 
-If it's passed the right stuff via the vars above, then it will do
-it's job. We can then simplify the development of the derive parameters 
-modules by having molecule call the above roles as seen in the
-molecule [converge.yml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/molecule/default/converge.yml)
+If it's passed the appropriate inputs via the vars above, then it will
+do its job. We can then simplify the development of the derive
+parameters modules by having molecule call the above roles as seen in
+the molecule [converge.yml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/molecule/default/converge.yml)
 section of the new role and mocking the real data like this:
 
 ```
@@ -82,7 +85,9 @@ gets the input paramters from a TripleO deployment.
 
 I have cloudnull's original [mock_params](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/molecule/mock_params)
 but it doesn't contain anything I would derive HCI parameters for so
-I'm  going to replace it with my own version from my own HCI deployment.
+I'm  going to replace it with my own version from my own HCI deployment
+and then I'm going to trim it as it's much longer than it needs to be
+at about over 12,000 lines, or 500K.
 
 I got [mock_params](mock_params) by modifying [cli-derive-parameters.yaml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/playbooks/cli-derive-parameters.yaml@37)
 to add a temporary task to save the result:
@@ -114,6 +119,17 @@ exercise the new role with molecule.
 Updated cloudnull's [mock_roles](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/molecule/mock_roles)
 to use Controller and ComputeHCI as that's a role combination you
 would derive HCI paramters for.
+
+## ironic_data
+
+The ironic data comes from a call to [tripleo_get_introspected_data](https://github.com/openstack/tripleo-ansible/blob/master/tripleo_ansible/ansible_plugins/modules/tripleo_get_introspected_data.py) from within [the role's main tasks](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/tasks/main.yml@158).
+which [merged](https://review.opendev.org/#/c/719462).
+
+We'll need to mock this data into molecule. At the moment when I run
+the job in molecule and 
+examine [~/zuul-output/logs/reports.html](derive_zuul_report.html),
+I see that after "set role feature fact" is executed the "Node block"
+is skipped and I assume that's because `tripleo_all_nodes` is defined.
 
 ## playbook_parameters
 
