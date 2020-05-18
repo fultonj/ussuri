@@ -120,22 +120,96 @@ Updated cloudnull's [mock_roles](https://review.opendev.org/#/c/719466/22/triple
 to use Controller and ComputeHCI as that's a role combination you
 would derive HCI paramters for.
 
-## ironic_data
+## mocking ironic data
 
 The ironic data comes from a call to [tripleo_get_introspected_data](https://github.com/openstack/tripleo-ansible/blob/master/tripleo_ansible/ansible_plugins/modules/tripleo_get_introspected_data.py) from within [the role's main tasks](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/tasks/main.yml@158).
 which [merged](https://review.opendev.org/#/c/719462).
 
-We'll need to mock this data into molecule. At the moment when I run
-the job in molecule and 
-examine [~/zuul-output/logs/reports.html](derive_zuul_report.html),
-I see that after "set role feature fact" is executed the "Node block"
-is skipped and I assume that's because `tripleo_all_nodes` is defined.
+When converge runs the report [~/zuul-output/logs/reports.html](derive_zuul_report.html)
+it shows that these tasks are skipped because the "Node block" is not
+entered when `tripleo_all_nodes` is defined and it's hard coded to
+an empty list in [converge.yml line 32](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/molecule/default/converge.yml@32).
+I need to update it so that this data is mocked and I will get the 
+mock data from my real deployment.
+
+Similar move as before. On my real deployment:
+
+```
+    - name: Set all nodes fact
+      set_fact:
+        tripleo_all_nodes: "{{ known_available_nodes.baremetal_nodes | union(known_active_nodes.baremetal_nodes) }}"
+
+- name: temp same tripleo_all_nodes
+  copy: content="{{ tripleo_all_nodes }}" dest=/tmp/ironic
+```
+
+Run the deployment once, copy it in with this and delete it:
+```
+cp /tmp/ironic ironic.json
+json2yaml ironic.json > mock_ironic_all
+```
+
+Then have converge pull in mock_ironic
+
+```
+        tripleo_all_nodes: "{{ lookup('file', '../mock_ironic_all') | from_yaml }}"
+```
+
+The next thing I need to do is mock in not the overview of all
+introspected nodes (mock_ironic_all), but the actual introspection
+data of two example nodes. I was able to extract it for one of my 
+controllers and one of my ceph/computes this way:
+
+```
+    - name: Get baremetal inspection data for CephNode for John
+      tripleo_get_introspected_data:
+        node_id: 'bd776e75-7476-4287-9289-0403fb7958e4'
+      register: johns_baremetal_data
+
+    - name: write johns_data
+      copy: content="{{ johns_baremetal_data }}" dest="/tmp/oc0-ceph-0.json"
+```
+
+I then created [mock_baremetal_ComputeHCI](mock_baremetal_ComputeHCI)
+from the above (similar yaml conversion) and did something similar for 
+[mock_baremetal_Controller](mock_baremetal_Controller). Finally, I
+updated the loop in converge to set a value for one or the other.
+
+I expect the real workflow to extract that stuff by UUID but since
+the molecule test has no swift container full of introspection data
+I'm going to set a variable and then just update the playbook with
+some benign checks to only get those values from Ironic if they are
+not defined. 
+
+Here is my current approach:
+```
+- name: Converge
+  hosts: all
+  vars:
+    tripleo_get_flatten_params: "{{ lookup('file', '../mock_params') | from_yaml }}"
+    tripleo_role_list: "{{ lookup('file', '../mock_roles') | from_yaml }}"
+    tripleo_all_nodes: "{{ lookup('file', '../mock_ironic_all') | from_yaml }}"
+  tasks:
+    - name: Derive params for each role
+      include_role:
+        name: tripleo_derived_parameters
+      vars:
+        tripleo_plan_name: "overcloud"
+        tripleo_role_name: "{{ outer_item }}"
+        tripleo_environment_parameters: "{{ tripleo_get_flatten_params.stack_data.environment_parameters }}"
+        tripleo_heat_resource_tree: "{{ tripleo_get_flatten_params.stack_data.heat_resource_tree }}"
+        baremetal_data: "{{ lookup('file', '../mock_baremetal_{{ outer_item }}') | from_yaml }}"
+      loop: "{{ tripleo_role_list.roles }}"
+      loop_control:
+        loop_var: outer_item
+```
 
 ## playbook_parameters
 
 As seen in
 [plan-environment-derived-params.yaml](https://review.opendev.org/#/c/714217/2/plan-samples/plan-environment-derived-params.yaml),
-the following are passed so I'll need hci_* variables.
+the following are passed so I'll need to mock hci_* variables into
+converge.
 
 ```
 playbook_parameters:
