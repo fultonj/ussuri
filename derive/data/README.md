@@ -19,12 +19,15 @@ then your overcloud will have the CPU allocation ratio and
 reserved memory as computed by Ansible (without Mistral).
 For now I'm faking the computation by setting the variables 
 directly so I can make sure all the interfaces are working
-and then I'll cycle back to writing an Ansible module to do
-the actual derivation.
+(by this I mean 'openstack overcloud deploy' results in the the
+overcloud having the required paramters because the deployment plan
+was updated because the new Ansible roles did the right thing).
+Once I'm confident of those interfaces working, I'll cycle back to
+writing an Ansible module to do the actual derivation.
 
-With respect to get all the interfaces are working, a crucial step
-is that Ansible gets the deployment plan updated. In other words if
-you run the following after the playbook has run:
+With respect those interfaces are working, a crucial step is that
+Ansible gets the deployment plan updated. In other words if you run
+the following after the playbook has run:
 
 ```
 swift download overcloud plan-environment.yaml --output /tmp/plan-environment.yaml
@@ -208,8 +211,7 @@ Here is my current approach:
 
 As seen in
 [plan-environment-derived-params.yaml](https://review.opendev.org/#/c/714217/2/plan-samples/plan-environment-derived-params.yaml),
-the following are passed so I'll need to mock hci_* variables into
-converge.
+the following are passed to the deployment.
 
 ```
 playbook_parameters:
@@ -222,4 +224,73 @@ playbook_parameters:
       default:
         average_guest_memory_size_in_mb: 2048
         average_guest_cpu_utilization_percentage: 50
+```
+
+In a real deployment a modification of
+[tasks/main.yml](https://review.opendev.org/#/c/719466/24/tripleo_ansible/roles/tripleo_derived_parameters/tasks/main.yml)
+to add this:
+
+```
+    - fail:
+        msg: "magic: {{ hci_profile_config }}"
+```
+Results in something like this:
+```
+TASK [tripleo_derived_parameters : fail] ***************************************
+task path: /usr/share/ansible/roles/tripleo_derived_parameters/tasks/main.yml:171
+Tuesday 19 May 2020  19:14:29 +0000 (0:00:00.112)       0:00:16.137   ***********
+fatal: [localhost]: FAILED! => changed=false
+msg: 'magic: {
+  ''default'':
+        {''average_guest_memory_size_in_mb'': 2048,
+         ''average_guest_cpu_utilization_percentage'': 50}, 
+  ''many_small_vms'':
+        {''average_guest_memory_size_in_mb'': 1024,
+         ''average_guest_cpu_utilization_percentage'': 20},
+  ''few_large_vms'':
+        {''average_guest_memory_size_in_mb'': 4096,
+          ''average_guest_cpu_utilization_percentage'': 80},
+  ''nfv_default'':
+        {''average_guest_memory_size_in_mb'': 8192,
+          ''average_guest_cpu_utilization_percentage'': 90}
+  }'
+```
+
+To update [converge.yml](https://review.opendev.org/#/c/719466/24/tripleo_ansible/roles/tripleo_derived_parameters/molecule/default/converge.yml)
+so that [tasks/main.yml](https://review.opendev.org/#/c/719466/24/tripleo_ansible/roles/tripleo_derived_parameters/tasks/main.yml)
+can use variables like "{{ hci_profile_config }}", we 
+create [mock_hci_profile_config](mock_hci_profile_config)
+and mock it in like this:
+
+```
+- name: Converge
+  hosts: all
+  vars:
+    tripleo_get_flatten_params: "{{ lookup('file', '../mock_params') | from_yaml }}"
+    tripleo_role_list: "{{ lookup('file', '../mock_roles') | from_yaml }}"
+    tripleo_all_nodes: "{{ lookup('file', '../mock_ironic_all') | from_yaml }}"
+    hci_profile_config: "{{ lookup('file', '../mock_hci_profile_config') | from_yaml }}"
+    hci_profile: default
+    num_phy_cores_per_numa_node_for_pmd: 1
+    hw_data_required: true
+```
+
+We are then able to fail the same way and dump the contents of the
+varaible from molecule:
+
+```
+fatal: [centos8]: FAILED! => changed=false 
+  msg: 'magic: {''default'': {''average_guest_memory_size_in_mb'': 
+  2048, ''average_guest_cpu_utilization_percentage'': 50}, 
+  ''many_small_vms'': {''average_guest_memory_size_in_mb'': 1024, 
+  ''average_guest_cpu_utilization_percentage'': 20}, 
+  ''few_large_vms'': {''average_guest_memory_size_in_mb'': 4096, 
+  ''average_guest_cpu_utilization_percentage'': 80}, 
+  ''nfv_default'': {''average_guest_memory_size_in_mb'': 8192, 
+  ''average_guest_cpu_utilization_percentage'': 90}}'
+ERROR: 
+---- generated html file: file:///home/stack/zuul-output/logs/reports.html -----
+=========================== short test summary info ============================
+FAILED ../../../tests/test_molecule.py::test_molecule - AssertionError: asser...
+======================== 1 failed in 102.02s (0:01:42) =========================
 ```
