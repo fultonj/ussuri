@@ -35,10 +35,6 @@
       {% set heat_service_types = tripleo_heat_resource_tree.resources.values() | list | sum(attribute='parameters', start=[]) %}
       {% set heat_neutron_datapath = ((heat_service_types | map('regex_search', '.*NeutronDatapathType.*') | list | length) > 0) | bool %}
       {{ (neutron_datapath | bool) or (heat_neutron_datapath | bool) }}
-    odl_dpdk: |-
-      {% set params = tripleo_heat_resource_tree.parameters.get((tripleo_role_name ~ 'Parameters'), {}) %}
-      {% set defaults = params.get('default', {}) %}
-      {{ defaults.get('OvsEnableDpdk', false) | bool }}
     sriov: |-
       {% set service_types = role_services.values() | map(attribute='type') | list %}
       {{ ((service_types | map('regex_search', '.*\:\:NeutronSriovAgent') | list | length) > 0) | bool }}
@@ -97,7 +93,7 @@
     - name: Set all nodes fact
       set_fact:
         tripleo_all_nodes: "{{ known_available_nodes.baremetal_nodes | union(known_active_nodes.baremetal_nodes) }}"
-      
+
 - name: All node block
   when:
     - (tripleo_all_nodes | length) > 0
@@ -117,8 +113,8 @@
             matching_nodes_with_hint: "{{
               tripleo_all_nodes |
               get_node_capabilities |
-              selectattr('hint', 'regex', hint_regex)|
-              map(attribute='uuid')|
+              selectattr('hint', 'regex', hint_regex) |
+              map(attribute='uuid') |
               list
             }}"
 
@@ -154,18 +150,19 @@
           when:
             - (matching_nodes_with_profile | length) > 0
 
-    - name: Hardware block
+    - name: Get baremetal inspection data
+      tripleo_get_introspected_data:
+        node_id: "{{ role_node_uuid }}"
+      register: baremetal_data
       when:
         - role_node_uuid is defined
-      block:
-        - name: Get baremetal inspection data
-          tripleo_get_introspected_data:
-            node_id: "{{ role_node_uuid }}"
-          register: baremetal_data
+        - baremetal_data is undefined
 
-        - name: Set hardware data fact
-          set_fact:
-            hw_data: "{{ baremetal_data.data }}"
+    - name: Set hardware data fact
+      set_fact:
+        hw_data: "{{ baremetal_data.data }}"
+      when:
+        - baremetal_data is defined
 
 # TODO
 
@@ -229,7 +226,6 @@
 #   input:
 #     tripleo_role_name: <% $.tripleo_role_name %>
 #     tripleo_heat_resource_tree: <% $.tripleo_heat_resource_tree %>
-#     tripleo_heat_resource_tree: <% $.tripleo_heat_resource_tree %>
 #     introspection_data: <% $.hw_data %>
 #     user_inputs: <% $.user_inputs %>
 #     derived_parameters: <% $.derived_parameters %>
@@ -238,15 +234,34 @@
 #   on-error: set_status_failed_get_hci_derive_params
 #   # Done (no more derived parameter features)
 
-- name: set derived_parameters_result
-  set_fact:
-    derived_parameters_result:
-      NovaReservedHostMemory: 180224
-      NovaCPUAllocationRatio: 2
+- name: Derive parameters for HCI
+  when:
+    - hci
+  block:
+    - name: extract average guest cpu and memory
+      set_fact:
+        average_guest_cpu_utilization_percentage: "{{ item.value.average_guest_cpu_utilization_percentage }}"
+        average_guest_memory_size_in_mb: "{{ item.value.average_guest_memory_size_in_mb }}"
+      loop: "{{ lookup('dict', hci_profile_config) }}"
+      when: item.key == hci_profile
 
-- name: show derived_parameters_result
-  debug:
-    msg: "derived_parameters_result: {{ derived_parameters_result }}"
+    # Replace with a call to new a hci_derived_parameters module with these inputs
+    - name: set mock_hci_derived_parameters_inputs
+      set_fact:
+        mock_hci_derived_parameters_inputs:
+          tripleo_heat_resource_tree: "{{ tripleo_heat_resource_tree }}"
+          introspection_data: "{{ hw_data }}"
+          average_guest_cpu_utilization_percentage: "{{ average_guest_cpu_utilization_percentage }}"
+          average_guest_memory_size_in_mb: "{{ average_guest_memory_size_in_mb }}"
+          derived_parameters: {}
+
+    # hci_derived_parameters module will update derived_parameters_result instead
+    - name: set mock_derived_parameters_result
+      set_fact:
+        #mock_derived_parameters_result:
+        derived_parameters_result:
+          NovaReservedHostMemory: 180224
+          NovaCPUAllocationRatio: 2
 
 - name: Update derived params block
   when:
@@ -257,12 +272,12 @@
         container: "{{ plan }}"
         parameter_key: derived_parameters
 
-- name: Update derive_parameters in plan
-  tripleo_plan_parameters_update:
-    container: "{{ plan }}"
-    parameter_key: 'derived_parameters'
-    parameters: "{{ derived_parameters_result }}"
-    validate: true
+    - name: Update derive_parameters in plan
+      tripleo_plan_parameters_update:
+        container: "{{ plan }}"
+        parameter_key: 'derived_parameters'
+        parameters: "{{ derived_parameters_result }}"
+        validate: true
 
 - name: download upated plan
   shell: "source /home/stack/stackrc; rm -f /tmp/plan-environment.yaml; swift download overcloud plan-environment.yaml --output /tmp/plan-environment.yaml"
