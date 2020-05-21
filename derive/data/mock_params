@@ -2142,1065 +2142,316 @@ stack_data:
         default: '4096'
     resources:
       004cb0fa-cb58-45f0-bfc2-8e3232271578:
-        description: No description
         id: 004cb0fa-cb58-45f0-bfc2-8e3232271578
         name: ServiceChain
         parameters: []
         resources:
         - 7bfae25a-a6a3-47a7-8eb8-b1321e8c13f1
-        - 4af53931-47e2-4b7b-93d0-e58c1352cdb0
-        - 27c9cffb-b173-4e4d-8c15-d8d7b0f38bdd
-        - de3aeaf7-e221-4862-aa30-2ec143562034
-        - a0f4ea19-4a8c-4651-8678-4ca47edbf95f
-        - 0c32b774-589e-4023-9ec8-766e3fc1b0fb
-        - 28330b08-6d44-44e2-8754-3cf7fdade336
-        - 9e1ef9bd-c0cb-4cb4-b4a2-f89bfa54b855
-        - 46a75587-0d7c-4b40-a81b-e2e87254a5c3
-        - 8910a4fd-b075-441e-8f1f-f2a77ca7e2ad
-        - aaa9302e-1172-4971-8d8b-5cd9bc7211c2
-        - 9a6e77f8-aa28-41b5-b63d-1ba75f6a6e95
-        - da167bcb-03bc-4ad8-8246-593b93187aea
-        - c62eb7d7-66ce-4223-bc28-88cead97f153
-        - a526a448-4e24-4914-9445-bfcff2e9dd83
-        - 4aaeb9ce-f15a-4362-a55f-32af5a4929ac
-        - ab644526-4c07-4ab3-81ee-6a7d07f6efbf
-        - 54477a11-db5b-4a89-95c0-bb76fcd00e24
-        - a243db9d-8b02-4ce2-8d0e-114284f031e9
-        - 212b07dc-b305-4598-a9e3-4b004659e73b
-        - e3b7fa5b-4d18-4008-8a20-009f5380bdd7
-        - dc26d938-b7b8-45f0-a5e7-79a4ce922069
-        - 1b07f27d-328c-418c-ae5b-6c4359174bba
         type: OS::Heat::ResourceChain
       00ed3a79-d6dd-4b53-bab9-a52dcdee0b9f:
-        description: 'OpenStack Nova base service. Shared for all Nova services.
-
-          '
         id: 00ed3a79-d6dd-4b53-bab9-a52dcdee0b9f
         name: NovaBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KeystoneRegion
-        - NotificationDriver
-        - NovaPassword
-        - NeutronPassword
-        - PlacementPassword
-        - PlacementAPIInterface
-        - ExtractedPlacementEnabled
-        - NovaOVSBridge
-        - DatabaseSyncTimeout
-        - Debug
-        - NovaDebug
-        - EnableSQLAlchemyCollectd
-        - EnableConfigPurge
-        - UpgradeLevelNovaCompute
-        - NovaCronArchiveDeleteRowsMinute
-        - NovaCronArchiveDeleteRowsHour
-        - NovaCronArchiveDeleteRowsMonthday
-        - NovaCronArchiveDeleteRowsMonth
-        - NovaCronArchiveDeleteRowsWeekday
-        - NovaCronArchiveDeleteRowsMaxRows
-        - NovaCronArchiveDeleteRowsUser
-        - NovaCronArchiveDeleteRowsDestination
-        - NovaCronArchiveDeleteRowsMaxDelay
-        - NovaCronArchiveDeleteRowsUntilComplete
-        - NovaCronArchiveDeleteRowsPurge
-        - NovaCronArchiveDeleteAllCells
-        - NovaCronArchiveDeleteRowsAge
-        - NovaCronPurgeShadowTablesMinute
-        - NovaCronPurgeShadowTablesHour
-        - NovaCronPurgeShadowTablesMonthday
-        - NovaCronPurgeShadowTablesMonth
-        - NovaCronPurgeShadowTablesWeekday
-        - NovaCronPurgeShadowTablesUser
-        - NovaCronPurgeShadowTablesDestination
-        - NovaCronPurgeShadowTablesMaxDelay
-        - NovaCronPurgeShadowTablesAge
-        - NovaCronPurgeShadowTablesVerbose
-        - NovaCronPurgeShadowTablesAllCells
-        - NovaOVSDBConnection
-        - NovaSyncPowerStateInterval
-        - RpcUseSSL
-        - NovaAdditionalCell
-        - NovaCrossAZAttach
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/nova/nova-base-puppet.yaml
       09bc2f8a-d0f8-4c85-b1cd-b244e25854f1:
-        description: Template file to add a swap file to a node.
         id: 09bc2f8a-d0f8-4c85-b1cd-b244e25854f1
         name: AllNodesExtraConfig
         parameters:
         - servers
-        - swap_size_megabytes
-        - swap_path
         resources:
         - 20a876b2-8223-4e58-95e9-e487cf02fbd1
-        - 8f549b6e-8b60-4baf-8c27-cebf53516844
         type: OS::TripleO::AllNodesExtraConfig
       0af55db1-0452-4cd6-acbb-f6909f130687:
-        description: 'Requests certificates using certmonger through Puppet
-
-          '
         id: 0af55db1-0452-4cd6-acbb-f6909f130687
         name: '22'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - DefaultCRLURL
-        - CertmongerCA
-        - CertmongerVncCA
-        - CertmongerQemuCA
         type: OS::TripleO::Services::CertmongerUser
       0c32b774-589e-4023-9ec8-766e3fc1b0fb:
-        description: 'OpenStack containerized Iscsid service
-
-          '
         id: 0c32b774-589e-4023-9ec8-766e3fc1b0fb
         name: '16'
         parameters:
         - ContainerIscsidImage
-        - ContainerIscsidConfigImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - RoleName
-        - RoleParameters
-        - DefaultPasswords
         resources:
         - c64aae74-3134-4e44-ae12-e836414b24c6
         type: OS::TripleO::Services::Iscsid
       0c80f24c-d9b9-440e-9258-fc0fe519be70:
-        description: 'Template for nova''s logging to files
-
-          '
         id: 0c80f24c-d9b9-440e-9258-fc0fe519be70
         name: NovaLogging
         parameters:
         - ContainerNovaImage
-        - NovaServiceName
-        - DeployIdentifier
         type: OS::TripleO::Services::Logging::NovaCommon
       0c847bbc-bebf-4f28-ab50-c7a2e9961727:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 0c847bbc-bebf-4f28-ab50-c7a2e9961727
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       0ca632ea-0a9d-42ad-9506-2fad7f97fc1d:
-        description: 'OpenStack containerized Neutron service
-
-          '
         id: 0ca632ea-0a9d-42ad-9506-2fad7f97fc1d
         name: NeutronLogging
         parameters:
         - NeutronServiceName
         type: OS::TripleO::Services::Logging::NeutronCommon
       0cc85cf4-fd95-45e9-b7a1-10852623a085:
-        description: No description
         id: 0cc85cf4-fd95-45e9-b7a1-10852623a085
         name: ServiceChain
         parameters: []
         resources:
         - 4884c0be-0024-4237-b63e-f281cda89815
-        - 9bdeba5b-4d1b-4879-935d-aefc642d4d6c
-        - 731ea344-7063-4208-af85-e96ea19d074b
-        - dd5c7d96-b38c-44a4-bde3-1f5a1d8da245
-        - 11f681b2-8bbf-4638-a99c-0e57f1d26473
-        - a604d442-94aa-4945-b0b6-5a013c32dc34
-        - 3ba767fd-1d91-4a5c-aaf2-2844c20dc63e
-        - 480893c2-b973-45dd-baf2-054ea3ca5463
-        - ede3480f-65be-4194-b20f-c553265fa790
-        - a2c4a8c4-219c-478a-b967-3a50d8c27a4c
-        - d2759a63-d17d-47eb-b9f4-c2b9612093b8
-        - 86d0e9ae-c443-46af-bb1b-8ab7382661ca
-        - 85779215-ae55-4991-84bb-620454766413
-        - 54750310-50c3-4199-8bfc-61a363a6e6e9
-        - e7ef836a-bd03-4202-a032-82b981f874fd
-        - 917b6d74-8b78-421b-bd62-2ab99aa3eb68
-        - c5056cd8-4275-423c-b75f-3955f8ec6a19
-        - 48972da9-05a8-485e-9e98-7290a46377b6
-        - 0af55db1-0452-4cd6-acbb-f6909f130687
-        - fbda4c48-d763-4fc1-8504-1b01781f861e
-        - 43575489-2803-4195-ace9-f51f053c44fb
-        - 3fb1fbb6-44ae-4840-9ed4-63d7ed433ab1
-        - 85fa65e3-dd28-471b-af93-a0c06de02ab9
-        - df789c53-face-44f1-8a16-04f64535ae18
-        - ebb84b43-aa6f-4352-b1c1-78d2f1368a97
-        - 9effbcca-b66a-4618-a30e-c8aa9f2365b2
-        - b890bc93-bbff-4b56-925d-3d74cbef0839
-        - 4801ac69-fd0e-460f-aec3-b0dc7d4dbca4
-        - 1f5e5466-4acb-4e25-baef-82abc2a67094
-        - 877b3f15-6b14-4754-972e-acbc93f64923
-        - f2710d64-363e-4d15-94da-609887902bf2
-        - 394599c5-bb76-40da-8083-a66870596faf
-        - a479a007-4f28-4d6f-83bd-9100bd293ecf
-        - aeed3856-749f-404c-94c8-693794d93405
-        - 391f013b-1f02-4ca1-ba1d-4cb60556466c
-        - 1a81c590-502d-42ad-81e7-ca82513ffe31
-        - 98a47189-32d0-4185-8930-b6885b700293
-        - 5ddd4e24-3ead-4d5a-a8d3-7c29252b2d95
-        - 72efacde-3ab0-43d0-9f85-857fe1405ab7
-        - bda70130-7945-43b5-ab35-ea9c36409cd1
-        - 4e877e54-2f52-4a6c-92fc-5a68f6a60450
-        - 5ab807f4-fd5e-4876-99d2-6fa6812407ac
-        - f16b83b7-aca1-47ae-becc-5e5f5ac1e613
-        - cc5101f9-2846-4e63-a70f-554a084efc88
-        - ee736bc2-35fd-460e-bd46-c7bcf9423378
-        - 274f0104-42e6-4c03-a263-ffd10c819e34
-        - 29a0a459-f512-4d22-80ca-33b3d465ddfe
-        - 924170d9-967f-476f-b457-715752961615
         type: OS::Heat::ResourceChain
       0d4a2a4d-2ed0-4873-960f-295989ffbd19:
-        description: 'MySQL service deployment using puppet
-
-          '
         id: 0d4a2a4d-2ed0-4873-960f-295989ffbd19
         name: MysqlBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - MysqlMaxConnections
-        - MysqlIncreaseFileLimit
-        - MysqlRootPassword
-        - MysqlClustercheckPassword
-        - EnableGalera
-        - EnableInternalTLS
-        - EnableMysqlAuthEd25519
-        - MysqlIPv6
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-base.yaml
       0d62cc6c-669c-4ce5-b1a9-97bdf3773d93:
-        description: 'MySQL service deployment using puppet
-
-          '
         id: 0d62cc6c-669c-4ce5-b1a9-97bdf3773d93
         name: MysqlBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - MysqlMaxConnections
-        - MysqlIncreaseFileLimit
-        - MysqlRootPassword
-        - MysqlClustercheckPassword
-        - EnableGalera
-        - EnableInternalTLS
-        - EnableMysqlAuthEd25519
-        - MysqlIPv6
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-base.yaml
       10c58912-e9d5-4433-a975-28f919a4ea57:
-        description: 'Mysql client settings
-
-          '
         id: 10c58912-e9d5-4433-a975-28f919a4ea57
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       11f681b2-8bbf-4638-a99c-0e57f1d26473:
-        description: 'OpenStack Swift Ringbuilder
-
-          '
         id: 11f681b2-8bbf-4638-a99c-0e57f1d26473
         name: '137'
         parameters:
         - ContainerSwiftConfigImage
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - SwiftMinPartHours
-        - SwiftPartPower
-        - SwiftRingBuild
-        - SwiftReplicas
-        - SwiftRawDisks
-        - SwiftUseLocalDir
-        - SwiftRingGetTempurl
-        - SwiftRingPutTempurl
         type: OS::TripleO::Services::SwiftRingBuilder
       14e42484-0919-4498-aeef-d5ad8133f7bf:
-        description: A map of OpenStack endpoints. Since the endpoints are URLs, we
-          need to have brackets around IPv6 IP addresses. The inputs to these parameters
-          come from net_ip_uri_map, which will include these brackets in IPv6 addresses.
         id: 14e42484-0919-4498-aeef-d5ad8133f7bf
         name: EndpointMap
         parameters:
         - NetIpMap
-        - ServiceNetMap
-        - EndpointMap
-        - CloudEndpoints
         type: OS::TripleO::EndpointMap
       1585a934-adef-4c62-a5c5-04d238202fd6:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 1585a934-adef-4c62-a5c5-04d238202fd6
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       16e0f81d-e490-4baf-880e-4b45b7929172:
-        description: Noop Extra Pre-Deployment Config
         id: 16e0f81d-e490-4baf-880e-4b45b7929172
         name: ControllerExtraConfigPre
         parameters:
         - server
         type: OS::TripleO::ControllerExtraConfigPre
       18074ad0-1e9f-4ae1-a16d-464eb7d08fb3:
-        description: 'This is a default no-op template which provides empty user-data
-          which can be passed to the OS::Nova::Server resources. This template can
-          be replaced with a different implementation via the resource registry, such
-          that deployers may customize their first-boot configuration.
-
-          '
         id: 18074ad0-1e9f-4ae1-a16d-464eb7d08fb3
         name: NodeUserData
         parameters: []
         type: OS::TripleO::NodeUserData
       1a81c590-502d-42ad-81e7-ca82513ffe31:
-        description: 'OpenStack containerized Cinder Volume service
-
-          '
         id: 1a81c590-502d-42ad-81e7-ca82513ffe31
         name: '38'
         parameters:
         - ContainerCinderVolumeImage
-        - ContainerCinderConfigImage
-        - ClusterCommonTag
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - ConfigDebug
-        - ContainerCli
-        - DeployIdentifier
-        - CinderVolumeLoggingSource
         resources:
         - f968ffe5-e310-4cd9-919d-1005924cbdfa
-        - 6de84d54-d293-4f0d-8b46-17f7ae0caf16
-        - 511cfe81-764b-4971-bee1-1f3b8860f790
-        - f5228973-e111-4864-b13d-ddc08dc20aa0
         type: OS::TripleO::Services::CinderVolume
       1b07f27d-328c-418c-ae5b-6c4359174bba:
-        description: 'Configure tuned
-
-          '
         id: 1b07f27d-328c-418c-ae5b-6c4359174bba
         name: '43'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - EndpointMap
-        - RoleName
-        - RoleParameters
-        - TunedCustomProfile
-        - TunedProfileName
         type: OS::TripleO::Services::Tuned
       1bebc39f-ce92-4753-9b10-c44648cb40f6:
-        description: Noop Extra Pre-Deployment Config
         id: 1bebc39f-ce92-4753-9b10-c44648cb40f6
         name: ComputeHCIExtraConfigPre
         parameters:
         - server
         type: OS::TripleO::ComputeHCIExtraConfigPre
       1f5e5466-4acb-4e25-baef-82abc2a67094:
-        description: 'Chrony time service deployment using ansible, this YAML file
-          creates the interface between the HOT template and the ansible role that
-          actually installs and configure chronyd.
-
-          '
         id: 1f5e5466-4acb-4e25-baef-82abc2a67094
         name: '139'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - NtpServer
-        - NtpPool
-        - ChronyGlobalServerOptions
-        - ChronyGlobalPoolOptions
-        - NtpIburstEnable
-        - MaxPoll
-        - MinPoll
-        - EnablePackageInstall
-        - ChronyAclRules
         type: OS::TripleO::Services::Timesync
       20527635-eb42-48fd-875b-c873f9d16c43:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 20527635-eb42-48fd-875b-c873f9d16c43
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       20a876b2-8223-4e58-95e9-e487cf02fbd1:
-        description: No description
         id: 20a876b2-8223-4e58-95e9-e487cf02fbd1
         name: ComputeHCISwapDeployment
         parameters: []
         type: OS::Heat::SoftwareDeploymentGroup
       212b07dc-b305-4598-a9e3-4b004659e73b:
-        description: 'OpenStack Libvirt Service
-
-          '
         id: 212b07dc-b305-4598-a9e3-4b004659e73b
         name: '27'
         parameters:
         - ContainerNovaLibvirtImage
-        - ContainerNovaLibvirtConfigImage
-        - ContainerNovaLibvirtUlimit
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - UseTLSTransportForLiveMigration
-        - NovaEnableRbdBackend
-        - CinderEnableRbdBackend
-        - CephClientKey
-        - CephClusterFSID
-        - CephClientUserName
-        - CephClusterName
-        - UseTLSTransportForVnc
-        - UseTLSTransportForNbd
-        - InternalTLSCAFile
-        - InternalTLSNbdCAFile
-        - InternalTLSVncCAFile
-        - InternalTLSQemuCAFile
-        - LibvirtCACert
-        - QemuCACert
-        - LibvirtVncCACert
-        - LibvirtNbdCACert
-        - VhostuserSocketGroup
-        - QemuMemoryBackingDir
-        - ContainerCli
-        - NovaComputeLibvirtType
-        - LibvirtEnabledPerfEvents
-        - MonitoringSubscriptionNovaLibvirt
-        - MigrationSshKey
-        - MigrationSshPort
-        - LibvirtTLSPassword
-        - NovaNfsEnabled
-        - LibvirtLogFilters
-        - LibvirtVirtlogdLogFilters
-        - LibvirtTLSPriority
         resources:
         - aaa47372-008b-420e-a787-fa9a7c694005
-        - 27d3d525-0f0d-483a-9668-ba3020a80315
-        - 79ec4402-3a2c-4934-bf79-f8ac48d2a140
-        - 0c847bbc-bebf-4f28-ab50-c7a2e9961727
         type: OS::TripleO::Services::NovaLibvirt
       22095df0-a048-4a32-91db-8c78ae2c2e05:
-        description: 'Openstack Heat base service. Shared for all Heat services.
-
-          '
         id: 22095df0-a048-4a32-91db-8c78ae2c2e05
         name: HeatBase
         parameters:
         - Debug
-        - HeatDebug
-        - ServiceData
-        - ServiceNetMap
-        - HeatPassword
-        - KeystoneRegion
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - HeatCronPurgeDeletedEnsure
-        - HeatCronPurgeDeletedMinute
-        - HeatCronPurgeDeletedHour
-        - HeatCronPurgeDeletedMonthday
-        - HeatCronPurgeDeletedMonth
-        - HeatCronPurgeDeletedWeekday
-        - HeatCronPurgeDeletedMaxDelay
-        - HeatCronPurgeDeletedUser
-        - HeatCronPurgeDeletedAge
-        - HeatCronPurgeDeletedAgeType
-        - HeatCronPurgeDeletedDestination
-        - HeatYaqlLimitIterators
-        - HeatYaqlMemoryQuota
-        - HeatMaxJsonBodySize
-        - NotificationDriver
-        - HeatCorsAllowedOrigin
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/heat/heat-base-puppet.yaml
       2366cde5-e545-4919-9743-ca1ecb14ab86:
-        description: 'OpenStack Nova base service. Shared for all Nova services.
-
-          '
         id: 2366cde5-e545-4919-9743-ca1ecb14ab86
         name: NovaBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KeystoneRegion
-        - NotificationDriver
-        - NovaPassword
-        - NeutronPassword
-        - PlacementPassword
-        - PlacementAPIInterface
-        - ExtractedPlacementEnabled
-        - NovaOVSBridge
-        - DatabaseSyncTimeout
-        - Debug
-        - NovaDebug
-        - EnableSQLAlchemyCollectd
-        - EnableConfigPurge
-        - UpgradeLevelNovaCompute
-        - NovaCronArchiveDeleteRowsMinute
-        - NovaCronArchiveDeleteRowsHour
-        - NovaCronArchiveDeleteRowsMonthday
-        - NovaCronArchiveDeleteRowsMonth
-        - NovaCronArchiveDeleteRowsWeekday
-        - NovaCronArchiveDeleteRowsMaxRows
-        - NovaCronArchiveDeleteRowsUser
-        - NovaCronArchiveDeleteRowsDestination
-        - NovaCronArchiveDeleteRowsMaxDelay
-        - NovaCronArchiveDeleteRowsUntilComplete
-        - NovaCronArchiveDeleteRowsPurge
-        - NovaCronArchiveDeleteAllCells
-        - NovaCronArchiveDeleteRowsAge
-        - NovaCronPurgeShadowTablesMinute
-        - NovaCronPurgeShadowTablesHour
-        - NovaCronPurgeShadowTablesMonthday
-        - NovaCronPurgeShadowTablesMonth
-        - NovaCronPurgeShadowTablesWeekday
-        - NovaCronPurgeShadowTablesUser
-        - NovaCronPurgeShadowTablesDestination
-        - NovaCronPurgeShadowTablesMaxDelay
-        - NovaCronPurgeShadowTablesAge
-        - NovaCronPurgeShadowTablesVerbose
-        - NovaCronPurgeShadowTablesAllCells
-        - NovaOVSDBConnection
-        - NovaSyncPowerStateInterval
-        - RpcUseSSL
-        - NovaAdditionalCell
-        - NovaCrossAZAttach
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/nova/nova-base-puppet.yaml
       23822700-13b5-449a-8993-884a470eec95:
-        description: 'Apache service configured with Puppet. Note this is typically
-          included automatically via other services which run via Apache.
-
-          '
         id: 23822700-13b5-449a-8993-884a470eec95
         name: ApacheServiceBase
         parameters:
         - ApacheMaxRequestWorkers
-        - ApacheServerLimit
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/apache/apache-baremetal-puppet.yaml
       2393bb0a-5d47-4349-a87e-5ed371b153ec:
-        description: 'OpenStack Swift Proxy service configured with Puppet
-
-          '
         id: 2393bb0a-5d47-4349-a87e-5ed371b153ec
         name: SwiftBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - SwiftHashSuffix
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/swift/swift-base.yaml
       23b0a631-1af8-4fb1-a858-d1eb967146ce:
-        description: 'Mysql client settings
-
-          '
         id: 23b0a631-1af8-4fb1-a858-d1eb967146ce
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       23c405b1-ab22-45b2-be11-e66b1ee97dce:
-        description: 'HAProxy deployment with TLS enabled, with an injected certificate
-
-          '
         id: 23c405b1-ab22-45b2-be11-e66b1ee97dce
         name: HAProxyPublicTLS
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - SSLCertificate
-        - SSLIntermediateCertificate
-        - SSLKey
-        - DeployedSSLCertificatePath
         type: OS::TripleO::Services::HAProxyPublicTLS
       24395c55-f3c9-4076-ad3b-b02912ffb0e2:
-        description: 'Apache service configured with Puppet. Note this is typically
-          included automatically via other services which run via Apache.
-
-          '
         id: 24395c55-f3c9-4076-ad3b-b02912ffb0e2
         name: ApacheServiceBase
         parameters:
         - ApacheMaxRequestWorkers
-        - ApacheServerLimit
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/apache/apache-baremetal-puppet.yaml
       25a7fcb5-752e-48fc-b4e0-e3bbd2c89c32:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 25a7fcb5-752e-48fc-b4e0-e3bbd2c89c32
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       2728a299-e633-4d03-ad21-d21caefd1e0f:
-        description: 'Apache service configured with Puppet. Note this is typically
-          included automatically via other services which run via Apache.
-
-          '
         id: 2728a299-e633-4d03-ad21-d21caefd1e0f
         name: ApacheServiceBase
         parameters:
         - ApacheMaxRequestWorkers
-        - ApacheServerLimit
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/apache/apache-baremetal-puppet.yaml
       274f0104-42e6-4c03-a263-ffd10c819e34:
-        description: 'OpenStack containerized Ovn Controller agent.
-
-          '
         id: 274f0104-42e6-4c03-a263-ffd10c819e34
         name: '119'
         parameters:
         - EndpointMap
-        - ServiceNetMap
-        - ServiceData
-        - ContainerOvnControllerImage
-        - ContainerOvnControllerConfigImage
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - DeployIdentifier
-        - OVNSouthboundServerPort
-        - NeutronBridgeMappings
-        - OVNIntegrationBridge
-        - OVNMetadataEnabled
-        - OVNCMSOptions
-        - OvsHwOffload
-        - OVNRemoteProbeInterval
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - OVNOpenflowProbeInterval
         resources:
         - bde6c8da-0657-4837-acaa-a1e26d57b853
         type: OS::TripleO::Services::OVNController
       276eb741-a213-418a-b3f6-80fb2960ce71:
-        description: 'Uses cloud-init to create an additional user with a known name,
-          in addition to the distro-default user created by the cloud-init default.
-
-          '
         id: 276eb741-a213-418a-b3f6-80fb2960ce71
         name: NodeAdminUserData
         parameters:
         - node_admin_username
-        - node_admin_extra_ssh_keys
         type: OS::TripleO::NodeAdminUserData
       27c9cffb-b173-4e4d-8c15-d8d7b0f38bdd:
-        description: 'TripleO Firewall settings
-
-          '
         id: 27c9cffb-b173-4e4d-8c15-d8d7b0f38bdd
         name: '41'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - ExtraFirewallRules
         type: OS::TripleO::Services::TripleoFirewall
       27d3d525-0f0d-483a-9668-ba3020a80315:
-        description: 'OpenStack containerized Nova libvirt service
-
-          '
         id: 27d3d525-0f0d-483a-9668-ba3020a80315
         name: NovaLibvirtLogging
         parameters:
         - LibvirtLogLevel
-        - LibvirtVirtlogdLogLevel
         type: OS::TripleO::Services::Logging::NovaLibvirt
       27df5684-d49c-4be6-87ad-d20ab0ba3028:
-        description: 'Software Config to drive os-net-config for a simple interface
-          on a bridge.
-
-          '
         id: 27df5684-d49c-4be6-87ad-d20ab0ba3028
         name: NetworkConfig
         parameters:
         - ControlPlaneIp
-        - ControlPlaneSubnetCidr
-        - ControlPlaneDefaultRoute
-        - ControlPlaneStaticRoutes
-        - ControlPlaneMtu
-        - DnsServers
-        - DnsSearchDomains
-        - StorageIpSubnet
-        - StorageInterfaceRoutes
-        - StorageMtu
-        - StorageInterfaceDefaultRoute
-        - StorageNetworkVlanID
-        - StorageMgmtIpSubnet
-        - StorageMgmtInterfaceRoutes
-        - StorageMgmtMtu
-        - StorageMgmtInterfaceDefaultRoute
-        - StorageMgmtNetworkVlanID
-        - InternalApiIpSubnet
-        - InternalApiInterfaceRoutes
-        - InternalApiMtu
-        - InternalApiInterfaceDefaultRoute
-        - InternalApiNetworkVlanID
-        - TenantIpSubnet
-        - TenantInterfaceRoutes
-        - TenantMtu
-        - TenantInterfaceDefaultRoute
-        - TenantNetworkVlanID
-        - ExternalIpSubnet
-        - ExternalInterfaceRoutes
-        - ExternalMtu
-        - ExternalInterfaceDefaultRoute
-        - ExternalNetworkVlanID
-        - ManagementIpSubnet
-        - ManagementInterfaceRoutes
-        - ManagementMtu
-        - ManagementInterfaceDefaultRoute
-        - ManagementNetworkVlanID
         type: OS::TripleO::Controller::Net::SoftwareConfig
       28330b08-6d44-44e2-8754-3cf7fdade336:
-        description: 'OpenStack containerized Nova Migration Target service
-
-          '
         id: 28330b08-6d44-44e2-8754-3cf7fdade336
         name: '29'
         parameters:
         - ContainerNovaComputeImage
-        - ContainerNovaLibvirtConfigImage
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - DockerNovaMigrationSshdPort
-        - MigrationSshKey
-        - MigrationSshPort
-        - NovaNfsEnabled
         resources:
         - eae34461-2081-449d-b929-73b116e5feab
-        - 69ebf83a-5956-457d-bdf7-e4d004f72467
         type: OS::TripleO::Services::NovaMigrationTarget
       2952b53f-a030-4a14-ba4e-b573dca5773f:
-        description: 'OpenStack Neutron ML2/OVN plugin configured with Puppet
-
-          '
         id: 2952b53f-a030-4a14-ba4e-b573dca5773f
         name: NeutronBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - OVNSouthboundServerPort
-        - OVNNorthboundServerPort
-        - OVNDbConnectionTimeout
-        - OVNVifType
-        - OVNNeutronSyncMode
-        - OVNQosDriver
-        - NeutronGeneveMaxHeaderSize
-        - NeutronEnableDVR
-        - NeutronEnableIgmpSnooping
-        - OVNMetadataEnabled
-        - NeutronNetworkType
-        - OVNDnsServers
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - NeutronVhostuserSocketDir
-        - OVNEmitNeedToFrag
         resources:
         - 3c5a339c-58cc-4ebe-9ead-f310608dff57
         type: OS::TripleO::Docker::NeutronMl2PluginBase
       295498ae-62f9-4cd9-92d8-e0ed33a9df80:
-        description: 'OpenStack containerized Glance API service
-
-          '
         id: 295498ae-62f9-4cd9-92d8-e0ed33a9df80
         name: GlanceLogging
         parameters:
         - ContainerGlanceApiImage
         type: OS::TripleO::Services::Logging::GlanceApi
       29a0a459-f512-4d22-80ca-33b3d465ddfe:
-        description: 'OpenStack containerized Heat API CFN service
-
-          '
         id: 29a0a459-f512-4d22-80ca-33b3d465ddfe
         name: '57'
         parameters:
         - ContainerHeatApiCfnImage
-        - ContainerHeatApiCfnConfigImage
-        - HeatApiCfnLoggingSource
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - HeatWorkers
-        - HeatPassword
-        - KeystoneRegion
-        - MonitoringSubscriptionHeatApiCnf
         resources:
         - 69c2a5a6-e9ee-4edf-8178-247634cbec70
-        - 22095df0-a048-4a32-91db-8c78ae2c2e05
-        - 40e1cfe5-2528-493d-adac-4f9cefb634ef
-        - 2728a299-e633-4d03-ad21-d21caefd1e0f
         type: OS::TripleO::Services::HeatApiCfn
       2a4a933e-adce-4dd5-b5f5-2891086e88c1:
-        description: 'Creates a port for a VIP on the undercloud ctlplane network.
-          The IP address will be chosen automatically if FixedIPs is empty.
-
-          '
         id: 2a4a933e-adce-4dd5-b5f5-2891086e88c1
         name: RedisVirtualIP
         parameters:
         - ServiceName
-        - NetworkName
-        - PortName
-        - DnsName
-        - ControlPlaneIP
-        - ControlPlaneSubnetCidr
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - FixedIPs
         type: OS::TripleO::Network::Ports::RedisVipPort
       2b6911c7-6f35-49e2-a7fc-7e6d2142967b:
-        description: 'Template for nova''s logging to files
-
-          '
         id: 2b6911c7-6f35-49e2-a7fc-7e6d2142967b
         name: NovaLogging
         parameters:
         - ContainerNovaImage
-        - NovaServiceName
-        - DeployIdentifier
         type: OS::TripleO::Services::Logging::NovaCommon
       2c5ec96d-c4d3-4caf-93d7-3761bec9041c:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 2c5ec96d-c4d3-4caf-93d7-3761bec9041c
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       2f7d4154-1985-4778-9848-553c28994a5e:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 2f7d4154-1985-4778-9848-553c28994a5e
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       30417c34-8010-4dc2-a2f8-e66ec01dd3b4:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 30417c34-8010-4dc2-a2f8-e66ec01dd3b4
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       304ed0e4-c5f4-454b-967e-bd5202e34392:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 304ed0e4-c5f4-454b-967e-bd5202e34392
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       3196b360-6fe2-40b6-b6d0-fd410baf7415:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 3196b360-6fe2-40b6-b6d0-fd410baf7415
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       322bfe51-7ce0-47a0-b029-a4011e620651:
-        description: 'Ceph base service. Shared by all Ceph services.
-
-          '
         id: 322bfe51-7ce0-47a0-b029-a4011e620651
         name: CephBase
         parameter_groups:
@@ -3214,67 +2465,8 @@ stack_data:
           - SwiftFetchDirPutTempurl
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - CephDashboardAdminPassword
-        - CephGrafanaAdminPassword
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - StackUpdateType
-        - NodeDataLookup
-        - DeploymentServerBlacklist
-        - ContainerCli
-        - CephEnableDashboard
-        - CephAnsiblePlaybook
-        - CephAnsibleExtraConfig
-        - CephAnsibleSkipTags
-        - CephConfigOverrides
-        - CephClusterFSID
-        - CephClusterName
-        - CephPoolDefaultPgNum
-        - CephPools
-        - CinderRbdPoolName
-        - CinderRbdExtraPools
-        - CinderBackupRbdPoolName
-        - GlanceRbdPoolName
-        - GlanceBackend
-        - GnocchiRbdPoolName
-        - NovaRbdPoolName
-        - CephClientKey
-        - CephClientUserName
-        - CephRgwClientName
-        - CephRgwKey
-        - CephPoolDefaultSize
-        - ManilaCephFSDataPoolName
-        - ManilaCephFSMetadataPoolName
-        - ManilaCephFSDataPoolPGNum
-        - ManilaCephFSMetadataPoolPGNum
-        - ManilaCephFSShareBackendName
-        - ManilaCephFSCephFSAuthId
-        - CephManilaClientKey
-        - CephIPv6
-        - SwiftPassword
-        - ContainerCephDaemonImage
-        - CephAnsiblePlaybookVerbosity
-        - CephAnsibleEnvironmentVariables
-        - SwiftFetchDirGetTempurl
-        - SwiftFetchDirPutTempurl
-        - LocalCephAnsibleFetchDirectoryBackup
-        - CephOsdPercentageMin
-        - ContainerImageRegistryCredentials
-        - CephExtraKeys
-        - CephAnsibleRepo
-        - CephExternalMultiConfig
-        - CinderEnableRbdBackend
-        - NovaEnableRbdBackend
-        - CinderBackupBackend
-        - GnocchiBackend
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/ceph-ansible/ceph-base.yaml
       33dc9a02-6fb5-4701-abaa-0352a1bf4c59:
-        description: 'Ceph base service. Shared by all Ceph services.
-
-          '
         id: 33dc9a02-6fb5-4701-abaa-0352a1bf4c59
         name: CephBase
         parameter_groups:
@@ -3288,783 +2480,210 @@ stack_data:
           - SwiftFetchDirPutTempurl
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - CephDashboardAdminPassword
-        - CephGrafanaAdminPassword
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - StackUpdateType
-        - NodeDataLookup
-        - DeploymentServerBlacklist
-        - ContainerCli
-        - CephEnableDashboard
-        - CephAnsiblePlaybook
-        - CephAnsibleExtraConfig
-        - CephAnsibleSkipTags
-        - CephConfigOverrides
-        - CephClusterFSID
-        - CephClusterName
-        - CephPoolDefaultPgNum
-        - CephPools
-        - CinderRbdPoolName
-        - CinderRbdExtraPools
-        - CinderBackupRbdPoolName
-        - GlanceRbdPoolName
-        - GlanceBackend
-        - GnocchiRbdPoolName
-        - NovaRbdPoolName
-        - CephClientKey
-        - CephClientUserName
-        - CephRgwClientName
-        - CephRgwKey
-        - CephPoolDefaultSize
-        - ManilaCephFSDataPoolName
-        - ManilaCephFSMetadataPoolName
-        - ManilaCephFSDataPoolPGNum
-        - ManilaCephFSMetadataPoolPGNum
-        - ManilaCephFSShareBackendName
-        - ManilaCephFSCephFSAuthId
-        - CephManilaClientKey
-        - CephIPv6
-        - SwiftPassword
-        - ContainerCephDaemonImage
-        - CephAnsiblePlaybookVerbosity
-        - CephAnsibleEnvironmentVariables
-        - SwiftFetchDirGetTempurl
-        - SwiftFetchDirPutTempurl
-        - LocalCephAnsibleFetchDirectoryBackup
-        - CephOsdPercentageMin
-        - ContainerImageRegistryCredentials
-        - CephExtraKeys
-        - CephAnsibleRepo
-        - CephExternalMultiConfig
-        - CinderEnableRbdBackend
-        - NovaEnableRbdBackend
-        - CinderBackupBackend
-        - GnocchiBackend
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/ceph-ansible/ceph-base.yaml
       391f013b-1f02-4ca1-ba1d-4cb60556466c:
-        description: 'Configure tuned
-
-          '
         id: 391f013b-1f02-4ca1-ba1d-4cb60556466c
         name: '143'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - EndpointMap
-        - RoleName
-        - RoleParameters
-        - TunedCustomProfile
-        - TunedProfileName
         type: OS::TripleO::Services::Tuned
       394599c5-bb76-40da-8083-a66870596faf:
-        description: Host config and reboot service which configures Kernel Args and
-          reboot
         id: 394599c5-bb76-40da-8083-a66870596faf
         name: '11'
         parameters:
         - RoleNetIpMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KernelArgs
-        - TunedProfileName
-        - IsolCpusList
-        - NodeRebootWaitTimeout
         type: OS::TripleO::Services::BootParams
       398a2971-be85-4cf4-973d-028fdfc09e8f:
-        description: No description
         id: 398a2971-be85-4cf4-973d-028fdfc09e8f
         name: VipMap
         parameters:
         - ControlPlaneIp
-        - ControlPlaneSubnetCidr
-        - StorageIp
-        - StorageIpSubnet
-        - StorageIpUri
-        - StorageNetName
-        - StorageMgmtIp
-        - StorageMgmtIpSubnet
-        - StorageMgmtIpUri
-        - StorageMgmtNetName
-        - InternalApiIp
-        - InternalApiIpSubnet
-        - InternalApiIpUri
-        - InternalApiNetName
-        - TenantIp
-        - TenantIpSubnet
-        - TenantIpUri
-        - TenantNetName
-        - ExternalIp
-        - ExternalIpSubnet
-        - ExternalIpUri
-        - ExternalNetName
-        - ManagementIp
-        - ManagementIpSubnet
-        - ManagementIpUri
-        - ManagementNetName
         type: OS::TripleO::Network::Ports::NetVipMap
       3b09e624-9c89-4702-a8a7-437d82029011:
-        description: 'OpenStack containerized HAproxy service
-
-          '
         id: 3b09e624-9c89-4702-a8a7-437d82029011
         name: HAProxyBase
         parameters:
         - ContainerHAProxyImage
-        - ContainerHAProxyConfigImage
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - EndpointMap
-        - HAProxyStatsPassword
-        - HAProxyStatsUser
-        - HAProxySyslogAddress
-        - HAProxySyslogFacility
-        - SSLCertificate
-        - PublicSSLCertificateAutogenerated
-        - EnablePublicTLS
-        - DeployedSSLCertificatePath
-        - RedisPassword
-        - MonitoringSubscriptionHaproxy
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - ConfigDebug
-        - EnableLoadBalancer
-        - HAProxyStatsEnabled
-        - InternalTLSCRLPEMFile
-        - InternalTLSCRLPEMDir
         resources:
         - 23c405b1-ab22-45b2-be11-e66b1ee97dce
-        - 69b9ad28-14c0-47fd-9adb-e25e49fed1a8
-        - 6d8208df-6a06-4185-aa83-b0a99c797aa5
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/haproxy/haproxy-container-puppet.yaml
       3ba767fd-1d91-4a5c-aaf2-2844c20dc63e:
-        description: 'OpenStack containerized Neutron ML2 Plugin configured with Puppet
-
-          '
         id: 3ba767fd-1d91-4a5c-aaf2-2844c20dc63e
         name: '93'
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - ContainerNeutronConfigImage
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - NeutronPluginMl2PuppetTags
         resources:
         - 2952b53f-a030-4a14-ba4e-b573dca5773f
         type: OS::TripleO::Services::NeutronCorePlugin
       3c5a339c-58cc-4ebe-9ead-f310608dff57:
-        description: 'OpenStack Neutron ML2 Plugin configured with Puppet
-
-          '
         id: 3c5a339c-58cc-4ebe-9ead-f310608dff57
         name: NeutronMl2Base
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - NeutronMechanismDrivers
-        - NeutronTypeDrivers
-        - NeutronFlatNetworks
-        - NeutronPluginExtensions
-        - NeutronNetworkVLANRanges
-        - NeutronTunnelIdRanges
-        - NeutronVniRanges
-        - NeutronNetworkType
-        - NeutronFirewallDriver
-        - NeutronOverlayIPVersion
-        - NeutronML2PhysicalNetworkMtus
         resources:
         - 819e904d-344b-4044-a89c-bb288e61e6d2
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/neutron/neutron-plugin-ml2.yaml
       3d3181b3-5038-4001-bf99-e3157053b0ad:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: 3d3181b3-5038-4001-bf99-e3157053b0ad
         name: TenantPort
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::Controller::Ports::TenantPort
       3fb1fbb6-44ae-4840-9ed4-63d7ed433ab1:
-        description: 'OpenStack containerized Nova Scheduler service
-
-          '
         id: 3fb1fbb6-44ae-4840-9ed4-63d7ed433ab1
         name: '109'
         parameters:
         - ContainerNovaSchedulerImage
-        - ContainerNovaConfigImage
-        - NovaSchedulerLoggingSource
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - NovaSchedulerAvailableFilters
-        - NovaSchedulerDefaultFilters
-        - NovaSchedulerMaxAttempts
-        - MonitoringSubscriptionNovaScheduler
-        - NovaSchedulerDiscoverHostsInCellsInterval
-        - NovaSchedulerWorkers
-        - NovaSchedulerQueryImageType
-        - NovaSchedulerLimitTenantsToPlacementAggregate
-        - NovaSchedulePlacementAggregateRequiredForTenants
-        - NovaSchedulerEnableIsolatedAggregateFiltering
         resources:
         - 44f697c0-8eaf-4d14-b537-e5d13dfc4a8d
-        - 7f09fe9b-81c3-46c2-874a-f69ccbed5d8e
-        - 790dbe8e-7a59-4a37-be92-fe047716230b
-        - 0c80f24c-d9b9-440e-9258-fc0fe519be70
         type: OS::TripleO::Services::NovaScheduler
       409542ee-0e71-4489-a619-327f6cf343b1:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: 409542ee-0e71-4489-a619-327f6cf343b1
         name: InternalApiPort
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::ComputeHCI::Ports::InternalApiPort
       40e1cfe5-2528-493d-adac-4f9cefb634ef:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 40e1cfe5-2528-493d-adac-4f9cefb634ef
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       43575489-2803-4195-ace9-f51f053c44fb:
-        description: 'OpenStack containerized Nova Conductor service
-
-          '
         id: 43575489-2803-4195-ace9-f51f053c44fb
         name: '106'
         parameters:
         - ContainerNovaConductorImage
-        - ContainerNovaConfigImage
-        - NovaConductorLoggingSource
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - DeployIdentifier
-        - NovaWorkers
-        - MonitoringSubscriptionNovaConductor
-        - NovaPassword
         resources:
         - d4f59ee2-1541-4f8a-9b4c-f0bc5e1a6063
-        - fa90a5f5-b92b-44a6-9a72-df39c669c5cb
-        - 83629074-1742-425b-91b2-3e46f3c873c2
-        - d78e5268-d434-4d77-a07f-f59d10588715
         type: OS::TripleO::Services::NovaConductor
       44f697c0-8eaf-4d14-b537-e5d13dfc4a8d:
-        description: 'Mysql client settings
-
-          '
         id: 44f697c0-8eaf-4d14-b537-e5d13dfc4a8d
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       46a75587-0d7c-4b40-a81b-e2e87254a5c3:
-        description: 'Containerized logrotate with crond for containerized service
-          logs rotation
-
-          '
         id: 46a75587-0d7c-4b40-a81b-e2e87254a5c3
         name: '30'
         parameters:
         - ContainerCrondImage
-        - ContainerCrondConfigImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - LogrotateMaxsize
-        - LogrotateRotationInterval
-        - LogrotateRotate
-        - LogrotatePurgeAfterDays
-        - LogrotateDateExt
-        - LogrotateDateFormat
-        - LogrotateDateYesterday
         resources:
         - 4feb0fb6-8671-4793-bcd6-3366628643ed
         type: OS::TripleO::Services::ContainersLogrotateCrond
       4801ac69-fd0e-460f-aec3-b0dc7d4dbca4:
-        description: 'Openstack Heat CloudWatch API service, disabled by default since
-          Pike
-
-          '
         id: 4801ac69-fd0e-460f-aec3-b0dc7d4dbca4
         name: '56'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
         type: OS::TripleO::Services::HeatApiCloudwatch
       480893c2-b973-45dd-baf2-054ea3ca5463:
-        description: 'OpenStack Glance service configured with Puppet
-
-          '
         id: 480893c2-b973-45dd-baf2-054ea3ca5463
         name: '50'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - DeployIdentifier
-        - Debug
-        - GlanceDebug
-        - EnableSQLAlchemyCollectd
-        - GlancePassword
-        - GlanceWorkers
-        - MonitoringSubscriptionGlanceApi
-        - GlanceApiLoggingSource
-        - GlanceImageMemberQuota
-        - GlanceNfsEnabled
-        - GlanceCacheEnabled
-        - GlanceImageCacheDir
-        - GlanceImageCacheMaxSize
-        - GlanceImageCacheStallTime
-        - GlanceNfsShare
-        - GlanceNetappNfsEnabled
-        - NetappShareLocation
-        - GlanceNfsOptions
-        - GlanceRbdPoolName
-        - NovaEnableRbdBackend
-        - GlanceShowMultipleLocations
-        - GlanceImageImportPlugins
-        - GlanceImageConversionOutputFormat
-        - GlanceInjectMetadataProperties
-        - GlanceIgnoreUserRoles
-        - GlanceEnabledImportMethods
-        - GlanceStagingNfsShare
-        - GlanceNodeStagingUri
-        - GlanceStagingNfsOptions
-        - KeystoneRegion
-        - GlanceApiPolicies
-        - NotificationDriver
-        - EnableInternalTLS
-        - GlanceNotifierStrategy
-        - GlanceLogFile
-        - GlanceBackend
-        - GlanceBackendID
-        - GlanceStoreDescription
-        - GlanceMultistoreConfig
-        - CephClientUserName
-        - CephClusterName
-        - MultipathdEnable
-        - GlanceApiOptVolumes
-        - ContainerGlanceApiImage
-        - ContainerGlanceApiConfigImage
         resources:
         - e2b9b42a-1764-4cdc-9f8e-f66e07d52530
-        - 295498ae-62f9-4cd9-92d8-e0ed33a9df80
-        - 9a5f35ea-87bd-4e0c-9876-429c55a7767c
         type: OS::TripleO::Services::GlanceApi
       4884c0be-0024-4237-b63e-f281cda89815:
-        description: 'Oslo Notify using a shared OpenStack containerized Rabbitmq
-          service
-
-          '
         id: 4884c0be-0024-4237-b63e-f281cda89815
         name: '123'
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - RpcPort
-        - RpcUserName
-        - RpcPassword
-        - RpcUseSSL
         resources:
         - f6888a56-ee82-4394-bf7c-e8dae793a2fc
         type: OS::TripleO::Services::OsloMessagingNotify
       48972da9-05a8-485e-9e98-7290a46377b6:
-        description: 'OpenStack containerized OVN DBs service managed by pacemaker
-
-          '
         id: 48972da9-05a8-485e-9e98-7290a46377b6
         name: '118'
         parameters:
         - ContainerOvnDbsImage
-        - ContainerOvnDbsConfigImage
-        - ClusterCommonTag
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - OVNNorthboundServerPort
-        - OVNSouthboundServerPort
-        - EnableLoadBalancer
-        - ConfigDebug
-        - ContainerCli
-        - DeployIdentifier
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - OVNDBSPacemakerTimeout
-        - OVNDBSReplicationInterval
         resources:
         - be706183-e800-484e-a272-697c3fd276e1
-        - c36a0b07-85d2-4475-b2da-f1ebfd47f900
         type: OS::TripleO::Services::OVNDBs
       4aaeb9ce-f15a-4362-a55f-32af5a4929ac:
-        description: 'OpenStack containerized Ovn Controller agent.
-
-          '
         id: 4aaeb9ce-f15a-4362-a55f-32af5a4929ac
         name: '45'
         parameters:
         - EndpointMap
-        - ServiceNetMap
-        - ServiceData
-        - ContainerOvnControllerImage
-        - ContainerOvnControllerConfigImage
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - DeployIdentifier
-        - OVNSouthboundServerPort
-        - NeutronBridgeMappings
-        - OVNIntegrationBridge
-        - OVNMetadataEnabled
-        - OVNCMSOptions
-        - OvsHwOffload
-        - OVNRemoteProbeInterval
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - OVNOpenflowProbeInterval
         resources:
         - c4c6acfa-7fcd-414a-b654-d989c034fb25
         type: OS::TripleO::Services::OVNController
       4af53931-47e2-4b7b-93d0-e58c1352cdb0:
-        description: 'HAproxy service configured with Puppet
-
-          '
         id: 4af53931-47e2-4b7b-93d0-e58c1352cdb0
         name: '3'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - CAMap
         type: OS::TripleO::Services::CACerts
       4d2f8f25-600a-47dc-8427-e22f21948f4b:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 4d2f8f25-600a-47dc-8427-e22f21948f4b
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       4da892dd-18d4-492d-abb0-4308d2849997:
-        description: OpenStack ComputeHCI node configured by Puppet
         id: 4da892dd-18d4-492d-abb0-4308d2849997
         name: '0'
         parameters:
         - OvercloudComputeHCIFlavor
-        - ComputeHCIImage
-        - ImageUpdatePolicy
-        - KeyName
-        - ServiceNetMap
-        - EndpointMap
-        - UpdateIdentifier
-        - Hostname
-        - HostnameMap
-        - ComputeHCIIPs
-        - SoftwareConfigTransport
-        - CloudDomain
-        - ComputeHCIServerMetadata
-        - ServerMetadata
-        - ComputeHCISchedulerHints
-        - NodeIndex
-        - ServiceNames
-        - MonitoringSubscriptions
-        - ServiceMetadataSettings
-        - ConfigCommand
-        - ConfigCollectSplay
-        - UpgradeInitCommand
-        - UpgradeInitCommonCommand
-        - DeploymentServerBlacklistDict
-        - RoleParameters
-        - ComputeHCIControlPlaneSubnet
-        - ControlPlaneSubnetCidr
-        - ControlPlaneDefaultRoute
-        - ControlPlaneStaticRoutes
-        - DnsServers
-        - StorageInterfaceRoutes
-        - StorageNetworkVlanID
-        - StorageMgmtInterfaceRoutes
-        - StorageMgmtNetworkVlanID
-        - InternalApiInterfaceRoutes
-        - InternalApiNetworkVlanID
-        - TenantInterfaceRoutes
-        - TenantNetworkVlanID
-        - ServerDeletionPolicy
-        - UserData
         resources:
         - d27cb27e-1b9c-41c3-a3ac-9c1ee1ee0e53
-        - cb71c038-5f8e-47ba-a27b-418b5dd1f362
-        - c78c4df9-aa06-4ffa-a19b-035ccaff8991
-        - 1bebc39f-ce92-4753-9b10-c44648cb40f6
-        - 409542ee-0e71-4489-a619-327f6cf343b1
-        - f456aff5-d1e6-4346-9a51-2526de7ed825
-        - deec0d78-bf77-4803-af30-52a5228f8504
-        - 94d88eb7-99fa-4153-a970-5994aea089f1
         type: OS::TripleO::ComputeHCI
       4e170317-fdb6-4d12-9a8f-ca7a1c712122:
-        description: 'Apache service configured with Puppet. Note this is typically
-          included automatically via other services which run via Apache.
-
-          '
         id: 4e170317-fdb6-4d12-9a8f-ca7a1c712122
         name: ApacheServiceBase
         parameters:
         - ApacheMaxRequestWorkers
-        - ApacheServerLimit
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/apache/apache-baremetal-puppet.yaml
       4e877e54-2f52-4a6c-92fc-5a68f6a60450:
-        description: 'Ceph Manager service.
-
-          '
         id: 4e877e54-2f52-4a6c-92fc-5a68f6a60450
         name: '18'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - CephDashboardAdminUser
-        - CephEnableDashboard
-        - CephDashboardAdminRO
-        - EnableInternalTLS
         resources:
         - eab60557-66d3-4a91-b329-f743fef383eb
         type: OS::TripleO::Services::CephMgr
       4fe6a4eb-7c9b-48f1-97d8-036de18a9e00:
-        description: 'Mysql client settings
-
-          '
         id: 4fe6a4eb-7c9b-48f1-97d8-036de18a9e00
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       4feb0fb6-8671-4793-bcd6-3366628643ed:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 4feb0fb6-8671-4793-bcd6-3366628643ed
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       504a81f8-6e6c-4b03-82b8-1d19a6cfe215:
-        description: Create networks to split out Overcloud traffic
         id: 504a81f8-6e6c-4b03-82b8-1d19a6cfe215
         name: Networks
         parameters:
         - CtlplaneNetworkCidrs
         type: OS::TripleO::Network
       511cfe81-764b-4971-bee1-1f3b8860f790:
-        description: 'OpenStack containerized Cinder Volume service
-
-          '
         id: 511cfe81-764b-4971-bee1-1f3b8860f790
         name: CinderBase
         parameters:
         - ContainerCinderVolumeImage
-        - ContainerCinderConfigImage
-        - DockerCinderVolumeUlimit
-        - CinderVolumeLoggingSource
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - CephClientUserName
-        - CephClusterName
-        - CinderVolumeCluster
-        - CinderEnableNfsBackend
-        - CinderEnableIscsiBackend
-        - CinderEnableRbdBackend
-        - CinderISCSIAvailabilityZone
-        - CinderISCSIHelper
-        - CinderISCSIProtocol
-        - CinderNfsAvailabilityZone
-        - CinderNfsMountOptions
-        - CinderNfsServers
-        - CinderNfsSnapshotSupport
-        - CinderNasSecureFileOperations
-        - CinderNasSecureFilePermissions
-        - CinderRbdAvailabilityZone
-        - CinderRbdPoolName
-        - CinderRbdExtraPools
-        - CinderRbdFlattenVolumeFromSnapshot
-        - CephClusterFSID
-        - MonitoringSubscriptionCinderVolume
-        - CinderEtcdLocalConnect
         resources:
         - 5872db09-dca4-4bf2-b2c2-35c5121f9f54
-        - 929d0618-95b3-4ca7-8f6e-1459d53b06e0
-        - b50db5c5-fb01-4516-aa1b-b0ce3a819ed8
-        - 6995cb1c-7ba1-489c-9dcf-049a1aa60ada
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/cinder/cinder-volume-container-puppet.yaml
       54477a11-db5b-4a89-95c0-bb76fcd00e24:
-        description: 'Mysql client settings
-
-          '
         id: 54477a11-db5b-4a89-95c0-bb76fcd00e24
         name: '21'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: OS::TripleO::Services::MySQLClient
       54750310-50c3-4199-8bfc-61a363a6e6e9:
-        description: 'OpenStack containerized Iscsid service
-
-          '
         id: 54750310-50c3-4199-8bfc-61a363a6e6e9
         name: '67'
         parameters:
         - ContainerIscsidImage
-        - ContainerIscsidConfigImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - RoleName
-        - RoleParameters
-        - DefaultPasswords
         resources:
         - 1585a934-adef-4c62-a5c5-04d238202fd6
         type: OS::TripleO::Services::Iscsid
       556c22da-b706-455e-a3d4-2ed7b0e632e0:
-        description: 'Ceph base service. Shared by all Ceph services.
-
-          '
         id: 556c22da-b706-455e-a3d4-2ed7b0e632e0
         name: CephBase
         parameter_groups:
@@ -4078,381 +2697,89 @@ stack_data:
           - SwiftFetchDirPutTempurl
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - CephDashboardAdminPassword
-        - CephGrafanaAdminPassword
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - StackUpdateType
-        - NodeDataLookup
-        - DeploymentServerBlacklist
-        - ContainerCli
-        - CephEnableDashboard
-        - CephAnsiblePlaybook
-        - CephAnsibleExtraConfig
-        - CephAnsibleSkipTags
-        - CephConfigOverrides
-        - CephClusterFSID
-        - CephClusterName
-        - CephPoolDefaultPgNum
-        - CephPools
-        - CinderRbdPoolName
-        - CinderRbdExtraPools
-        - CinderBackupRbdPoolName
-        - GlanceRbdPoolName
-        - GlanceBackend
-        - GnocchiRbdPoolName
-        - NovaRbdPoolName
-        - CephClientKey
-        - CephClientUserName
-        - CephRgwClientName
-        - CephRgwKey
-        - CephPoolDefaultSize
-        - ManilaCephFSDataPoolName
-        - ManilaCephFSMetadataPoolName
-        - ManilaCephFSDataPoolPGNum
-        - ManilaCephFSMetadataPoolPGNum
-        - ManilaCephFSShareBackendName
-        - ManilaCephFSCephFSAuthId
-        - CephManilaClientKey
-        - CephIPv6
-        - SwiftPassword
-        - ContainerCephDaemonImage
-        - CephAnsiblePlaybookVerbosity
-        - CephAnsibleEnvironmentVariables
-        - SwiftFetchDirGetTempurl
-        - SwiftFetchDirPutTempurl
-        - LocalCephAnsibleFetchDirectoryBackup
-        - CephOsdPercentageMin
-        - ContainerImageRegistryCredentials
-        - CephExtraKeys
-        - CephAnsibleRepo
-        - CephExternalMultiConfig
-        - CinderEnableRbdBackend
-        - NovaEnableRbdBackend
-        - CinderBackupBackend
-        - GnocchiBackend
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/ceph-ansible/ceph-base.yaml
       56b2d69e-c45e-4aad-92ef-3fef13bb1ee1:
-        description: Noop Extra Pre-Deployment Config
         id: 56b2d69e-c45e-4aad-92ef-3fef13bb1ee1
         name: NodeExtraConfig
         parameters:
         - server
         type: OS::TripleO::NodeExtraConfig
       580f0aa5-16f7-48bd-b0f8-d9171701e3b8:
-        description: 'OpenStack Nova base service. Shared for all Nova services.
-
-          '
         id: 580f0aa5-16f7-48bd-b0f8-d9171701e3b8
         name: NovaBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KeystoneRegion
-        - NotificationDriver
-        - NovaPassword
-        - NeutronPassword
-        - PlacementPassword
-        - PlacementAPIInterface
-        - ExtractedPlacementEnabled
-        - NovaOVSBridge
-        - DatabaseSyncTimeout
-        - Debug
-        - NovaDebug
-        - EnableSQLAlchemyCollectd
-        - EnableConfigPurge
-        - UpgradeLevelNovaCompute
-        - NovaCronArchiveDeleteRowsMinute
-        - NovaCronArchiveDeleteRowsHour
-        - NovaCronArchiveDeleteRowsMonthday
-        - NovaCronArchiveDeleteRowsMonth
-        - NovaCronArchiveDeleteRowsWeekday
-        - NovaCronArchiveDeleteRowsMaxRows
-        - NovaCronArchiveDeleteRowsUser
-        - NovaCronArchiveDeleteRowsDestination
-        - NovaCronArchiveDeleteRowsMaxDelay
-        - NovaCronArchiveDeleteRowsUntilComplete
-        - NovaCronArchiveDeleteRowsPurge
-        - NovaCronArchiveDeleteAllCells
-        - NovaCronArchiveDeleteRowsAge
-        - NovaCronPurgeShadowTablesMinute
-        - NovaCronPurgeShadowTablesHour
-        - NovaCronPurgeShadowTablesMonthday
-        - NovaCronPurgeShadowTablesMonth
-        - NovaCronPurgeShadowTablesWeekday
-        - NovaCronPurgeShadowTablesUser
-        - NovaCronPurgeShadowTablesDestination
-        - NovaCronPurgeShadowTablesMaxDelay
-        - NovaCronPurgeShadowTablesAge
-        - NovaCronPurgeShadowTablesVerbose
-        - NovaCronPurgeShadowTablesAllCells
-        - NovaOVSDBConnection
-        - NovaSyncPowerStateInterval
-        - RpcUseSSL
-        - NovaAdditionalCell
-        - NovaCrossAZAttach
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/nova/nova-base-puppet.yaml
       5872db09-dca4-4bf2-b2c2-35c5121f9f54:
-        description: 'Mysql client settings
-
-          '
         id: 5872db09-dca4-4bf2-b2c2-35c5121f9f54
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       58fd3bdf-f270-4c90-a3f3-0e6147162c2c:
-        description: No description
         id: 58fd3bdf-f270-4c90-a3f3-0e6147162c2c
         name: ControllerIpListMap
         parameters:
         - ControlPlaneIpList
-        - StorageIpList
-        - StorageNetName
-        - StorageMgmtIpList
-        - StorageMgmtNetName
-        - InternalApiIpList
-        - InternalApiNetName
-        - TenantIpList
-        - TenantNetName
-        - ExternalIpList
-        - ExternalNetName
-        - ManagementIpList
-        - ManagementNetName
-        - EnabledServices
-        - ServiceNetMap
-        - ServiceHostnameList
-        - NetworkHostnameMap
-        - NovaAdditionalCell
-        - RoleNetworks
         type: OS::TripleO::Network::Ports::NetIpListMap
       5a293ec9-56f4-481d-a8d9-957d9a090fc5:
-        description: 'Utility stack to convert an array of services into a set of
-          combined role configs.
-
-          '
         id: 5a293ec9-56f4-481d-a8d9-957d9a090fc5
         name: ComputeHCIServiceChain
         parameters:
         - Services
-        - ServiceData
-        - ServiceNetMap
-        - EndpointMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
         resources:
         - 004cb0fa-cb58-45f0-bfc2-8e3232271578
         type: OS::TripleO::ComputeHCIServices
       5a57324b-30db-4ab7-bed2-98fa414eb491:
-        description: 'This is a default no-op template which provides empty user-data
-          which can be passed to the OS::Nova::Server resources. This template can
-          be replaced with a different implementation via the resource registry, such
-          that deployers may customize their first-boot configuration.
-
-          '
         id: 5a57324b-30db-4ab7-bed2-98fa414eb491
         name: ControllerRoleUserData
         parameters: []
         type: OS::TripleO::Controller::NodeUserData
       5ab807f4-fd5e-4876-99d2-6fa6812407ac:
-        description: 'TripleO Package installation settings
-
-          '
         id: 5ab807f4-fd5e-4876-99d2-6fa6812407ac
         name: '142'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnablePackageInstall
-        - FastForwardRepoType
-        - FastForwardRepoArgs
-        - FastForwardCustomRepoScriptContent
-        - UpgradeLeappEnabled
-        - UpgradeLeappDebug
-        - UpgradeLeappDevelSkip
-        - UpgradeLeappRebootTimeout
-        - UpgradeInitCommand
-        - UpgradeInitCommonCommand
-        - SkipPackageUpdate
         type: OS::TripleO::Services::TripleoPackages
       5ddd4e24-3ead-4d5a-a8d3-7c29252b2d95:
-        description: 'OpenStack containerized Heat Engine service
-
-          '
         id: 5ddd4e24-3ead-4d5a-a8d3-7c29252b2d95
         name: '58'
         parameters:
         - ContainerHeatEngineImage
-        - ContainerHeatConfigImage
-        - HeatEngineLoggingSource
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - DeployIdentifier
-        - HeatEngineOptVolumes
-        - HeatEngineOptEnvVars
-        - HeatEnableDBPurge
-        - EnableSQLAlchemyCollectd
-        - HeatWorkers
-        - HeatMaxNestedStackDepth
-        - HeatReauthenticationAuthMethod
-        - HeatPassword
-        - HeatStackDomainAdminPassword
-        - HeatAuthEncryptionKey
-        - MonitoringSubscriptionHeatEngine
-        - HeatConvergenceEngine
-        - HeatMaxResourcesPerStack
-        - HeatEnginePluginDirs
-        - HeatConfigureDelegatedRoles
-        - ClientRetryLimit
         resources:
         - 7c5fb290-55ed-43dc-b59d-4cae63efa634
-        - c469e7c7-fb69-4d24-b3fe-39df1f2d5797
-        - 5fc2a04f-370c-4e19-b210-edb345e66931
-        - 4d2f8f25-600a-47dc-8427-e22f21948f4b
         type: OS::TripleO::Services::HeatEngine
       5f9019bf-c6f1-452e-9804-9ad623a085c9:
-        description: 'Apache service configured with Puppet. Note this is typically
-          included automatically via other services which run via Apache.
-
-          '
         id: 5f9019bf-c6f1-452e-9804-9ad623a085c9
         name: ApacheServiceBase
         parameters:
         - ApacheMaxRequestWorkers
-        - ApacheServerLimit
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/apache/apache-baremetal-puppet.yaml
       5fc2a04f-370c-4e19-b210-edb345e66931:
-        description: 'Openstack Heat base service. Shared for all Heat services.
-
-          '
         id: 5fc2a04f-370c-4e19-b210-edb345e66931
         name: HeatBase
         parameters:
         - Debug
-        - HeatDebug
-        - ServiceData
-        - ServiceNetMap
-        - HeatPassword
-        - KeystoneRegion
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - HeatCronPurgeDeletedEnsure
-        - HeatCronPurgeDeletedMinute
-        - HeatCronPurgeDeletedHour
-        - HeatCronPurgeDeletedMonthday
-        - HeatCronPurgeDeletedMonth
-        - HeatCronPurgeDeletedWeekday
-        - HeatCronPurgeDeletedMaxDelay
-        - HeatCronPurgeDeletedUser
-        - HeatCronPurgeDeletedAge
-        - HeatCronPurgeDeletedAgeType
-        - HeatCronPurgeDeletedDestination
-        - HeatYaqlLimitIterators
-        - HeatYaqlMemoryQuota
-        - HeatMaxJsonBodySize
-        - NotificationDriver
-        - HeatCorsAllowedOrigin
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/heat/heat-base-puppet.yaml
       60ded895-2ef2-408c-a910-a8cd98071ea9:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 60ded895-2ef2-408c-a910-a8cd98071ea9
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       631f40fb-d15e-47d5-86a7-ddc65e1265d9:
-        description: 'Mysql client settings
-
-          '
         id: 631f40fb-d15e-47d5-86a7-ddc65e1265d9
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       64d4a37f-e9b7-4baa-a7c2-281751bb8662:
-        description: 'OpenStack Cinder base service. Shared by all Cinder services.
-
-          '
         id: 64d4a37f-e9b7-4baa-a7c2-281751bb8662
         name: CinderBase
         parameters:
         - CinderStorageAvailabilityZone
-        - CinderPassword
-        - Debug
-        - CinderDebug
-        - EnableSQLAlchemyCollectd
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KeystoneRegion
-        - CinderCronDbPurgeMinute
-        - CinderCronDbPurgeHour
-        - CinderCronDbPurgeMonthday
-        - CinderCronDbPurgeMonth
-        - CinderCronDbPurgeWeekday
-        - CinderCronDbPurgeUser
-        - CinderCronDbPurgeAge
-        - CinderCronDbPurgeDestination
-        - CinderCronDbPurgeMaxDelay
-        - NovaPassword
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/cinder/cinder-base.yaml
       696485d1-1a5b-4abc-84eb-9e392fb8cd5c:
-        description: No description
         id: 696485d1-1a5b-4abc-84eb-9e392fb8cd5c
         name: Controller
         parameters: []
@@ -4460,285 +2787,94 @@ stack_data:
         - 9ea872a1-2f59-4464-b4fc-9b16ce956a41
         type: OS::Heat::ResourceGroup
       6995cb1c-7ba1-489c-9dcf-049a1aa60ada:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 6995cb1c-7ba1-489c-9dcf-049a1aa60ada
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       69b9ad28-14c0-47fd-9adb-e25e49fed1a8:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 69b9ad28-14c0-47fd-9adb-e25e49fed1a8
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       69c2a5a6-e9ee-4edf-8178-247634cbec70:
-        description: 'OpenStack containerized Heat API CFN service
-
-          '
         id: 69c2a5a6-e9ee-4edf-8178-247634cbec70
         name: HeatApiCfnLogging
         parameters: []
         type: OS::TripleO::Services::Logging::HeatApiCfn
       69ebf83a-5956-457d-bdf7-e4d004f72467:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 69ebf83a-5956-457d-bdf7-e4d004f72467
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       6bb1c294-813d-4709-afd5-ebc5545a3240:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 6bb1c294-813d-4709-afd5-ebc5545a3240
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       6d8208df-6a06-4185-aa83-b0a99c797aa5:
-        description: 'OpenStack containerized HAProxy API service
-
-          '
         id: 6d8208df-6a06-4185-aa83-b0a99c797aa5
         name: HAProxyLogging
         parameters: []
         type: OS::TripleO::Services::Logging::HAProxy
       6de84d54-d293-4f0d-8b46-17f7ae0caf16:
-        description: 'Provides the list of Docker volumes and environment to be used
-          by the CinderVolume and CinderBackup services. The same list is used for
-          HA and non-HA deployments.
-
-          '
         id: 6de84d54-d293-4f0d-8b46-17f7ae0caf16
         name: CinderCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - CinderVolumeOptVolumes
-        - CinderVolumeOptEnvVars
-        - CinderEnableIscsiBackend
-        - CinderLVMLoopDeviceSize
-        - MultipathdEnable
         resources:
         - 8a3aa4a1-6838-41cd-ba15-962b2af4020b
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/cinder/cinder-common-container-puppet.yaml
       6f83500b-c197-4dee-9e9e-d080b07317fa:
-        description: 'OpenStack Neutron base service. Shared for all Neutron agents.
-
-          '
         id: 6f83500b-c197-4dee-9e9e-d080b07317fa
         name: NeutronBase
         parameters:
         - DatabaseSyncTimeout
-        - NeutronDhcpAgentsPerNetwork
-        - DhcpAgentNotification
-        - NeutronDnsDomain
-        - NeutronCorePlugin
-        - NeutronServicePlugins
-        - Debug
-        - NeutronDebug
-        - EnableConfigPurge
-        - NeutronGlobalPhysnetMtu
-        - TenantNetPhysnetMtu
-        - NeutronDBSyncExtraParams
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - NotificationDriver
-        - EnableVLANTransparency
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/neutron/neutron-base.yaml
       72b79376-ae59-4524-bc73-a1b402c07f1b:
-        description: 'Mysql client settings
-
-          '
         id: 72b79376-ae59-4524-bc73-a1b402c07f1b
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       72efacde-3ab0-43d0-9f85-857fe1405ab7:
-        description: 'Containerized logrotate with crond for containerized service
-          logs rotation
-
-          '
         id: 72efacde-3ab0-43d0-9f85-857fe1405ab7
         name: '111'
         parameters:
         - ContainerCrondImage
-        - ContainerCrondConfigImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - LogrotateMaxsize
-        - LogrotateRotationInterval
-        - LogrotateRotate
-        - LogrotatePurgeAfterDays
-        - LogrotateDateExt
-        - LogrotateDateFormat
-        - LogrotateDateYesterday
         resources:
         - 3196b360-6fe2-40b6-b6d0-fd410baf7415
         type: OS::TripleO::Services::ContainersLogrotateCrond
       7312bbd3-0495-496c-809c-b5c528b3bb78:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: 7312bbd3-0495-496c-809c-b5c528b3bb78
         name: PublicVirtualIP
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::Network::Ports::ExternalVipPort
       731ea344-7063-4208-af85-e96ea19d074b:
-        description: 'MySQL service deployment with pacemaker bundle
-
-          '
         id: 731ea344-7063-4208-af85-e96ea19d074b
         name: '88'
         parameters:
         - ContainerMysqlImage
-        - ContainerMysqlConfigImage
-        - ClusterCommonTag
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - MysqlRootPassword
-        - MysqlClustercheckPassword
-        - MysqlUpgradePersist
-        - MysqlUpgradeTransfer
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - ConfigDebug
-        - DeployIdentifier
-        - ContainerCli
         resources:
         - 0d4a2a4d-2ed0-4873-960f-295989ffbd19
-        - a3bead95-55a2-429b-aee3-669025a1be09
         type: OS::TripleO::Services::MySQL
       734afb18-6755-4918-82d2-9f47e2679981:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 734afb18-6755-4918-82d2-9f47e2679981
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       74743613-26f3-4439-a10f-6826a0cc9368:
-        description: 'Apache service configured with Puppet. Note this is typically
-          included automatically via other services which run via Apache.
-
-          '
         id: 74743613-26f3-4439-a10f-6826a0cc9368
         name: ApacheServiceBase
         parameters:
         - ApacheMaxRequestWorkers
-        - ApacheServerLimit
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/apache/apache-baremetal-puppet.yaml
       76550500-3598-415d-bee1-4e9069d95375:
-        description: 'Deploy an OpenStack environment, consisting of several node
-          types (roles), Controller, Compute, BlockStorage, SwiftStorage and CephStorage.
-          The Storage roles enable independent scaling of the storage components,
-          but the minimal deployment is one Controller and one Compute node.
-
-          '
         id: 76550500-3598-415d-bee1-4e9069d95375
         name: Root
         parameter_groups:
@@ -4748,630 +2884,180 @@ stack_data:
           - controllerExtraConfig
         parameters:
         - CloudNameStorage
-        - StorageVirtualFixedIPs
-        - CloudNameStorageManagement
-        - StorageMgmtVirtualFixedIPs
-        - CloudNameInternal
-        - InternalApiVirtualFixedIPs
-        - CloudName
-        - PublicVirtualFixedIPs
-        - ExternalVirtualFixedIPs
-        - CloudNameCtlplane
-        - ExtraHostFileEntries
-        - UndercloudHostsEntries
-        - EndpointMapOverride
-        - ExtraConfig
-        - NeutronControlPlaneID
-        - NeutronPhysicalBridge
-        - NeutronPublicInterface
-        - ControlPlaneSubnet
-        - ControlPlaneSubnetCidr
-        - ControlFixedIPs
-        - RabbitCookieSalt
-        - RedisVirtualFixedIPs
-        - OVNDBsVirtualFixedIPs
-        - CloudDomain
-        - ServerMetadata
-        - NetworkDeploymentActions
-        - HypervisorNeutronPhysicalBridge
-        - HypervisorNeutronPublicInterface
-        - NodeCreateBatchSize
-        - NovaAdditionalCell
-        - NovaLocalMetadataPerCell
-        - ControllerExtraConfig
-        - controllerExtraConfig
-        - ControllerServices
-        - ControllerNetworkDeploymentActions
-        - ControllerAnyErrorsFatal
-        - ControllerMaxFailPercentage
-        - ControllerCount
-        - ControllerHostnameFormat
-        - ControllerRemovalPolicies
-        - ControllerRemovalPoliciesMode
-        - ControllerSchedulerHints
-        - ControllerParameters
-        - ControllerExtraGroupVars
-        - ComputeHCIExtraConfig
-        - ComputeHCIServices
-        - ComputeHCINetworkDeploymentActions
-        - ComputeHCIAnyErrorsFatal
-        - ComputeHCIMaxFailPercentage
-        - ComputeHCICount
-        - ComputeHCIHostnameFormat
-        - ComputeHCIRemovalPolicies
-        - ComputeHCIRemovalPoliciesMode
-        - ComputeHCISchedulerHints
-        - ComputeHCIParameters
-        - ComputeHCIExtraGroupVars
-        - UpdateIdentifier
-        - DeployIdentifier
-        - AddVipsToEtcHosts
-        - DeploymentServerBlacklist
-        - GlobalConfigExtraMapData
         resources:
         - cf9072c0-2c28-4f6c-b459-eaa182ebb52e
-        - a5e0ade6-5698-4755-be82-9d82d5ddfd86
-        - bbc4bc2b-9ff2-4bca-a6a0-1a64b765627a
-        - 14e42484-0919-4498-aeef-d5ad8133f7bf
-        - b0031af2-37fe-4224-872d-fea79057e19c
-        - 398a2971-be85-4cf4-973d-028fdfc09e8f
-        - f9316fa2-1822-4758-9e04-37ded21bebb0
-        - 7312bbd3-0495-496c-809c-b5c528b3bb78
-        - 276eb741-a213-418a-b3f6-80fb2960ce71
-        - a3f4c288-c2f3-4223-be0d-cb90e8d960e8
-        - 5a293ec9-56f4-481d-a8d9-957d9a090fc5
-        - 504a81f8-6e6c-4b03-82b8-1d19a6cfe215
-        - 990443f1-ae57-452b-a6e6-72ee81043caa
-        - d5ac91a0-d47b-45f9-8f3f-75d0fa4c0947
-        - 776bd938-41d2-44b1-964b-5e0639ae39fb
-        - f537bec9-07ea-40b9-8496-1441b706ff63
-        - 58fd3bdf-f270-4c90-a3f3-0e6147162c2c
-        - 5a57324b-30db-4ab7-bed2-98fa414eb491
-        - ee32c1c3-d5b8-4ee3-807d-0a14b11e1fb2
-        - 696485d1-1a5b-4abc-84eb-9e392fb8cd5c
-        - 09bc2f8a-d0f8-4c85-b1cd-b244e25854f1
-        - 18074ad0-1e9f-4ae1-a16d-464eb7d08fb3
-        - 2a4a933e-adce-4dd5-b5f5-2891086e88c1
-        - e0654479-b219-4112-a485-a72f280b44ba
       776bd938-41d2-44b1-964b-5e0639ae39fb:
-        description: 'This is a default no-op template which provides empty user-data
-          which can be passed to the OS::Nova::Server resources. This template can
-          be replaced with a different implementation via the resource registry, such
-          that deployers may customize their first-boot configuration.
-
-          '
         id: 776bd938-41d2-44b1-964b-5e0639ae39fb
         name: ComputeHCIRoleUserData
         parameters: []
         type: OS::TripleO::ComputeHCI::NodeUserData
       790dbe8e-7a59-4a37-be92-fe047716230b:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 790dbe8e-7a59-4a37-be92-fe047716230b
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       7953ddbb-76f7-4bb3-a016-953e4a09f730:
-        description: 'OpenStack containerized Rabbitmq service
-
-          '
         id: 7953ddbb-76f7-4bb3-a016-953e4a09f730
         name: RabbitMQServiceBase
         parameters:
         - ContainerRabbitmqImage
-        - ContainerRabbitmqConfigImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - RabbitCookie
-        - EnableInternalTLS
-        - RabbitUserName
-        - RabbitPassword
-        - RabbitFDLimit
-        - RabbitIPv6
-        - RabbitHAQueues
-        - RabbitNetTickTime
-        - RabbitAdditionalErlArgs
-        - MonitoringSubscriptionRabbitmq
-        - DeployIdentifier
         resources:
         - d41ab8fd-4b09-4d76-848a-32938ef02704
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/rabbitmq/rabbitmq-container-puppet.yaml
       79dd0af5-c3bc-4356-9af6-4db7bb4694c1:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 79dd0af5-c3bc-4356-9af6-4db7bb4694c1
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       79ec4402-3a2c-4934-bf79-f8ac48d2a140:
-        description: 'Mysql client settings
-
-          '
         id: 79ec4402-3a2c-4934-bf79-f8ac48d2a140
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       7acce70e-6d80-4202-ad6a-22d562b9acd6:
-        description: 'OpenStack Swift Proxy service configured with Puppet
-
-          '
         id: 7acce70e-6d80-4202-ad6a-22d562b9acd6
         name: SwiftBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - SwiftHashSuffix
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/swift/swift-base.yaml
       7ad274fe-7081-4d3e-83f3-719d711b31b6:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 7ad274fe-7081-4d3e-83f3-719d711b31b6
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       7bfae25a-a6a3-47a7-8eb8-b1321e8c13f1:
-        description: 'Ceph OSD service.
-
-          '
         id: 7bfae25a-a6a3-47a7-8eb8-b1321e8c13f1
         name: '6'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - CephAnsibleDisksConfig
-        - CephEnableDashboard
         resources:
         - 33dc9a02-6fb5-4701-abaa-0352a1bf4c59
         type: OS::TripleO::Services::CephOSD
       7c5fb290-55ed-43dc-b59d-4cae63efa634:
-        description: 'Mysql client settings
-
-          '
         id: 7c5fb290-55ed-43dc-b59d-4cae63efa634
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       7f09fe9b-81c3-46c2-874a-f69ccbed5d8e:
-        description: 'OpenStack Nova base service. Shared for all Nova services.
-
-          '
         id: 7f09fe9b-81c3-46c2-874a-f69ccbed5d8e
         name: NovaBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KeystoneRegion
-        - NotificationDriver
-        - NovaPassword
-        - NeutronPassword
-        - PlacementPassword
-        - PlacementAPIInterface
-        - ExtractedPlacementEnabled
-        - NovaOVSBridge
-        - DatabaseSyncTimeout
-        - Debug
-        - NovaDebug
-        - EnableSQLAlchemyCollectd
-        - EnableConfigPurge
-        - UpgradeLevelNovaCompute
-        - NovaCronArchiveDeleteRowsMinute
-        - NovaCronArchiveDeleteRowsHour
-        - NovaCronArchiveDeleteRowsMonthday
-        - NovaCronArchiveDeleteRowsMonth
-        - NovaCronArchiveDeleteRowsWeekday
-        - NovaCronArchiveDeleteRowsMaxRows
-        - NovaCronArchiveDeleteRowsUser
-        - NovaCronArchiveDeleteRowsDestination
-        - NovaCronArchiveDeleteRowsMaxDelay
-        - NovaCronArchiveDeleteRowsUntilComplete
-        - NovaCronArchiveDeleteRowsPurge
-        - NovaCronArchiveDeleteAllCells
-        - NovaCronArchiveDeleteRowsAge
-        - NovaCronPurgeShadowTablesMinute
-        - NovaCronPurgeShadowTablesHour
-        - NovaCronPurgeShadowTablesMonthday
-        - NovaCronPurgeShadowTablesMonth
-        - NovaCronPurgeShadowTablesWeekday
-        - NovaCronPurgeShadowTablesUser
-        - NovaCronPurgeShadowTablesDestination
-        - NovaCronPurgeShadowTablesMaxDelay
-        - NovaCronPurgeShadowTablesAge
-        - NovaCronPurgeShadowTablesVerbose
-        - NovaCronPurgeShadowTablesAllCells
-        - NovaOVSDBConnection
-        - NovaSyncPowerStateInterval
-        - RpcUseSSL
-        - NovaAdditionalCell
-        - NovaCrossAZAttach
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/nova/nova-base-puppet.yaml
       8093f6f5-86d0-40bf-bf5d-493c84e30f6d:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 8093f6f5-86d0-40bf-bf5d-493c84e30f6d
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       819e904d-344b-4044-a89c-bb288e61e6d2:
-        description: 'OpenStack Neutron base service. Shared for all Neutron agents.
-
-          '
         id: 819e904d-344b-4044-a89c-bb288e61e6d2
         name: NeutronBase
         parameters:
         - DatabaseSyncTimeout
-        - NeutronDhcpAgentsPerNetwork
-        - DhcpAgentNotification
-        - NeutronDnsDomain
-        - NeutronCorePlugin
-        - NeutronServicePlugins
-        - Debug
-        - NeutronDebug
-        - EnableConfigPurge
-        - NeutronGlobalPhysnetMtu
-        - TenantNetPhysnetMtu
-        - NeutronDBSyncExtraParams
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - NotificationDriver
-        - EnableVLANTransparency
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/neutron/neutron-base.yaml
       83629074-1742-425b-91b2-3e46f3c873c2:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 83629074-1742-425b-91b2-3e46f3c873c2
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       843028a9-3b70-4fc7-8a91-35d696a01941:
-        description: 'Template for nova-metadata''s logging to files
-
-          '
         id: 843028a9-3b70-4fc7-8a91-35d696a01941
         name: NovaMetadataLogging
         parameters:
         - ContainerNovaMetadataImage
         type: OS::TripleO::Services::Logging::NovaMetadata
       85779215-ae55-4991-84bb-620454766413:
-        description: 'OpenStack containerized Memcached services
-
-          '
         id: 85779215-ae55-4991-84bb-620454766413
         name: '81'
         parameters:
         - ContainerMemcachedImage
-        - ContainerMemcachedConfigImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - MemcachedMaxMemory
-        - MonitoringSubscriptionMemcached
-        - Debug
-        - MemcachedDebug
-        - MemcachedIpSubnet
         resources:
         - a054fc44-759f-4f97-ab11-03fd5f0bd1e2
         type: OS::TripleO::Services::Memcached
       85fa65e3-dd28-471b-af93-a0c06de02ab9:
-        description: 'OpenStack containerized Rabbitmq service
-
-          '
         id: 85fa65e3-dd28-471b-af93-a0c06de02ab9
         name: '122'
         parameters:
         - ContainerRabbitmqImage
-        - ContainerRabbitmqConfigImage
-        - ClusterCommonTag
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RabbitCookie
-        - RoleName
-        - RoleParameters
-        - ConfigDebug
-        - ContainerCli
-        - DeployIdentifier
         resources:
         - b07eba27-222b-41de-b5ba-72c9e329460a
-        - 2f7d4154-1985-4778-9848-553c28994a5e
         type: OS::TripleO::Services::OsloMessagingRpc
       86d0e9ae-c443-46af-bb1b-8ab7382661ca:
-        description: 'Ceph Monitor service.
-
-          '
         id: 86d0e9ae-c443-46af-bb1b-8ab7382661ca
         name: '19'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - CephMonKey
-        - CephAdminKey
-        - CephValidationRetries
-        - CephValidationDelay
-        - CephEnableDashboard
         resources:
         - 556c22da-b706-455e-a3d4-2ed7b0e632e0
         type: OS::TripleO::Services::CephMon
       877b3f15-6b14-4754-972e-acbc93f64923:
-        description: 'OpenStack containerized Nova Vncproxy service
-
-          '
         id: 877b3f15-6b14-4754-972e-acbc93f64923
         name: '110'
         parameters:
         - ContainerNovaVncProxyImage
-        - ContainerNovaConfigImage
-        - NovaVncproxyLoggingSource
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - UseTLSTransportForVnc
-        - InternalTLSVncProxyCAFile
-        - LibvirtVncCACert
-        - NovaVNCProxySSLCiphers
-        - NovaVNCProxySSLMinimumVersion
-        - StackUpdateType
         resources:
         - d5ef9973-46c2-4865-b446-403c6d65411f
-        - 00ed3a79-d6dd-4b53-bab9-a52dcdee0b9f
-        - b8ab9225-69b6-4a26-9443-947d9bceb572
-        - 91510eb0-45d4-4904-a69a-f0ceaf6319b3
         type: OS::TripleO::Services::NovaVncProxy
       8910a4fd-b075-441e-8f1f-f2a77ca7e2ad:
-        description: 'Configure sshd_config
-
-          '
         id: 8910a4fd-b075-441e-8f1f-f2a77ca7e2ad
         name: '38'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - BannerText
-        - MessageOfTheDay
-        - SshServerOptions
-        - PasswordAuthentication
-        - SshFirewallAllowAll
         type: OS::TripleO::Services::Sshd
       8a397498-06a3-4525-b13a-45851a7359c2:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 8a397498-06a3-4525-b13a-45851a7359c2
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       8a3aa4a1-6838-41cd-ba15-962b2af4020b:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 8a3aa4a1-6838-41cd-ba15-962b2af4020b
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       8b3b3394-d622-4914-a313-6ea5bbdcd19a:
-        description: 'OpenStack containerized Heat API service
-
-          '
         id: 8b3b3394-d622-4914-a313-6ea5bbdcd19a
         name: HeatApiLogging
         parameters: []
         type: OS::TripleO::Services::Logging::HeatApi
       8ed68679-8d5b-41a0-a2bd-4b390503442c:
-        description: 'Apache service configured with Puppet. Note this is typically
-          included automatically via other services which run via Apache.
-
-          '
         id: 8ed68679-8d5b-41a0-a2bd-4b390503442c
         name: ApacheServiceBase
         parameters:
         - ApacheMaxRequestWorkers
-        - ApacheServerLimit
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/apache/apache-baremetal-puppet.yaml
       8f549b6e-8b60-4baf-8c27-cebf53516844:
-        description: No description
         id: 8f549b6e-8b60-4baf-8c27-cebf53516844
         name: ControllerSwapDeployment
         parameters: []
         type: OS::Heat::SoftwareDeploymentGroup
       904b1440-dcb6-41cc-820b-9bbc1a58f75f:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: 904b1440-dcb6-41cc-820b-9bbc1a58f75f
         name: InternalApiPort
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::Controller::Ports::InternalApiPort
       91510eb0-45d4-4904-a69a-f0ceaf6319b3:
-        description: 'Template for nova''s logging to files
-
-          '
         id: 91510eb0-45d4-4904-a69a-f0ceaf6319b3
         name: NovaLogging
         parameters:
         - ContainerNovaImage
-        - NovaServiceName
-        - DeployIdentifier
         type: OS::TripleO::Services::Logging::NovaCommon
       917b6d74-8b78-421b-bd62-2ab99aa3eb68:
-        description: 'SNMP client configured with Puppet, to facilitate Ceilometer
-          Hardware monitoring in the undercloud. This service is required to enable
-          hardware monitoring.
-
-          '
         id: 917b6d74-8b78-421b-bd62-2ab99aa3eb68
         name: '133'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - SnmpdReadonlyUserName
-        - SnmpdReadonlyUserPassword
-        - SnmpdBindHost
-        - SnmpdOptions
-        - SnmpdIpSubnet
         type: OS::TripleO::Services::Snmp
       924170d9-967f-476f-b457-715752961615:
-        description: 'Load kernel modules with kmod and configure kernel options with
-          sysctl.
-
-          '
         id: 924170d9-967f-476f-b457-715752961615
         name: '69'
         parameter_groups:
@@ -5381,375 +3067,106 @@ stack_data:
           - InotifyIntancesMax
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KernelPidMax
-        - KernelDisableIPv6
-        - KernelIpForward
-        - KernelIpNonLocalBind
-        - NeighbourGcThreshold1
-        - NeighbourGcThreshold2
-        - NeighbourGcThreshold3
-        - InotifyInstancesMax
-        - BridgeNfCallArpTables
-        - BridgeNfCallIpTables
-        - BridgeNfCallIp6Tables
-        - ExtraKernelModules
-        - ExtraKernelPackages
-        - ExtraSysctlSettings
-        - InotifyIntancesMax
         type: OS::TripleO::Services::Kernel
       929d0618-95b3-4ca7-8f6e-1459d53b06e0:
-        description: 'Provides the list of Docker volumes and environment to be used
-          by the CinderVolume and CinderBackup services. The same list is used for
-          HA and non-HA deployments.
-
-          '
         id: 929d0618-95b3-4ca7-8f6e-1459d53b06e0
         name: CinderCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - CinderVolumeOptVolumes
-        - CinderVolumeOptEnvVars
-        - CinderEnableIscsiBackend
-        - CinderLVMLoopDeviceSize
-        - MultipathdEnable
         resources:
         - 7ad274fe-7081-4d3e-83f3-719d711b31b6
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/cinder/cinder-common-container-puppet.yaml
       938481ee-f329-4f15-9e00-9facee925838:
-        description: 'Openstack Heat base service. Shared for all Heat services.
-
-          '
         id: 938481ee-f329-4f15-9e00-9facee925838
         name: HeatBase
         parameters:
         - Debug
-        - HeatDebug
-        - ServiceData
-        - ServiceNetMap
-        - HeatPassword
-        - KeystoneRegion
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - HeatCronPurgeDeletedEnsure
-        - HeatCronPurgeDeletedMinute
-        - HeatCronPurgeDeletedHour
-        - HeatCronPurgeDeletedMonthday
-        - HeatCronPurgeDeletedMonth
-        - HeatCronPurgeDeletedWeekday
-        - HeatCronPurgeDeletedMaxDelay
-        - HeatCronPurgeDeletedUser
-        - HeatCronPurgeDeletedAge
-        - HeatCronPurgeDeletedAgeType
-        - HeatCronPurgeDeletedDestination
-        - HeatYaqlLimitIterators
-        - HeatYaqlMemoryQuota
-        - HeatMaxJsonBodySize
-        - NotificationDriver
-        - HeatCorsAllowedOrigin
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/heat/heat-base-puppet.yaml
       93fce5a3-4036-46f6-bf9f-dff4560613f7:
-        description: 'Mysql client settings
-
-          '
         id: 93fce5a3-4036-46f6-bf9f-dff4560613f7
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       94d88eb7-99fa-4153-a970-5994aea089f1:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: 94d88eb7-99fa-4153-a970-5994aea089f1
         name: TenantPort
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::ComputeHCI::Ports::TenantPort
       9527c1ca-ed06-40e2-a746-90a620878d91:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 9527c1ca-ed06-40e2-a746-90a620878d91
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       96316dd6-c7aa-41e6-9954-884a9c44644e:
-        description: 'Mysql client settings
-
-          '
         id: 96316dd6-c7aa-41e6-9954-884a9c44644e
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       96acbc98-721b-49c9-b3d8-6d702f6e92b8:
-        description: 'OpenStack containerized Neutron API service
-
-          '
         id: 96acbc98-721b-49c9-b3d8-6d702f6e92b8
         name: NeutronLogging
         parameters:
         - ContainerNeutronApiImage
-        - NeutronServiceName
         type: OS::TripleO::Services::Logging::NeutronApi
       96db323e-368e-446d-954e-f1b45c57bafa:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 96db323e-368e-446d-954e-f1b45c57bafa
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       98a47189-32d0-4185-8930-b6885b700293:
-        description: 'OpenStack containerized Heat API service
-
-          '
         id: 98a47189-32d0-4185-8930-b6885b700293
         name: '55'
         parameters:
         - ContainerHeatApiImage
-        - ContainerHeatApiConfigImage
-        - HeatApiLoggingSource
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - HeatApiOptVolumes
-        - HeatApiOptEnvVars
-        - HeatWorkers
-        - HeatPassword
-        - KeystoneRegion
-        - MonitoringSubscriptionHeatApi
-        - HeatApiPolicies
-        - HeatStackDomainAdminPassword
         resources:
         - 938481ee-f329-4f15-9e00-9facee925838
-        - 79dd0af5-c3bc-4356-9af6-4db7bb4694c1
-        - 74743613-26f3-4439-a10f-6826a0cc9368
-        - 8b3b3394-d622-4914-a313-6ea5bbdcd19a
         type: OS::TripleO::Services::HeatApi
       990443f1-ae57-452b-a6e6-72ee81043caa:
-        description: 'Uses cloud-init to bootstrap timesync configuration to ensure
-          it is done as soon as possible. We do additional and more complex configurations
-          as part of the deployment itself.
-
-          '
         id: 990443f1-ae57-452b-a6e6-72ee81043caa
         name: NodeTimesyncUserData
         parameters:
         - NtpServer
-        - NtpPool
-        - NtpService
         type: OS::TripleO::NodeTimesyncUserData
       9a5f35ea-87bd-4e0c-9876-429c55a7767c:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: 9a5f35ea-87bd-4e0c-9876-429c55a7767c
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       9a6e77f8-aa28-41b5-b63d-1ba75f6a6e95:
-        description: 'Composable Timezone service
-
-          '
         id: 9a6e77f8-aa28-41b5-b63d-1ba75f6a6e95
         name: '40'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - TimeZone
         type: OS::TripleO::Services::Timezone
       9bdeba5b-4d1b-4879-935d-aefc642d4d6c:
-        description: 'OpenStack containerized Nova API service
-
-          '
         id: 9bdeba5b-4d1b-4879-935d-aefc642d4d6c
         name: '105'
         parameters:
         - ContainerNovaApiImage
-        - ContainerNovaConfigImage
-        - NovaApiLoggingSource
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - DeployIdentifier
-        - EnableInternalTLS
-        - NovaDbSyncTimeout
-        - NovaPassword
-        - MysqlIPv6
-        - NovaWorkers
-        - KeystoneRegion
-        - NeutronMetadataProxySharedSecret
-        - InstanceNameTemplate
-        - NovaEnableDBPurge
-        - NovaEnableDBArchive
-        - MonitoringSubscriptionNovaApi
-        - NovaDefaultFloatingPool
-        - NovaApiPolicies
         resources:
         - a782b3f5-0fe7-4c3a-b19d-e138fc7e340c
-        - 9c1bf18a-b131-41c4-bf3e-79db2026e0cd
-        - 24395c55-f3c9-4076-ad3b-b02912ffb0e2
-        - 72b79376-ae59-4524-bc73-a1b402c07f1b
-        - af3ea2d7-4fe5-41f5-bc5e-c647ebfcfe45
         type: OS::TripleO::Services::NovaApi
       9c1bf18a-b131-41c4-bf3e-79db2026e0cd:
-        description: 'OpenStack Nova base service. Shared for all Nova services.
-
-          '
         id: 9c1bf18a-b131-41c4-bf3e-79db2026e0cd
         name: NovaBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KeystoneRegion
-        - NotificationDriver
-        - NovaPassword
-        - NeutronPassword
-        - PlacementPassword
-        - PlacementAPIInterface
-        - ExtractedPlacementEnabled
-        - NovaOVSBridge
-        - DatabaseSyncTimeout
-        - Debug
-        - NovaDebug
-        - EnableSQLAlchemyCollectd
-        - EnableConfigPurge
-        - UpgradeLevelNovaCompute
-        - NovaCronArchiveDeleteRowsMinute
-        - NovaCronArchiveDeleteRowsHour
-        - NovaCronArchiveDeleteRowsMonthday
-        - NovaCronArchiveDeleteRowsMonth
-        - NovaCronArchiveDeleteRowsWeekday
-        - NovaCronArchiveDeleteRowsMaxRows
-        - NovaCronArchiveDeleteRowsUser
-        - NovaCronArchiveDeleteRowsDestination
-        - NovaCronArchiveDeleteRowsMaxDelay
-        - NovaCronArchiveDeleteRowsUntilComplete
-        - NovaCronArchiveDeleteRowsPurge
-        - NovaCronArchiveDeleteAllCells
-        - NovaCronArchiveDeleteRowsAge
-        - NovaCronPurgeShadowTablesMinute
-        - NovaCronPurgeShadowTablesHour
-        - NovaCronPurgeShadowTablesMonthday
-        - NovaCronPurgeShadowTablesMonth
-        - NovaCronPurgeShadowTablesWeekday
-        - NovaCronPurgeShadowTablesUser
-        - NovaCronPurgeShadowTablesDestination
-        - NovaCronPurgeShadowTablesMaxDelay
-        - NovaCronPurgeShadowTablesAge
-        - NovaCronPurgeShadowTablesVerbose
-        - NovaCronPurgeShadowTablesAllCells
-        - NovaOVSDBConnection
-        - NovaSyncPowerStateInterval
-        - RpcUseSSL
-        - NovaAdditionalCell
-        - NovaCrossAZAttach
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/nova/nova-base-puppet.yaml
       9e1ef9bd-c0cb-4cb4-b4a2-f89bfa54b855:
-        description: 'Ceph Client service.
-
-          '
         id: 9e1ef9bd-c0cb-4cb4-b4a2-f89bfa54b855
         name: '4'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
         resources:
         - 322bfe51-7ce0-47a0-b029-a4011e620651
         type: OS::TripleO::Services::CephClient
       9ea872a1-2f59-4464-b4fc-9b16ce956a41:
-        description: OpenStack Controller node configured by Puppet
         id: 9ea872a1-2f59-4464-b4fc-9b16ce956a41
         name: '0'
         parameter_groups:
@@ -5760,274 +3177,70 @@ stack_data:
           - controllerImage
         parameters:
         - OvercloudControlFlavor
-        - OvercloudControllerFlavor
-        - controllerImage
-        - ControllerImage
-        - ImageUpdatePolicy
-        - KeyName
-        - ServiceNetMap
-        - EndpointMap
-        - UpdateIdentifier
-        - Hostname
-        - HostnameMap
-        - ControllerIPs
-        - SoftwareConfigTransport
-        - CloudDomain
-        - ControllerServerMetadata
-        - ServerMetadata
-        - ControllerSchedulerHints
-        - NodeIndex
-        - ServiceNames
-        - MonitoringSubscriptions
-        - ServiceMetadataSettings
-        - ConfigCommand
-        - ConfigCollectSplay
-        - UpgradeInitCommand
-        - UpgradeInitCommonCommand
-        - DeploymentServerBlacklistDict
-        - RoleParameters
-        - ControllerControlPlaneSubnet
-        - ControlPlaneSubnetCidr
-        - ControlPlaneDefaultRoute
-        - ControlPlaneStaticRoutes
-        - DnsServers
-        - StorageInterfaceRoutes
-        - StorageNetworkVlanID
-        - StorageMgmtInterfaceRoutes
-        - StorageMgmtNetworkVlanID
-        - InternalApiInterfaceRoutes
-        - InternalApiNetworkVlanID
-        - TenantInterfaceRoutes
-        - TenantNetworkVlanID
-        - ExternalInterfaceRoutes
-        - ExternalNetworkVlanID
-        - ServerDeletionPolicy
-        - UserData
         resources:
         - 27df5684-d49c-4be6-87ad-d20ab0ba3028
-        - c99a80d5-c9d6-4497-9c13-9596bb93e88a
-        - b7b26969-090c-433d-8213-56a652c8e669
-        - d469f5ec-1858-41bb-9f27-06f8098b0452
-        - 16e0f81d-e490-4baf-880e-4b45b7929172
-        - 904b1440-dcb6-41cc-820b-9bbc1a58f75f
-        - 56b2d69e-c45e-4aad-92ef-3fef13bb1ee1
-        - b2550f71-a2f6-46a7-847f-effba4fbcc39
-        - 3d3181b3-5038-4001-bf99-e3157053b0ad
         type: OS::TripleO::Controller
       9effbcca-b66a-4618-a30e-c8aa9f2365b2:
-        description: 'Configures podman on the host
-
-          '
         id: 9effbcca-b66a-4618-a30e-c8aa9f2365b2
         name: '124'
         parameters:
         - DockerInsecureRegistryAddress
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - ContainerImageRegistryLogin
-        - ContainerImageRegistryCredentials
-        - SystemdDropInDependencies
         type: OS::TripleO::Services::Podman
       a054fc44-759f-4f97-ab11-03fd5f0bd1e2:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: a054fc44-759f-4f97-ab11-03fd5f0bd1e2
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       a0f4ea19-4a8c-4651-8678-4ca47edbf95f:
-        description: 'Chrony time service deployment using ansible, this YAML file
-          creates the interface between the HOT template and the ansible role that
-          actually installs and configure chronyd.
-
-          '
         id: a0f4ea19-4a8c-4651-8678-4ca47edbf95f
         name: '39'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - NtpServer
-        - NtpPool
-        - ChronyGlobalServerOptions
-        - ChronyGlobalPoolOptions
-        - NtpIburstEnable
-        - MaxPoll
-        - MinPoll
-        - EnablePackageInstall
-        - ChronyAclRules
         type: OS::TripleO::Services::Timesync
       a243db9d-8b02-4ce2-8d0e-114284f031e9:
-        description: 'Configure libvirt-guests
-
-          '
         id: a243db9d-8b02-4ce2-8d0e-114284f031e9
         name: '28'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - EndpointMap
-        - RoleName
-        - RoleParameters
-        - ContainerNovaLibvirtConfigImage
-        - NovaResumeGuestsStateOnHostBoot
-        - NovaResumeGuestsShutdownTimeout
         type: OS::TripleO::Services::NovaLibvirtGuests
       a2c4a8c4-219c-478a-b967-3a50d8c27a4c:
-        description: 'Pacemaker service configured with Puppet
-
-          '
         id: a2c4a8c4-219c-478a-b967-3a50d8c27a4c
         name: '120'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - MonitoringSubscriptionPacemaker
-        - CorosyncIPv6
-        - EnableFencing
-        - PacemakerTLSPriorities
-        - PacemakerRemoteAuthkey
-        - PcsdPassword
-        - CorosyncSettleTries
-        - FencingConfig
-        - PacemakerLoggingSource
-        - UpgradeLeappEnabled
-        - ContainerCli
-        - PacemakerBundleOperationTimeout
         type: OS::TripleO::Services::Pacemaker
       a3bead95-55a2-429b-aee3-669025a1be09:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: a3bead95-55a2-429b-aee3-669025a1be09
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       a3f4c288-c2f3-4223-be0d-cb90e8d960e8:
-        description: 'Utility stack to convert an array of services into a set of
-          combined role configs.
-
-          '
         id: a3f4c288-c2f3-4223-be0d-cb90e8d960e8
         name: ControllerServiceChain
         parameters:
         - Services
-        - ServiceData
-        - ServiceNetMap
-        - EndpointMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
         resources:
         - 0cc85cf4-fd95-45e9-b7a1-10852623a085
         type: OS::TripleO::ControllerServices
       a479a007-4f28-4d6f-83bd-9100bd293ecf:
-        description: 'OpenStack containerized Cinder API service
-
-          '
         id: a479a007-4f28-4d6f-83bd-9100bd293ecf
         name: '23'
         parameters:
         - ContainerCinderApiImage
-        - ContainerCinderConfigImage
-        - CinderApiLoggingSource
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - DeployIdentifier
-        - EnableInternalTLS
-        - CinderDefaultVolumeType
-        - CinderEnableDBPurge
-        - CinderPassword
-        - KeystoneRegion
-        - MonitoringSubscriptionCinderApi
-        - CinderWorkers
-        - CinderApiPolicies
-        - NotificationDriver
-        - RootStackName
         resources:
         - 10c58912-e9d5-4433-a975-28f919a4ea57
-        - 64d4a37f-e9b7-4baa-a7c2-281751bb8662
-        - 304ed0e4-c5f4-454b-967e-bd5202e34392
-        - 4e170317-fdb6-4d12-9a8f-ca7a1c712122
         type: OS::TripleO::Services::CinderApi
       a526a448-4e24-4914-9445-bfcff2e9dd83:
-        description: 'OpenStack containerized OVN Metadata agent
-
-          '
         id: a526a448-4e24-4914-9445-bfcff2e9dd83
         name: '46'
         parameters:
         - ContainerOvnMetadataImage
-        - ContainerNeutronConfigImage
-        - OvnMetadataAgentLoggingSource
-        - OVNEnableHaproxyDockerWrapper
-        - Debug
-        - OVNWrapperDebug
-        - ContainerCli
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - EndpointMap
-        - RoleName
-        - RoleParameters
-        - DeployIdentifier
-        - NeutronMetadataProxySharedSecret
-        - NeutronMetadataWorkers
-        - NeutronPassword
-        - OVNSouthboundServerPort
-        - OVNDbConnectionTimeout
-        - MonitoringSubscriptionOvnMetadata
-        - OvnMetadataAgentDebug
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - DockerAdditionalSockets
-        - OVNRemoteProbeInterval
         resources:
         - 0ca632ea-0a9d-42ad-9506-2fad7f97fc1d
-        - 6f83500b-c197-4dee-9e9e-d080b07317fa
-        - b8546a6c-44ee-42f0-97d1-1684a5b86993
         type: OS::TripleO::Services::OVNMetadataAgent
       a5e0ade6-5698-4755-be82-9d82d5ddfd86:
-        description: No description
         id: a5e0ade6-5698-4755-be82-9d82d5ddfd86
         name: ComputeHCI
         parameters: []
@@ -6035,528 +3248,138 @@ stack_data:
         - 4da892dd-18d4-492d-abb0-4308d2849997
         type: OS::Heat::ResourceGroup
       a604d442-94aa-4945-b0b6-5a013c32dc34:
-        description: 'Configure sshd_config
-
-          '
         id: a604d442-94aa-4945-b0b6-5a013c32dc34
         name: '134'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - BannerText
-        - MessageOfTheDay
-        - SshServerOptions
-        - PasswordAuthentication
-        - SshFirewallAllowAll
         type: OS::TripleO::Services::Sshd
       a6319e76-9541-44fc-b477-411d33dbcf55:
-        description: Extra Post Deployment Config
         id: a6319e76-9541-44fc-b477-411d33dbcf55
         name: ControllerExtraConfigPost
         parameters:
         - servers
-        - EndpointMap
         type: OS::TripleO::NodeExtraConfigPost
       a782b3f5-0fe7-4c3a-b19d-e138fc7e340c:
-        description: 'Template for nova-api''s logging to files
-
-          '
         id: a782b3f5-0fe7-4c3a-b19d-e138fc7e340c
         name: NovaApiLogging
         parameters:
         - ContainerNovaApiImage
-        - DeployIdentifier
         type: OS::TripleO::Services::Logging::NovaApi
       a87e6e91-d8c6-4cae-9bc1-9e6574e0ad2a:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: a87e6e91-d8c6-4cae-9bc1-9e6574e0ad2a
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       aaa47372-008b-420e-a787-fa9a7c694005:
-        description: 'OpenStack Nova base service. Shared for all Nova services.
-
-          '
         id: aaa47372-008b-420e-a787-fa9a7c694005
         name: NovaBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KeystoneRegion
-        - NotificationDriver
-        - NovaPassword
-        - NeutronPassword
-        - PlacementPassword
-        - PlacementAPIInterface
-        - ExtractedPlacementEnabled
-        - NovaOVSBridge
-        - DatabaseSyncTimeout
-        - Debug
-        - NovaDebug
-        - EnableSQLAlchemyCollectd
-        - EnableConfigPurge
-        - UpgradeLevelNovaCompute
-        - NovaCronArchiveDeleteRowsMinute
-        - NovaCronArchiveDeleteRowsHour
-        - NovaCronArchiveDeleteRowsMonthday
-        - NovaCronArchiveDeleteRowsMonth
-        - NovaCronArchiveDeleteRowsWeekday
-        - NovaCronArchiveDeleteRowsMaxRows
-        - NovaCronArchiveDeleteRowsUser
-        - NovaCronArchiveDeleteRowsDestination
-        - NovaCronArchiveDeleteRowsMaxDelay
-        - NovaCronArchiveDeleteRowsUntilComplete
-        - NovaCronArchiveDeleteRowsPurge
-        - NovaCronArchiveDeleteAllCells
-        - NovaCronArchiveDeleteRowsAge
-        - NovaCronPurgeShadowTablesMinute
-        - NovaCronPurgeShadowTablesHour
-        - NovaCronPurgeShadowTablesMonthday
-        - NovaCronPurgeShadowTablesMonth
-        - NovaCronPurgeShadowTablesWeekday
-        - NovaCronPurgeShadowTablesUser
-        - NovaCronPurgeShadowTablesDestination
-        - NovaCronPurgeShadowTablesMaxDelay
-        - NovaCronPurgeShadowTablesAge
-        - NovaCronPurgeShadowTablesVerbose
-        - NovaCronPurgeShadowTablesAllCells
-        - NovaOVSDBConnection
-        - NovaSyncPowerStateInterval
-        - RpcUseSSL
-        - NovaAdditionalCell
-        - NovaCrossAZAttach
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/nova/nova-base-puppet.yaml
       aaa9302e-1172-4971-8d8b-5cd9bc7211c2:
-        description: 'Configures podman on the host
-
-          '
         id: aaa9302e-1172-4971-8d8b-5cd9bc7211c2
         name: '31'
         parameters:
         - DockerInsecureRegistryAddress
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - ContainerImageRegistryLogin
-        - ContainerImageRegistryCredentials
-        - SystemdDropInDependencies
         type: OS::TripleO::Services::Podman
       ab644526-4c07-4ab3-81ee-6a7d07f6efbf:
-        description: Host config and reboot service which configures Kernel Args and
-          reboot
         id: ab644526-4c07-4ab3-81ee-6a7d07f6efbf
         name: '2'
         parameters:
         - RoleNetIpMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KernelArgs
-        - TunedProfileName
-        - IsolCpusList
-        - NodeRebootWaitTimeout
         type: OS::TripleO::Services::BootParams
       aeed3856-749f-404c-94c8-693794d93405:
-        description: 'OpenStack containerized Keystone service
-
-          '
         id: aeed3856-749f-404c-94c8-693794d93405
         name: '70'
         parameters:
         - ContainerKeystoneImage
-        - ContainerKeystoneConfigImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - DeployIdentifier
-        - AdminPassword
-        - KeystoneTokenProvider
-        - EnableInternalTLS
-        - KeystoneSSLCertificate
-        - KeystoneSSLCertificateKey
-        - KeystoneNotificationFormat
-        - KeystoneNotificationTopics
-        - KeystoneRegion
-        - Debug
-        - KeystoneDebug
-        - EnableSQLAlchemyCollectd
-        - AdminEmail
-        - AdminToken
-        - TokenExpiration
-        - KeystoneWorkers
-        - MonitoringSubscriptionKeystone
-        - KeystoneCredential0
-        - KeystoneCredential1
-        - KeystoneFernetKeys
-        - KeystoneFernetMaxActiveKeys
-        - ManageKeystoneFernetKeys
-        - KeystoneLoggingSource
-        - KeystonePolicies
-        - KeystoneLDAPDomainEnable
-        - KeystoneLDAPBackendConfigs
-        - NotificationDriver
-        - KeystoneChangePasswordUponFirstUse
-        - KeystoneDisableUserAccountDaysInactive
-        - KeystoneLockoutDuration
-        - KeystoneLockoutFailureAttempts
-        - KeystoneMinimumPasswordAge
-        - KeystonePasswordExpiresDays
-        - KeystonePasswordRegex
-        - KeystonePasswordRegexDescription
-        - KeystoneUniqueLastPasswordCount
-        - KeystoneCorsAllowedOrigin
-        - KeystoneEnableMember
-        - KeystoneFederationEnable
-        - KeystoneTrustedDashboards
-        - KeystoneAuthMethods
-        - KeystoneOpenIdcEnable
-        - KeystoneOpenIdcIdpName
-        - KeystoneOpenIdcProviderMetadataUrl
-        - KeystoneOpenIdcClientId
-        - KeystoneOpenIdcClientSecret
-        - KeystoneOpenIdcCryptoPassphrase
-        - KeystoneOpenIdcResponseType
-        - KeystoneOpenIdcRemoteIdAttribute
-        - KeystoneOpenIdcEnableOAuth
-        - KeystoneOpenIdcIntrospectionEndpoint
-        - RootStackName
         resources:
         - 93fce5a3-4036-46f6-bf9f-dff4560613f7
-        - d562a5ce-0133-41ad-b52b-d5b902e7b1ec
-        - a87e6e91-d8c6-4cae-9bc1-9e6574e0ad2a
-        - 5f9019bf-c6f1-452e-9804-9ad623a085c9
         type: OS::TripleO::Services::Keystone
       af3ea2d7-4fe5-41f5-bc5e-c647ebfcfe45:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: af3ea2d7-4fe5-41f5-bc5e-c647ebfcfe45
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       b0031af2-37fe-4224-872d-fea79057e19c:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: b0031af2-37fe-4224-872d-fea79057e19c
         name: StorageVirtualIP
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::Network::Ports::StorageVipPort
       b07eba27-222b-41de-b5ba-72c9e329460a:
-        description: 'OpenStack containerized Rabbitmq service
-
-          '
         id: b07eba27-222b-41de-b5ba-72c9e329460a
         name: RabbitmqBase
         parameters:
         - ContainerRabbitmqImage
-        - ContainerRabbitmqConfigImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - RabbitCookie
-        - EnableInternalTLS
-        - RpcPort
-        - RpcUserName
-        - RpcPassword
-        - RpcUseSSL
-        - DeployIdentifier
         resources:
         - eaaf1e59-caf0-4307-bb9c-af42c9042e97
-        - 7953ddbb-76f7-4bb3-a016-953e4a09f730
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/rabbitmq/rabbitmq-messaging-rpc-container-puppet.yaml
       b20ddbb5-9555-4a58-8a40-82ea43ba4e51:
-        description: Extra Post Deployment Config
         id: b20ddbb5-9555-4a58-8a40-82ea43ba4e51
         name: ComputeHCIExtraConfigPost
         parameters:
         - servers
-        - EndpointMap
         type: OS::TripleO::NodeExtraConfigPost
       b2550f71-a2f6-46a7-847f-effba4fbcc39:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: b2550f71-a2f6-46a7-847f-effba4fbcc39
         name: StorageMgmtPort
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::Controller::Ports::StorageMgmtPort
       b50db5c5-fb01-4516-aa1b-b0ce3a819ed8:
-        description: 'OpenStack Cinder base service. Shared by all Cinder services.
-
-          '
         id: b50db5c5-fb01-4516-aa1b-b0ce3a819ed8
         name: CinderBase
         parameters:
         - CinderStorageAvailabilityZone
-        - CinderPassword
-        - Debug
-        - CinderDebug
-        - EnableSQLAlchemyCollectd
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KeystoneRegion
-        - CinderCronDbPurgeMinute
-        - CinderCronDbPurgeHour
-        - CinderCronDbPurgeMonthday
-        - CinderCronDbPurgeMonth
-        - CinderCronDbPurgeWeekday
-        - CinderCronDbPurgeUser
-        - CinderCronDbPurgeAge
-        - CinderCronDbPurgeDestination
-        - CinderCronDbPurgeMaxDelay
-        - NovaPassword
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/cinder/cinder-base.yaml
       b6759c0c-c354-4e11-a728-0e252ccc6741:
-        description: 'OpenStack Neutron base service. Shared for all Neutron agents.
-
-          '
         id: b6759c0c-c354-4e11-a728-0e252ccc6741
         name: NeutronBase
         parameters:
         - DatabaseSyncTimeout
-        - NeutronDhcpAgentsPerNetwork
-        - DhcpAgentNotification
-        - NeutronDnsDomain
-        - NeutronCorePlugin
-        - NeutronServicePlugins
-        - Debug
-        - NeutronDebug
-        - EnableConfigPurge
-        - NeutronGlobalPhysnetMtu
-        - TenantNetPhysnetMtu
-        - NeutronDBSyncExtraParams
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - NotificationDriver
-        - EnableVLANTransparency
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/neutron/neutron-base.yaml
       b6b880fa-da18-4ac4-894c-18cf7a2abf95:
-        description: 'Contains a static list of common things necessary for nova-compute
-          containers
-
-          '
         id: b6b880fa-da18-4ac4-894c-18cf7a2abf95
         name: NovaComputeCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - NovaAdditionalCell
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/nova/nova-compute-common-container-puppet.yaml
       b7b26969-090c-433d-8213-56a652c8e669:
-        description: No description
         id: b7b26969-090c-433d-8213-56a652c8e669
         name: NetIpMap
         parameters:
         - ControlPlaneIp
-        - ControlPlaneSubnetCidr
-        - StorageIp
-        - StorageIpSubnet
-        - StorageIpUri
-        - StorageNetName
-        - StorageMgmtIp
-        - StorageMgmtIpSubnet
-        - StorageMgmtIpUri
-        - StorageMgmtNetName
-        - InternalApiIp
-        - InternalApiIpSubnet
-        - InternalApiIpUri
-        - InternalApiNetName
-        - TenantIp
-        - TenantIpSubnet
-        - TenantIpUri
-        - TenantNetName
-        - ExternalIp
-        - ExternalIpSubnet
-        - ExternalIpUri
-        - ExternalNetName
-        - ManagementIp
-        - ManagementIpSubnet
-        - ManagementIpUri
-        - ManagementNetName
         type: OS::TripleO::Network::Ports::NetIpMap
       b8546a6c-44ee-42f0-97d1-1684a5b86993:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: b8546a6c-44ee-42f0-97d1-1684a5b86993
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       b890bc93-bbff-4b56-925d-3d74cbef0839:
-        description: 'OpenStack containerized Horizon service
-
-          '
         id: b890bc93-bbff-4b56-925d-3d74cbef0839
         name: '59'
         parameters:
         - ContainerHorizonImage
-        - ContainerHorizonConfigImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - Debug
-        - HorizonDebug
-        - HorizonAllowedHosts
-        - HorizonPasswordValidator
-        - HorizonPasswordValidatorHelp
-        - HorizonSecret
-        - HorizonSecureCookies
-        - MemcachedIPv6
-        - MonitoringSubscriptionHorizon
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - HorizonVhostExtraParams
-        - HorizonCustomizationModule
-        - TimeZone
-        - WebSSOEnable
-        - WebSSOInitialChoice
-        - WebSSOChoices
-        - WebSSOIDPMapping
-        - HorizonDomainChoices
         resources:
         - 6bb1c294-813d-4709-afd5-ebc5545a3240
         type: OS::TripleO::Services::Horizon
       b8ab9225-69b6-4a26-9443-947d9bceb572:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: b8ab9225-69b6-4a26-9443-947d9bceb572
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       bbc4bc2b-9ff2-4bca-a6a0-1a64b765627a:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: bbc4bc2b-9ff2-4bca-a6a0-1a64b765627a
         name: StorageMgmtVirtualIP
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::Network::Ports::StorageMgmtVipPort
       bda70130-7945-43b5-ab35-ea9c36409cd1:
-        description: 'OpenStack containerized Swift Storage services.
-
-          '
         id: bda70130-7945-43b5-ab35-ea9c36409cd1
         name: '138'
         parameter_groups:
@@ -6566,135 +3389,48 @@ stack_data:
           - ControllerEnableSwiftStorage
         parameters:
         - ContainerSwiftProxyImage
-        - ContainerSwiftAccountImage
-        - ContainerSwiftContainerImage
-        - ContainerSwiftObjectImage
-        - ContainerSwiftConfigImage
-        - EndpointMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - ServiceData
-        - ServiceNetMap
-        - SwiftRawDisks
-        - SwiftReplicas
-        - SwiftUseLocalDir
-        - SwiftContainerSharderEnabled
-        - SwiftMountCheck
-        - SwiftAccountWorkers
-        - SwiftContainerWorkers
-        - SwiftObjectWorkers
-        - ControllerEnableSwiftStorage
         resources:
         - 734afb18-6755-4918-82d2-9f47e2679981
-        - 7acce70e-6d80-4202-ad6a-22d562b9acd6
         type: OS::TripleO::Services::SwiftStorage
       bde6c8da-0657-4837-acaa-a1e26d57b853:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: bde6c8da-0657-4837-acaa-a1e26d57b853
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       be706183-e800-484e-a272-697c3fd276e1:
-        description: 'OpenStack containerized Ovn DBs service
-
-          '
         id: be706183-e800-484e-a272-697c3fd276e1
         name: OVNDbsBase
         parameters:
         - ContainerOvnNbDbImage
-        - ContainerOvnSbDbImage
-        - ContainerOvnNorthdImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - OVNNorthboundServerPort
-        - OVNSouthboundServerPort
         resources:
         - 8a397498-06a3-4525-b13a-45851a7359c2
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/ovn/ovn-dbs-container-puppet.yaml
       c36a0b07-85d2-4475-b2da-f1ebfd47f900:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: c36a0b07-85d2-4475-b2da-f1ebfd47f900
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       c469e7c7-fb69-4d24-b3fe-39df1f2d5797:
-        description: 'OpenStack containerized Glance API service
-
-          '
         id: c469e7c7-fb69-4d24-b3fe-39df1f2d5797
         name: HeatEngineLogging
         parameters:
         - ContainerHeatEngineImage
         type: OS::TripleO::Services::Logging::HeatEngine
       c4c6acfa-7fcd-414a-b654-d989c034fb25:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: c4c6acfa-7fcd-414a-b654-d989c034fb25
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       c5056cd8-4275-423c-b75f-3955f8ec6a19:
-        description: 'Composable Timezone service
-
-          '
         id: c5056cd8-4275-423c-b75f-3955f8ec6a19
         name: '140'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - TimeZone
         type: OS::TripleO::Services::Timezone
       c62eb7d7-66ce-4223-bc28-88cead97f153:
-        description: 'OpenStack containerized Nova Compute service
-
-          '
         id: c62eb7d7-66ce-4223-bc28-88cead97f153
         name: '26'
         parameter_groups:
@@ -6713,453 +3449,116 @@ stack_data:
           - NovaVcpuPinSet
         parameters:
         - ContainerNovaComputeImage
-        - ContainerNovaLibvirtConfigImage
-        - DockerNovaComputeUlimit
-        - NovaComputeLoggingSource
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - CephClientUserName
-        - CephClusterName
-        - NovaComputeOptVolumes
-        - NovaComputeOptEnvVars
-        - EnableInstanceHA
-        - NovaRbdPoolName
-        - CephClientKey
-        - CephClusterFSID
-        - CinderEnableNfsBackend
-        - NovaNfsEnabled
-        - NovaNfsShare
-        - NovaNfsOptions
-        - NovaNfsVersion
-        - CinderEnableRbdBackend
-        - NovaEnableRbdBackend
-        - NovaPCIPassthrough
-        - NovaComputeCpuSharedSet
-        - NovaComputeCpuDedicatedSet
-        - NovaReservedHostMemory
-        - NovaReservedHugePages
-        - KernelArgs
-        - OvsDpdkSocketMemory
-        - MonitoringSubscriptionNovaCompute
-        - MigrationSshKey
-        - MigrationSshPort
-        - VerifyGlanceSignatures
-        - NovaAutoDisabling
-        - NeutronPhysnetNUMANodesMapping
-        - NeutronTunnelNUMANodes
-        - NovaResumeGuestsStateOnHostBoot
-        - NovaLibvirtRxQueueSize
-        - NovaLibvirtTxQueueSize
-        - NovaLibvirtFileBackedMemory
-        - NovaLibvirtVolumeUseMultipath
-        - NovaHWMachineType
-        - DeployIdentifier
-        - NovaAdditionalCell
-        - NovaComputeEnableKsm
-        - AdminPassword
-        - CinderPassword
-        - KeystoneRegion
-        - NovaLibvirtNumPciePorts
-        - NovaLibvirtMemStatsPeriodSeconds
-        - NovaLiveMigrationWaitForVIFPlug
-        - MultipathdEnable
-        - NovaPassword
-        - NovaCPUAllocationRatio
-        - NovaRAMAllocationRatio
-        - NovaDiskAllocationRatio
-        - NovaMaxDiskDevicesToAttach
-        - NovaVcpuPinSet
         resources:
         - 580f0aa5-16f7-48bd-b0f8-d9171701e3b8
-        - b6b880fa-da18-4ac4-894c-18cf7a2abf95
-        - 2b6911c7-6f35-49e2-a7fc-7e6d2142967b
-        - c863a357-f8e3-4280-92fd-811065305e40
-        - 8093f6f5-86d0-40bf-bf5d-493c84e30f6d
         type: OS::TripleO::Services::NovaCompute
       c64aae74-3134-4e44-ae12-e836414b24c6:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: c64aae74-3134-4e44-ae12-e836414b24c6
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       c78c4df9-aa06-4ffa-a19b-035ccaff8991:
-        description: No description
         id: c78c4df9-aa06-4ffa-a19b-035ccaff8991
         name: NetIpMap
         parameters:
         - ControlPlaneIp
-        - ControlPlaneSubnetCidr
-        - StorageIp
-        - StorageIpSubnet
-        - StorageIpUri
-        - StorageNetName
-        - StorageMgmtIp
-        - StorageMgmtIpSubnet
-        - StorageMgmtIpUri
-        - StorageMgmtNetName
-        - InternalApiIp
-        - InternalApiIpSubnet
-        - InternalApiIpUri
-        - InternalApiNetName
-        - TenantIp
-        - TenantIpSubnet
-        - TenantIpUri
-        - TenantNetName
-        - ExternalIp
-        - ExternalIpSubnet
-        - ExternalIpUri
-        - ExternalNetName
-        - ManagementIp
-        - ManagementIpSubnet
-        - ManagementIpUri
-        - ManagementNetName
         type: OS::TripleO::Network::Ports::NetIpMap
       c863a357-f8e3-4280-92fd-811065305e40:
-        description: 'Mysql client settings
-
-          '
         id: c863a357-f8e3-4280-92fd-811065305e40
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       c99a80d5-c9d6-4497-9c13-9596bb93e88a:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: c99a80d5-c9d6-4497-9c13-9596bb93e88a
         name: StoragePort
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::Controller::Ports::StoragePort
       cb71c038-5f8e-47ba-a27b-418b5dd1f362:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: cb71c038-5f8e-47ba-a27b-418b5dd1f362
         name: StoragePort
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::ComputeHCI::Ports::StoragePort
       cc5101f9-2846-4e63-a70f-554a084efc88:
-        description: 'OpenStack containerized swift proxy service
-
-          '
         id: cc5101f9-2846-4e63-a70f-554a084efc88
         name: '135'
         parameters:
         - ContainerSwiftProxyImage
-        - ContainerSwiftConfigImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - SwiftEncryptionEnabled
-        - DeployIdentifier
-        - SwiftPassword
-        - SwiftProxyNodeTimeout
-        - SwiftWorkers
-        - KeystoneRegion
-        - MonitoringSubscriptionSwiftProxy
-        - SwiftCeilometerPipelineEnabled
-        - SwiftCeilometerIgnoreProjects
-        - RpcUseSSL
-        - EnableInternalTLS
-        - SwiftCorsAllowedOrigin
         resources:
         - 25a7fcb5-752e-48fc-b4e0-e3bbd2c89c32
-        - 2393bb0a-5d47-4349-a87e-5ed371b153ec
         type: OS::TripleO::Services::SwiftProxy
       cc5b3dc6-8be7-49c5-8a33-084abeb43dbc:
-        description: 'Template for placement''s logging to files
-
-          '
         id: cc5b3dc6-8be7-49c5-8a33-084abeb43dbc
         name: PlacementLogging
         parameters:
         - ContainerPlacementImage
         type: OS::TripleO::Services::Logging::PlacementApi
       cf9072c0-2c28-4f6c-b459-eaa182ebb52e:
-        description: Passwords we manage at the top level
         id: cf9072c0-2c28-4f6c-b459-eaa182ebb52e
         name: DefaultPasswords
         parameters:
         - DefaultMysqlRootPassword
-        - DefaultRabbitCookie
-        - DefaultHeatAuthEncryptionKey
-        - DefaultPcsdPassword
-        - DefaultHorizonSecret
         type: OS::TripleO::DefaultPasswords
       d2759a63-d17d-47eb-b9f4-c2b9612093b8:
-        description: 'Mysql client settings
-
-          '
         id: d2759a63-d17d-47eb-b9f4-c2b9612093b8
         name: '89'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: OS::TripleO::Services::MySQLClient
       d27cb27e-1b9c-41c3-a3ac-9c1ee1ee0e53:
-        description: 'Software Config to no-op for os-net-config. Using this will
-          allow you to use the parameter driven (init-neutron-ovs) configuration instead.
-
-          '
         id: d27cb27e-1b9c-41c3-a3ac-9c1ee1ee0e53
         name: NetworkConfig
         parameters:
         - ControlPlaneIp
-        - ControlPlaneSubnetCidr
-        - ControlPlaneDefaultRoute
-        - ControlPlaneStaticRoutes
-        - ControlPlaneMtu
-        - DnsServers
-        - StorageIpSubnet
-        - StorageInterfaceRoutes
-        - StorageMtu
-        - StorageInterfaceDefaultRoute
-        - StorageNetworkVlanID
-        - StorageMgmtIpSubnet
-        - StorageMgmtInterfaceRoutes
-        - StorageMgmtMtu
-        - StorageMgmtInterfaceDefaultRoute
-        - StorageMgmtNetworkVlanID
-        - InternalApiIpSubnet
-        - InternalApiInterfaceRoutes
-        - InternalApiMtu
-        - InternalApiInterfaceDefaultRoute
-        - InternalApiNetworkVlanID
-        - TenantIpSubnet
-        - TenantInterfaceRoutes
-        - TenantMtu
-        - TenantInterfaceDefaultRoute
-        - TenantNetworkVlanID
-        - ExternalIpSubnet
-        - ExternalInterfaceRoutes
-        - ExternalMtu
-        - ExternalInterfaceDefaultRoute
-        - ExternalNetworkVlanID
-        - ManagementIpSubnet
-        - ManagementInterfaceRoutes
-        - ManagementMtu
-        - ManagementInterfaceDefaultRoute
-        - ManagementNetworkVlanID
         type: OS::TripleO::ComputeHCI::Net::SoftwareConfig
       d41ab8fd-4b09-4d76-848a-32938ef02704:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: d41ab8fd-4b09-4d76-848a-32938ef02704
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       d469f5ec-1858-41bb-9f27-06f8098b0452:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: d469f5ec-1858-41bb-9f27-06f8098b0452
         name: ExternalPort
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::Controller::Ports::ExternalPort
       d4f59ee2-1541-4f8a-9b4c-f0bc5e1a6063:
-        description: 'Mysql client settings
-
-          '
         id: d4f59ee2-1541-4f8a-9b4c-f0bc5e1a6063
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       d562a5ce-0133-41ad-b52b-d5b902e7b1ec:
-        description: 'OpenStack containerized Keystone service
-
-          '
         id: d562a5ce-0133-41ad-b52b-d5b902e7b1ec
         name: KeystoneLogging
         parameters:
         - ContainerKeystoneImage
         type: OS::TripleO::Services::Logging::Keystone
       d5ac91a0-d47b-45f9-8f3f-75d0fa4c0947:
-        description: 'Post-deploy configuration steps via puppet for all roles, as
-          defined in ../roles_data.yaml
-
-          '
         id: d5ac91a0-d47b-45f9-8f3f-75d0fa4c0947
         name: AllNodesDeploySteps
         parameters:
         - servers
-        - role_data
-        - DeployIdentifier
-        - deployment_source_hosts
-        - deployment_target_hosts
-        - EndpointMap
-        - ConfigDebug
-        - HideSensitiveLogs
-        - EnablePuppet
-        - EnablePaunch
-        - DockerPuppetDebug
-        - DockerPuppetProcessCount
-        - ContainerCli
-        - DockerPuppetMountHostPuppet
-        - FastForwardUpgradeReleases
-        - ContainerLogStdoutPath
-        - ContainerHealthcheckDisabled
-        - SELinuxMode
-        - ControllerCount
-        - ComputeHCICount
-        - ServiceNetMapLower
-        - ValidateControllersIcmp
-        - ValidateGatewaysIcmp
-        - ValidateFqdn
-        - ValidateNtp
-        - PingTestIpsMap
-        - StackAction
-        - DeployArtifactURLs
-        - HostsEntry
-        - AnsibleHostVarsMap
-        - StackUpdateType
-        - EnabledServices
-        - ControlVirtualIP
-        - EnabledNetworks
-        - NetVipMap
-        - StorageNetName
-        - StorageMgmtNetName
-        - InternalApiNetName
-        - TenantNetName
-        - ExternalNetName
-        - ManagementNetName
-        - CloudNames
-        - EnableInternalTLS
-        - CloudDomain
-        - NovaAdditionalCell
-        - AllNodesExtraMapData
-        - UndercloudHostsEntries
-        - ExtraHostsEntries
-        - VipHostsEntries
-        - KeystoneResourcesConfigs
         resources:
         - a6319e76-9541-44fc-b477-411d33dbcf55
-        - b20ddbb5-9555-4a58-8a40-82ea43ba4e51
         type: OS::TripleO::PostDeploySteps
       d5ef9973-46c2-4865-b446-403c6d65411f:
-        description: 'Mysql client settings
-
-          '
         id: d5ef9973-46c2-4865-b446-403c6d65411f
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       d78e5268-d434-4d77-a07f-f59d10588715:
-        description: 'Template for nova''s logging to files
-
-          '
         id: d78e5268-d434-4d77-a07f-f59d10588715
         name: NovaLogging
         parameters:
         - ContainerNovaImage
-        - NovaServiceName
-        - DeployIdentifier
         type: OS::TripleO::Services::Logging::NovaCommon
       da167bcb-03bc-4ad8-8246-593b93187aea:
-        description: 'Load kernel modules with kmod and configure kernel options with
-          sysctl.
-
-          '
         id: da167bcb-03bc-4ad8-8246-593b93187aea
         name: '17'
         parameter_groups:
@@ -7169,125 +3568,34 @@ stack_data:
           - InotifyIntancesMax
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KernelPidMax
-        - KernelDisableIPv6
-        - KernelIpForward
-        - KernelIpNonLocalBind
-        - NeighbourGcThreshold1
-        - NeighbourGcThreshold2
-        - NeighbourGcThreshold3
-        - InotifyInstancesMax
-        - BridgeNfCallArpTables
-        - BridgeNfCallIpTables
-        - BridgeNfCallIp6Tables
-        - ExtraKernelModules
-        - ExtraKernelPackages
-        - ExtraSysctlSettings
-        - InotifyIntancesMax
         type: OS::TripleO::Services::Kernel
       dc26d938-b7b8-45f0-a5e7-79a4ce922069:
-        description: 'SNMP client configured with Puppet, to facilitate Ceilometer
-          Hardware monitoring in the undercloud. This service is required to enable
-          hardware monitoring.
-
-          '
         id: dc26d938-b7b8-45f0-a5e7-79a4ce922069
         name: '37'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - SnmpdReadonlyUserName
-        - SnmpdReadonlyUserPassword
-        - SnmpdBindHost
-        - SnmpdOptions
-        - SnmpdIpSubnet
         type: OS::TripleO::Services::Snmp
       dd5c7d96-b38c-44a4-bde3-1f5a1d8da245:
-        description: 'OpenStack containerized HAproxy service for pacemaker
-
-          '
         id: dd5c7d96-b38c-44a4-bde3-1f5a1d8da245
         name: '54'
         parameters:
         - ContainerHAProxyImage
-        - ContainerHAProxyConfigImage
-        - ClusterCommonTag
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - EndpointMap
-        - SSLCertificate
-        - PublicSSLCertificateAutogenerated
-        - EnablePublicTLS
-        - DeployedSSLCertificatePath
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - HAProxyInternalTLSCertsDirectory
-        - HAProxyInternalTLSKeysDirectory
-        - HAProxySyslogAddress
-        - HAProxySyslogFacility
-        - ConfigDebug
-        - ContainerCli
-        - DeployIdentifier
         resources:
         - 2c5ec96d-c4d3-4caf-93d7-3761bec9041c
-        - 3b09e624-9c89-4702-a8a7-437d82029011
         type: OS::TripleO::Services::HAproxy
       de3aeaf7-e221-4862-aa30-2ec143562034:
-        description: 'Requests certificates using certmonger through Puppet
-
-          '
         id: de3aeaf7-e221-4862-aa30-2ec143562034
         name: '7'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - DefaultCRLURL
-        - CertmongerCA
-        - CertmongerVncCA
-        - CertmongerQemuCA
         type: OS::TripleO::Services::CertmongerUser
       deec0d78-bf77-4803-af30-52a5228f8504:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: deec0d78-bf77-4803-af30-52a5228f8504
         name: StorageMgmtPort
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::ComputeHCI::Ports::StorageMgmtPort
       df789c53-face-44f1-8a16-04f64535ae18:
-        description: 'OpenStack containerized Neutron API service
-
-          '
         id: df789c53-face-44f1-8a16-04f64535ae18
         name: '90'
         parameter_groups:
@@ -7306,188 +3614,50 @@ stack_data:
           - NeutronL3HA
         parameters:
         - ContainerNeutronApiImage
-        - ContainerNeutronConfigImage
-        - NeutronApiLoggingSource
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - DeployIdentifier
-        - EnableInternalTLS
-        - NeutronApiOptVolumes
-        - NeutronApiOptEnvVars
-        - NeutronWorkers
-        - NeutronRpcWorkers
-        - NeutronPassword
-        - NeutronAllowL3AgentFailover
-        - NovaPassword
-        - NeutronEnableDVR
-        - NeutronEnableIgmpSnooping
-        - KeystoneRegion
-        - MonitoringSubscriptionNeutronServer
-        - EnableSQLAlchemyCollectd
-        - NeutronApiPolicies
-        - NeutronOvsIntegrationBridge
-        - NeutronPortQuota
-        - NeutronSecurityGroupQuota
-        - NeutronMechanismDrivers
-        - NeutronDefaultAvailabilityZones
-        - NeutronNetworkSchedulerDriver
-        - NeutronRouterSchedulerDriver
-        - NeutronDhcpLoadType
-        - InternalTLSCAFile
-        - NeutronL3HA
         resources:
         - 96acbc98-721b-49c9-b3d8-6d702f6e92b8
-        - b6759c0c-c354-4e11-a728-0e252ccc6741
-        - 96316dd6-c7aa-41e6-9954-884a9c44644e
-        - f0b0f7c7-2530-4cd5-a1f7-0ed4f7d6e672
         type: OS::TripleO::Services::NeutronApi
       e0654479-b219-4112-a485-a72f280b44ba:
-        description: 'Creates a port for a VIP on the undercloud ctlplane network.
-          The IP address will be chosen automatically if FixedIPs is empty.
-
-          '
         id: e0654479-b219-4112-a485-a72f280b44ba
         name: OVNDBsVirtualIP
         parameters:
         - ServiceName
-        - NetworkName
-        - PortName
-        - DnsName
-        - ControlPlaneIP
-        - ControlPlaneSubnetCidr
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - FixedIPs
         type: OS::TripleO::Network::Ports::OVNDBsVipPort
       e2b9b42a-1764-4cdc-9f8e-f66e07d52530:
-        description: 'Mysql client settings
-
-          '
         id: e2b9b42a-1764-4cdc-9f8e-f66e07d52530
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       e3b7fa5b-4d18-4008-8a20-009f5380bdd7:
-        description: 'TripleO Package installation settings
-
-          '
         id: e3b7fa5b-4d18-4008-8a20-009f5380bdd7
         name: '42'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnablePackageInstall
-        - FastForwardRepoType
-        - FastForwardRepoArgs
-        - FastForwardCustomRepoScriptContent
-        - UpgradeLeappEnabled
-        - UpgradeLeappDebug
-        - UpgradeLeappDevelSkip
-        - UpgradeLeappRebootTimeout
-        - UpgradeInitCommand
-        - UpgradeInitCommonCommand
-        - SkipPackageUpdate
         type: OS::TripleO::Services::TripleoPackages
       e7ef836a-bd03-4202-a032-82b981f874fd:
-        description: 'OpenStack containerized Placement API service
-
-          '
         id: e7ef836a-bd03-4202-a032-82b981f874fd
         name: '121'
         parameters:
         - ContainerPlacementImage
-        - ContainerPlacementConfigImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - EnableSQLAlchemyCollectd
-        - RoleName
-        - RoleParameters
-        - DeployIdentifier
-        - EnableInternalTLS
-        - PlacementWorkers
-        - PlacementPassword
-        - PlacementAPIInterface
-        - KeystoneRegion
-        - MonitoringSubscriptionPlacement
-        - PlacementLoggingSource
-        - NovaPassword
-        - Debug
         resources:
         - 23b0a631-1af8-4fb1-a858-d1eb967146ce
-        - cc5b3dc6-8be7-49c5-8a33-084abeb43dbc
-        - 9527c1ca-ed06-40e2-a746-90a620878d91
-        - 8ed68679-8d5b-41a0-a2bd-4b390503442c
         type: OS::TripleO::Services::PlacementApi
       e8d17d7f-0483-4066-b425-cd9eb075b1be:
-        description: 'MySQL service deployment with pacemaker bundle
-
-          '
         id: e8d17d7f-0483-4066-b425-cd9eb075b1be
         name: MysqlPuppetBase
         parameters:
         - ContainerMysqlImage
-        - ContainerMysqlConfigImage
-        - ClusterCommonTag
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - MysqlRootPassword
-        - MysqlClustercheckPassword
-        - MysqlUpgradePersist
-        - MysqlUpgradeTransfer
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - ConfigDebug
-        - DeployIdentifier
-        - ContainerCli
         resources:
         - 0d62cc6c-669c-4ce5-b1a9-97bdf3773d93
-        - 96db323e-368e-446d-954e-f1b45c57bafa
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-pacemaker-puppet.yaml
       eaaf1e59-caf0-4307-bb9c-af42c9042e97:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: eaaf1e59-caf0-4307-bb9c-af42c9042e97
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       eab60557-66d3-4a91-b329-f743fef383eb:
-        description: 'Ceph base service. Shared by all Ceph services.
-
-          '
         id: eab60557-66d3-4a91-b329-f743fef383eb
         name: CephBase
         parameter_groups:
@@ -7501,329 +3671,92 @@ stack_data:
           - SwiftFetchDirPutTempurl
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - CephDashboardAdminPassword
-        - CephGrafanaAdminPassword
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - StackUpdateType
-        - NodeDataLookup
-        - DeploymentServerBlacklist
-        - ContainerCli
-        - CephEnableDashboard
-        - CephAnsiblePlaybook
-        - CephAnsibleExtraConfig
-        - CephAnsibleSkipTags
-        - CephConfigOverrides
-        - CephClusterFSID
-        - CephClusterName
-        - CephPoolDefaultPgNum
-        - CephPools
-        - CinderRbdPoolName
-        - CinderRbdExtraPools
-        - CinderBackupRbdPoolName
-        - GlanceRbdPoolName
-        - GlanceBackend
-        - GnocchiRbdPoolName
-        - NovaRbdPoolName
-        - CephClientKey
-        - CephClientUserName
-        - CephRgwClientName
-        - CephRgwKey
-        - CephPoolDefaultSize
-        - ManilaCephFSDataPoolName
-        - ManilaCephFSMetadataPoolName
-        - ManilaCephFSDataPoolPGNum
-        - ManilaCephFSMetadataPoolPGNum
-        - ManilaCephFSShareBackendName
-        - ManilaCephFSCephFSAuthId
-        - CephManilaClientKey
-        - CephIPv6
-        - SwiftPassword
-        - ContainerCephDaemonImage
-        - CephAnsiblePlaybookVerbosity
-        - CephAnsibleEnvironmentVariables
-        - SwiftFetchDirGetTempurl
-        - SwiftFetchDirPutTempurl
-        - LocalCephAnsibleFetchDirectoryBackup
-        - CephOsdPercentageMin
-        - ContainerImageRegistryCredentials
-        - CephExtraKeys
-        - CephAnsibleRepo
-        - CephExternalMultiConfig
-        - CinderEnableRbdBackend
-        - NovaEnableRbdBackend
-        - CinderBackupBackend
-        - GnocchiBackend
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/ceph-ansible/ceph-base.yaml
       eae34461-2081-449d-b929-73b116e5feab:
-        description: 'Configure sshd_config
-
-          '
         id: eae34461-2081-449d-b929-73b116e5feab
         name: SshdBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - BannerText
-        - MessageOfTheDay
-        - SshServerOptions
-        - PasswordAuthentication
-        - SshFirewallAllowAll
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/sshd/sshd-baremetal-puppet.yaml
       ebb84b43-aa6f-4352-b1c1-78d2f1368a97:
-        description: 'HAproxy service configured with Puppet
-
-          '
         id: ebb84b43-aa6f-4352-b1c1-78d2f1368a97
         name: '12'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - CAMap
         type: OS::TripleO::Services::CACerts
       ede3480f-65be-4194-b20f-c553265fa790:
-        description: 'OpenStack containerized Nova Metadata service
-
-          '
         id: ede3480f-65be-4194-b20f-c553265fa790
         name: '108'
         parameters:
         - ContainerNovaMetadataImage
-        - ContainerNovaMetadataConfigImage
-        - NovaMetadataLoggingSource
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - NovaWorkers
-        - NovaPassword
-        - KeystoneRegion
-        - NeutronMetadataProxySharedSecret
-        - MonitoringSubscriptionNovaMetadata
-        - NovaLocalMetadataPerCell
         resources:
         - 843028a9-3b70-4fc7-8a91-35d696a01941
-        - 2366cde5-e545-4919-9743-ca1ecb14ab86
-        - 23822700-13b5-449a-8993-884a470eec95
-        - 4fe6a4eb-7c9b-48f1-97d8-036de18a9e00
-        - 60ded895-2ef2-408c-a910-a8cd98071ea9
         type: OS::TripleO::Services::NovaMetadata
       ee32c1c3-d5b8-4ee3-807d-0a14b11e1fb2:
-        description: 'Returns the control plane port (provisioning network) as the
-          ip_address.
-
-          '
         id: ee32c1c3-d5b8-4ee3-807d-0a14b11e1fb2
         name: InternalApiVirtualIP
         parameters:
         - ServiceName
-        - ControlPlaneIP
-        - ControlPlaneNetwork
-        - ControlPlaneSubnet
-        - ControlPlaneMtu
-        - PortName
-        - DnsName
-        - NetworkName
-        - FixedIPs
-        - ControlPlaneSubnetCidr
-        - IPPool
-        - NodeIndex
         type: OS::TripleO::Network::Ports::InternalApiVipPort
       ee736bc2-35fd-460e-bd46-c7bcf9423378:
-        description: 'TripleO Firewall settings
-
-          '
         id: ee736bc2-35fd-460e-bd46-c7bcf9423378
         name: '141'
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - ExtraFirewallRules
         type: OS::TripleO::Services::TripleoFirewall
       f0b0f7c7-2530-4cd5-a1f7-0ed4f7d6e672:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: f0b0f7c7-2530-4cd5-a1f7-0ed4f7d6e672
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       f16b83b7-aca1-47ae-becc-5e5f5ac1e613:
-        description: 'MySQL HA clustercheck service deployment using puppet This service
-          is used by HAProxy in a HA scenario to report whether the local galera node
-          is synced
-
-          '
         id: f16b83b7-aca1-47ae-becc-5e5f5ac1e613
         name: '39'
         parameters:
         - ContainerClustercheckImage
-        - ContainerClustercheckConfigImage
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
         resources:
         - 30417c34-8010-4dc2-a2f8-e66ec01dd3b4
-        - e8d17d7f-0483-4066-b425-cd9eb075b1be
         type: OS::TripleO::Services::Clustercheck
       f2710d64-363e-4d15-94da-609887902bf2:
-        description: 'OpenStack containerized Cinder Scheduler service
-
-          '
         id: f2710d64-363e-4d15-94da-609887902bf2
         name: '37'
         parameters:
         - ContainerCinderSchedulerImage
-        - ContainerCinderConfigImage
-        - CinderSchedulerLoggingSource
-        - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - MonitoringSubscriptionCinderScheduler
         resources:
         - 631f40fb-d15e-47d5-86a7-ddc65e1265d9
-        - f742a048-f2d1-4c73-94e0-cf7b009a6db4
-        - 20527635-eb42-48fd-875b-c873f9d16c43
         type: OS::TripleO::Services::CinderScheduler
       f456aff5-d1e6-4346-9a51-2526de7ed825:
-        description: Noop Extra Pre-Deployment Config
         id: f456aff5-d1e6-4346-9a51-2526de7ed825
         name: NodeExtraConfig
         parameters:
         - server
         type: OS::TripleO::NodeExtraConfig
       f5228973-e111-4864-b13d-ddc08dc20aa0:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: f5228973-e111-4864-b13d-ddc08dc20aa0
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       f537bec9-07ea-40b9-8496-1441b706ff63:
-        description: No description
         id: f537bec9-07ea-40b9-8496-1441b706ff63
         name: ComputeHCIIpListMap
         parameters:
         - ControlPlaneIpList
-        - StorageIpList
-        - StorageNetName
-        - StorageMgmtIpList
-        - StorageMgmtNetName
-        - InternalApiIpList
-        - InternalApiNetName
-        - TenantIpList
-        - TenantNetName
-        - ExternalIpList
-        - ExternalNetName
-        - ManagementIpList
-        - ManagementNetName
-        - EnabledServices
-        - ServiceNetMap
-        - ServiceHostnameList
-        - NetworkHostnameMap
-        - NovaAdditionalCell
-        - RoleNetworks
         type: OS::TripleO::Network::Ports::NetIpListMap
       f6888a56-ee82-4394-bf7c-e8dae793a2fc:
-        description: 'Contains a static list of common things necessary for containers
-
-          '
         id: f6888a56-ee82-4394-bf7c-e8dae793a2fc
         name: ContainersCommon
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EnableInternalTLS
-        - InternalTLSCAFile
-        - RpcPort
-        - PcmkConfigRestartTimeout
-        - ContainerCli
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/containers-common.yaml
       f742a048-f2d1-4c73-94e0-cf7b009a6db4:
-        description: 'OpenStack Cinder base service. Shared by all Cinder services.
-
-          '
         id: f742a048-f2d1-4c73-94e0-cf7b009a6db4
         name: CinderBase
         parameters:
         - CinderStorageAvailabilityZone
-        - CinderPassword
-        - Debug
-        - CinderDebug
-        - EnableSQLAlchemyCollectd
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KeystoneRegion
-        - CinderCronDbPurgeMinute
-        - CinderCronDbPurgeHour
-        - CinderCronDbPurgeMonthday
-        - CinderCronDbPurgeMonth
-        - CinderCronDbPurgeWeekday
-        - CinderCronDbPurgeUser
-        - CinderCronDbPurgeAge
-        - CinderCronDbPurgeDestination
-        - CinderCronDbPurgeMaxDelay
-        - NovaPassword
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/cinder/cinder-base.yaml
       f9316fa2-1822-4758-9e04-37ded21bebb0:
-        description: 'Mapping of service_name_network -> network name
-
-          '
         id: f9316fa2-1822-4758-9e04-37ded21bebb0
         name: ServiceNetMap
         parameter_groups:
@@ -7833,116 +3766,23 @@ stack_data:
           - ServiceNetMapDeprecatedMapping
         parameters:
         - ServiceNetMap
-        - ServiceNetMapDefaults
-        - ControlPlaneSubnet
-        - VipSubnetMap
-        - VipSubnetMapDefaults
-        - ServiceNetMapDeprecatedMapping
-        - StorageNetName
-        - StorageMgmtNetName
-        - InternalApiNetName
-        - TenantNetName
-        - ExternalNetName
-        - ManagementNetName
         type: OS::TripleO::ServiceNetMap
       f968ffe5-e310-4cd9-919d-1005924cbdfa:
-        description: 'Mysql client settings
-
-          '
         id: f968ffe5-e310-4cd9-919d-1005924cbdfa
         name: MySQLClient
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - EnableInternalTLS
-        - InternalTLSCAFile
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/database/mysql-client.yaml
       fa90a5f5-b92b-44a6-9a72-df39c669c5cb:
-        description: 'OpenStack Nova base service. Shared for all Nova services.
-
-          '
         id: fa90a5f5-b92b-44a6-9a72-df39c669c5cb
         name: NovaBase
         parameters:
         - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - EndpointMap
-        - KeystoneRegion
-        - NotificationDriver
-        - NovaPassword
-        - NeutronPassword
-        - PlacementPassword
-        - PlacementAPIInterface
-        - ExtractedPlacementEnabled
-        - NovaOVSBridge
-        - DatabaseSyncTimeout
-        - Debug
-        - NovaDebug
-        - EnableSQLAlchemyCollectd
-        - EnableConfigPurge
-        - UpgradeLevelNovaCompute
-        - NovaCronArchiveDeleteRowsMinute
-        - NovaCronArchiveDeleteRowsHour
-        - NovaCronArchiveDeleteRowsMonthday
-        - NovaCronArchiveDeleteRowsMonth
-        - NovaCronArchiveDeleteRowsWeekday
-        - NovaCronArchiveDeleteRowsMaxRows
-        - NovaCronArchiveDeleteRowsUser
-        - NovaCronArchiveDeleteRowsDestination
-        - NovaCronArchiveDeleteRowsMaxDelay
-        - NovaCronArchiveDeleteRowsUntilComplete
-        - NovaCronArchiveDeleteRowsPurge
-        - NovaCronArchiveDeleteAllCells
-        - NovaCronArchiveDeleteRowsAge
-        - NovaCronPurgeShadowTablesMinute
-        - NovaCronPurgeShadowTablesHour
-        - NovaCronPurgeShadowTablesMonthday
-        - NovaCronPurgeShadowTablesMonth
-        - NovaCronPurgeShadowTablesWeekday
-        - NovaCronPurgeShadowTablesUser
-        - NovaCronPurgeShadowTablesDestination
-        - NovaCronPurgeShadowTablesMaxDelay
-        - NovaCronPurgeShadowTablesAge
-        - NovaCronPurgeShadowTablesVerbose
-        - NovaCronPurgeShadowTablesAllCells
-        - NovaOVSDBConnection
-        - NovaSyncPowerStateInterval
-        - RpcUseSSL
-        - NovaAdditionalCell
-        - NovaCrossAZAttach
         type: https://192.168.24.2:13808/v1/AUTH_ca64f567ef1b4db0a789a352c1315a08/overcloud/deployment/nova/nova-base-puppet.yaml
       fbda4c48-d763-4fc1-8504-1b01781f861e:
-        description: 'Prepare container images
-
-          '
         id: fbda4c48-d763-4fc1-8504-1b01781f861e
         name: '41'
         parameters:
         - EndpointMap
-        - ServiceData
-        - ServiceNetMap
-        - DefaultPasswords
-        - RoleName
-        - RoleParameters
-        - ContainerImagePrepare
-        - ContainerImagePrepareLogFile
-        - DockerInsecureRegistryAddress
-        - NeutronMechanismDrivers
-        - DockerRegistryMirror
-        - Debug
-        - ContainerImagePrepareDebug
-        - ContainerImageRegistryCredentials
-        - AdditionalArchitectures
-        - ControllerServices
-        - ControllerCount
-        - ComputeHCIServices
-        - ComputeHCICount
         type: OS::TripleO::Services::ContainerImagePrepare
 success: true

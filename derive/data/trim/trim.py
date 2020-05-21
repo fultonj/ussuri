@@ -24,22 +24,27 @@ def trim_params(params):
     return new_params
 
 def trim_resources(resources):
-    return resources
-    # ended up not using the rest of this function...
     new_resources = {}
     for k, resource in resources.items():
         new_resource = {}
         if 'name' in resource:
             new_resource['name'] = resource['name']
         if 'id' in resource:
-            new_resource['id'] = resource['id']
+          new_resource['id'] = resource['id']
         if 'type' in resource:
-            new_resource['type'] = resource['type']
+          new_resource['type'] = resource['type']
         if 'description' in resource:
-            new_resource['description'] = resource['description']
+            pass # saving some space
+        if 'parameter_groups' in resource:
+            new_resource['parameter_groups'] = resource['parameter_groups']
+        if 'resources' in resource:
+            # only use the first item on the list to save space
+            new_resource['resources'] = resource['resources'][:1]
         if 'parameters' in resource:
-            new_resource['parameters'] = resource['parameters']
+            # only use the first item on the list to save space
+            new_resource['parameters'] = resource['parameters'][:1]
         new_resources[k] = new_resource
+
     return new_resources
 
 def trim_stack_data(stack_data):

@@ -113,8 +113,8 @@ json2yaml /tmp/tripleo_get_flatten_params.json > mock_params
 When I use the new mock_params molecule doesn't fail.
 
 I then wrote [trim.py](trim/trim.py) to reduce the size of the 
-original [mock_params](trim/mock_params) by about one third to
-get new [mock_params](mock_params).
+original [mock_params](trim/mock_params) by 70% to get a new
+[mock_params](mock_params).
 
 ## mock_roles
 
