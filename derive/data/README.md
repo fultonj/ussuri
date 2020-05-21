@@ -88,12 +88,10 @@ gets the input paramters from a TripleO deployment.
 
 I have cloudnull's original [mock_params](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/molecule/mock_params)
 but it doesn't contain anything I would derive HCI parameters for so
-I'm  going to replace it with my own version from my own HCI deployment
-and then I'm going to trim it as it's much longer than it needs to be
-at about over 12,000 lines, or 500K.
-
-I got [mock_params](mock_params) by modifying [cli-derive-parameters.yaml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/playbooks/cli-derive-parameters.yaml@37)
-to add a temporary task to save the result:
+I replaced it with my own version from my own HCI deployment. To do
+this, I got [mock_params](trim/mock_params) by modifying
+[cli-derive-parameters.yaml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/playbooks/cli-derive-parameters.yaml@37) to
+add a temporary task to save the result:
 
 ```
 - name: Get flatten params
@@ -112,10 +110,11 @@ sudo yum install -y npm
 sudo npm install -g json2yaml
 json2yaml /tmp/tripleo_get_flatten_params.json > mock_params 
 ```
-When I use the new mock_params molecule doesn't fail. I will trim it later.
+When I use the new mock_params molecule doesn't fail.
 
-I now need to add more parameters as input in the converge playbook to
-exercise the new role with molecule.
+I then wrote [trim.py](trim/trim.py) to reduce the size of the 
+original [mock_params](trim/mock_params) by about one third to
+get new [mock_params](mock_params).
 
 ## mock_roles
 
