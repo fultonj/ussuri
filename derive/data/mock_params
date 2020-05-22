@@ -83,210 +83,10 @@ stack_data:
     parameters:
       AddVipsToEtcHosts:
         default: true
-      AdditionalArchitectures:
-        default: []
-      AdminEmail:
-        default: admin@example.com
-      AdminPassword:
-        default: gTDqglfHJPSTequF0JHhhZc2r
-      AdminToken:
-        default: fUeqLxBcgn0qAcRus3pQ7PKjS
-      AllNodesExtraMapData:
-        default: {}
-      AnsibleHostVarsMap:
-        default: {}
       ApacheMaxRequestWorkers:
         default: 100
       ApacheServerLimit:
         default: 100
-      BannerText:
-        default: ''
-      BridgeNfCallArpTables:
-        default: 1
-      BridgeNfCallIp6Tables:
-        default: 1
-      BridgeNfCallIpTables:
-        default: 1
-      CAMap:
-        default: {}
-      CephAdminKey:
-        default: AQCgtqheAAAAABAA+XDG4aTpDYKYk6bJZZtmuQ==
-      CephAnsibleDisksConfig:
-        default:
-          devices:
-          - /dev/sdb
-          osd_objectstore: bluestore
-          osd_scenario: lvm
-      CephAnsibleEnvironmentVariables:
-        default:
-          ANSIBLE_HOST_KEY_CHECKING: 'False'
-          ANSIBLE_SSH_CONTROL_PATH: /home/stack/ansible-ssh
-      CephAnsibleExtraConfig:
-        default:
-          ceph_osd_docker_cpu_limit: 1
-      CephAnsiblePlaybook:
-        default:
-        - default
-      CephAnsiblePlaybookVerbosity:
-        default: 3
-      CephAnsibleRepo:
-        default: storage8-ceph-nautilus
-      CephAnsibleSkipTags:
-        default: package-install,with_pkg
-      CephClientKey:
-        default: AQCgtqheAAAAABAAM/93ARrPvKidGBBJr1NlyQ==
-      CephClientUserName:
-        default: openstack
-      CephClusterFSID:
-        default: 59a647ec-f864-4d25-a557-14f4a21cf0ed
-      CephClusterName:
-        default: ceph
-      CephConfigOverrides:
-        default:
-          osd_max_backfills: 1
-          osd_recovery_max_active: 3
-          osd_recovery_op_priority: 3
-      CephDashboardAdminPassword:
-        default: AQCgtqheAAAAABAAnn8hRKgIuaTI128BuXUmRw==
-      CephDashboardAdminRO:
-        default: true
-      CephDashboardAdminUser:
-        default: admin
-      CephEnableDashboard:
-        default: false
-      CephExternalMultiConfig:
-        default: []
-      CephExtraKeys:
-        default: []
-      CephGrafanaAdminPassword:
-        default: AQCgtqheAAAAABAAw9H03jh54+LWY2AT7gtzJg==
-      CephIPv6:
-        default: false
-      CephManilaClientKey:
-        default: AQCgtqheAAAAABAAWegpVHCxBDKNlrZSBwO7Bg==
-      CephMonKey:
-        default: AQCgtqheAAAAABAAtk/A4BmBxZuveCYw3BmGAg==
-      CephOsdPercentageMin:
-        default: 66
-      CephPoolDefaultPgNum:
-        default: 32
-      CephPoolDefaultSize:
-        default: 1
-      CephPools:
-        default: []
-      CephRgwClientName:
-        default: radosgw
-      CephRgwKey:
-        default: AQCgtqheAAAAABAAJbF2sC13OKAUwndCUcqoDA==
-      CephValidationDelay:
-        default: 30
-      CephValidationRetries:
-        default: 40
-      CertmongerCA:
-        default: IPA
-      CertmongerQemuCA:
-        default: IPA
-      CertmongerVncCA:
-        default: IPA
-      ChronyAclRules:
-        default:
-        - deny all
-      ChronyGlobalPoolOptions:
-        default: ''
-      ChronyGlobalServerOptions:
-        default: ''
-      CinderApiLoggingSource:
-        default:
-          file: /var/log/containers/cinder/cinder-api.log
-          tag: openstack.cinder.api
-      CinderApiPolicies:
-        default: {}
-      CinderBackupBackend:
-        default: ceph
-      CinderBackupRbdPoolName:
-        default: backups
-      CinderCronDbPurgeAge:
-        default: '30'
-      CinderCronDbPurgeDestination:
-        default: /var/log/cinder/cinder-rowsflush.log
-      CinderCronDbPurgeHour:
-        default: '0'
-      CinderCronDbPurgeMaxDelay:
-        default: '3600'
-      CinderCronDbPurgeMinute:
-        default: '1'
-      CinderCronDbPurgeMonth:
-        default: '*'
-      CinderCronDbPurgeMonthday:
-        default: '*'
-      CinderCronDbPurgeUser:
-        default: cinder
-      CinderCronDbPurgeWeekday:
-        default: '*'
-      CinderDebug:
-        default: ''
-      CinderDefaultVolumeType:
-        default: tripleo
-      CinderEnableDBPurge:
-        default: true
-      CinderEnableIscsiBackend:
-        default: false
-      CinderEnableNfsBackend:
-        default: false
-      CinderEnableRbdBackend:
-        default: true
-      CinderEtcdLocalConnect:
-        default: false
-      CinderISCSIAvailabilityZone:
-        default: ''
-      CinderISCSIHelper:
-        default: lioadm
-      CinderISCSIProtocol:
-        default: iscsi
-      CinderLVMLoopDeviceSize:
-        default: 10280
-      CinderNasSecureFileOperations:
-        default: false
-      CinderNasSecureFilePermissions:
-        default: false
-      CinderNfsAvailabilityZone:
-        default: ''
-      CinderNfsMountOptions:
-        default: ''
-      CinderNfsServers:
-        default: ''
-      CinderNfsSnapshotSupport:
-        default: true
-      CinderPassword:
-        default: BjD4fnsAskKILxtWIuFldK8ig
-      CinderRbdAvailabilityZone:
-        default: ''
-      CinderRbdExtraPools:
-        default: []
-      CinderRbdFlattenVolumeFromSnapshot:
-        default: false
-      CinderRbdPoolName:
-        default: volumes
-      CinderSchedulerLoggingSource:
-        default:
-          file: /var/log/containers/cinder/cinder-scheduler.log
-          tag: openstack.cinder.scheduler
-      CinderStorageAvailabilityZone:
-        default: nova
-      CinderVolumeCluster:
-        default: ''
-      CinderVolumeLoggingSource:
-        default:
-          file: /var/log/containers/cinder/cinder-volume.log
-          tag: openstack.cinder.volume
-      CinderVolumeOptEnvVars:
-        default: {}
-      CinderVolumeOptVolumes:
-        default: []
-      CinderWorkers:
-        default: 1
-      ClientRetryLimit:
-        default: 2
       CloudDomain:
         default: localdomain
       CloudEndpoints:
@@ -301,13 +101,6 @@ stack_data:
         default: overcloud.storage.localdomain
       CloudNameStorageManagement:
         default: overcloud.storagemgmt.localdomain
-      CloudNames:
-        default:
-          description: ''
-          label: CloudNames
-          name: CloudNames
-          noEcho: 'false'
-          type: Json
       ClusterCommonTag:
         default: false
       ComputeHCIAnyErrorsFatal:
@@ -409,8 +202,6 @@ stack_data:
           type: String
       ControlPlaneIp:
         default: ''
-      ControlPlaneIpList:
-        default: []
       ControlPlaneMtu:
         default: 1500
       ControlPlaneNetwork:
@@ -421,21 +212,10 @@ stack_data:
         default: ctlplane-subnet
       ControlPlaneSubnetCidr:
         default: ''
-      ControlVirtualIP:
-        default:
-          description: ''
-          label: ControlVirtualIP
-          name: ControlVirtualIP
-          noEcho: 'false'
-          type: String
       ControllerAnyErrorsFatal:
         default: true
-      ControllerControlPlaneSubnet:
-        default: ctlplane-subnet
       ControllerCount:
         default: 1
-      ControllerEnableSwiftStorage:
-        default: true
       ControllerExtraConfig:
         default:
           nova::network::neutron::timeout: '60'
@@ -443,10 +223,6 @@ stack_data:
         default: {}
       ControllerHostnameFormat:
         default: '%stackname%-controller-%index%'
-      ControllerIPs:
-        default: {}
-      ControllerImage:
-        default: overcloud-full
       ControllerMaxFailPercentage:
         default: 15
       ControllerNetworkDeploymentActions:
@@ -460,8 +236,6 @@ stack_data:
       ControllerSchedulerHints:
         default:
           capabilities:node: 0-controller-%index%
-      ControllerServerMetadata:
-        default: {}
       ControllerServices:
         default:
         - OS::TripleO::Services::Aide
@@ -610,23 +384,10 @@ stack_data:
         - OS::TripleO::Services::Tuned
         - OS::TripleO::Services::Vpp
         - OS::TripleO::Services::Zaqar
-      CorosyncIPv6:
-        default: false
-      CorosyncSettleTries:
-        default: 360
-      CtlplaneNetworkCidrs:
-        default:
-          description: Cidrs for the ctlplane network.
-          label: CtlplaneNetworkCidrs
-          name: CtlplaneNetworkCidrs
-          noEcho: 'false'
-          type: Json
       DatabaseSyncTimeout:
         default: 900
       Debug:
         default: false
-      DefaultCRLURL:
-        default: http://ipa-ca/ipa/crl/MasterCRL.bin
       DefaultHeatAuthEncryptionKey:
         default:
           description: ''
@@ -664,83 +425,26 @@ stack_data:
           name: DefaultRabbitCookie
           noEcho: 'false'
           type: String
-      DeployArtifactURLs:
-        default: []
       DeployIdentifier:
         default: ''
-      DeployedSSLCertificatePath:
-        default: /etc/pki/tls/private/overcloud_endpoint.pem
       DeploymentServerBlacklist:
         default: []
       DeploymentServerBlacklistDict:
         default: {}
-      DhcpAgentNotification:
-        default: true
       DnsName:
         default: ''
-      DnsSearchDomains:
-        default: []
       DnsServers:
         default: []
-      DockerAdditionalSockets:
-        default:
-        - /var/lib/openstack/docker.sock
-      DockerCinderVolumeUlimit:
-        default:
-        - nofile=131072
-      DockerInsecureRegistryAddress:
-        default:
-        - 192.168.24.1:8787
-      DockerNovaComputeUlimit:
-        default:
-        - nofile=131072
-        - memlock=67108864
-      DockerNovaMigrationSshdPort:
-        default: 2022
-      DockerPuppetDebug:
-        default: false
-      DockerPuppetMountHostPuppet:
-        default: true
-      DockerPuppetProcessCount:
-        default: 6
-      DockerRegistryMirror:
-        default: ''
       EnableConfigPurge:
-        default: false
-      EnableFencing:
         default: false
       EnableGalera:
         default: true
-      EnableInstanceHA:
-        default: false
       EnableInternalTLS:
         default: false
-      EnableLoadBalancer:
-        default: true
       EnableMysqlAuthEd25519:
         default: false
-      EnablePackageInstall:
-        default: false
-      EnablePaunch:
-        default: false
-      EnablePublicTLS:
-        default: true
-      EnablePuppet:
-        default: true
       EnableSQLAlchemyCollectd:
         default: false
-      EnableVLANTransparency:
-        default: false
-      EnabledNetworks:
-        default:
-          description: ''
-          label: EnabledNetworks
-          name: EnabledNetworks
-          noEcho: 'false'
-          type: CommaDelimitedList
-          value: Storage,StorageMgmt,InternalApi,Tenant,External,Management
-      EnabledServices:
-        default: []
       EndpointMap:
         default: {}
       EndpointMapOverride:
@@ -751,8 +455,6 @@ stack_data:
         default: []
       ExternalIp:
         default: ''
-      ExternalIpList:
-        default: []
       ExternalIpSubnet:
         default: ''
       ExternalIpUri:
@@ -767,245 +469,18 @@ stack_data:
         default: []
       ExtraConfig:
         default: {}
-      ExtraFirewallRules:
-        default: {}
       ExtraHostFileEntries:
         default: []
-      ExtraHostsEntries:
-        default: []
-      ExtraKernelModules:
-        default: {}
-      ExtraKernelPackages:
-        default: {}
-      ExtraSysctlSettings:
-        default: {}
       ExtractedPlacementEnabled:
         default: false
-      FastForwardCustomRepoScriptContent:
-        default: '#!/bin/bash
-
-          set -e
-
-          echo "If you use FastForwardRepoType ''custom-script'' you have to provide
-          the upgrade repo script content."
-
-          echo "It will be installed as /root/ffu_upgrade_repo.sh on the node"
-
-          echo "and passed the upstream name (rocky, stein, train) of the release
-          as first argument"
-
-          exit 1
-
-          '
-      FastForwardRepoArgs:
-        default:
-          tripleo_repos:
-            rocky: -b rocky current
-            stein: -b stein current
-            train: -b train current
-      FastForwardRepoType:
-        default: tripleo-repos
-      FastForwardUpgradeReleases:
-        default:
-        - rocky
-        - stein
-        - train
-      FencingConfig:
-        default: {}
       FixedIPs:
         default: []
-      GlanceApiLoggingSource:
-        default:
-          file: /var/log/containers/glance/api.log
-          tag: openstack.glance.api
-      GlanceApiOptVolumes:
-        default: []
-      GlanceApiPolicies:
-        default: {}
-      GlanceBackend:
-        default: rbd
-      GlanceBackendID:
-        default: default_backend
-      GlanceCacheEnabled:
-        default: false
-      GlanceDebug:
-        default: ''
-      GlanceEnabledImportMethods:
-        default: web-download
-      GlanceIgnoreUserRoles:
-        default: admin
-      GlanceImageCacheDir:
-        default: /var/lib/glance/image-cache
-      GlanceImageCacheMaxSize:
-        default: 10737418240
-      GlanceImageCacheStallTime:
-        default: 86400
-      GlanceImageConversionOutputFormat:
-        default: raw
-      GlanceImageImportPlugins:
-        default: []
-      GlanceImageMemberQuota:
-        default: 128
-      GlanceInjectMetadataProperties:
-        default: ''
-      GlanceLogFile:
-        default: ''
-      GlanceMultistoreConfig:
-        default: {}
-      GlanceNetappNfsEnabled:
-        default: false
-      GlanceNfsEnabled:
-        default: false
-      GlanceNfsOptions:
-        default: _netdev,bg,intr,context=system_u:object_r:container_file_t:s0
-      GlanceNfsShare:
-        default: ''
-      GlanceNodeStagingUri:
-        default: file:///var/lib/glance/staging
-      GlanceNotifierStrategy:
-        default: noop
-      GlancePassword:
-        default: qN2zfLeLJVQFeaZo4qJf6dkNP
-      GlanceRbdPoolName:
-        default: images
-      GlanceShowMultipleLocations:
-        default: false
-      GlanceStagingNfsOptions:
-        default: _netdev,bg,intr,context=system_u:object_r:container_file_t:s0
-      GlanceStagingNfsShare:
-        default: ''
-      GlanceStoreDescription:
-        default: Default glance store backend.
-      GlanceWorkers:
-        default: 1
       GlobalConfigExtraMapData:
         default: {}
-      GnocchiBackend:
-        default: swift
-      GnocchiRbdPoolName:
-        default: ''
-      HAProxyInternalTLSCertsDirectory:
-        default: /etc/pki/tls/certs/haproxy
-      HAProxyInternalTLSKeysDirectory:
-        default: /etc/pki/tls/private/haproxy
-      HAProxyStatsEnabled:
-        default: true
-      HAProxyStatsPassword:
-        default: jOgVAsoOCrdSTF5aDOUjibP19
-      HAProxyStatsUser:
-        default: admin
-      HAProxySyslogAddress:
-        default: /dev/log
-      HAProxySyslogFacility:
-        default: local0
-      HeatApiCfnLoggingSource:
-        default:
-          file: /var/log/containers/heat/heat_api_cfn.log
-          tag: openstack.heat.api.cfn
-      HeatApiLoggingSource:
-        default:
-          file: /var/log/containers/heat/heat_api.log
-          tag: openstack.heat.api
-      HeatApiOptEnvVars:
-        default: {}
-      HeatApiOptVolumes:
-        default: []
-      HeatApiPolicies:
-        default: {}
-      HeatAuthEncryptionKey:
-        default: IwuHjSvbm2Qeq2hshVL9kdUTS8BGV8Y7
-      HeatConfigureDelegatedRoles:
-        default: false
-      HeatConvergenceEngine:
-        default: true
-      HeatCorsAllowedOrigin:
-        default: ''
-      HeatCronPurgeDeletedAge:
-        default: '30'
-      HeatCronPurgeDeletedAgeType:
-        default: days
-      HeatCronPurgeDeletedDestination:
-        default: /dev/null
-      HeatCronPurgeDeletedEnsure:
-        default: present
-      HeatCronPurgeDeletedHour:
-        default: '0'
-      HeatCronPurgeDeletedMaxDelay:
-        default: '3600'
-      HeatCronPurgeDeletedMinute:
-        default: '1'
-      HeatCronPurgeDeletedMonth:
-        default: '*'
-      HeatCronPurgeDeletedMonthday:
-        default: '*'
-      HeatCronPurgeDeletedUser:
-        default: heat
-      HeatCronPurgeDeletedWeekday:
-        default: '*'
-      HeatDebug:
-        default: ''
-      HeatEnableDBPurge:
-        default: true
-      HeatEngineLoggingSource:
-        default:
-          file: /var/log/containers/heat/heat-engine.log
-          tag: openstack.heat.engine
-      HeatEngineOptEnvVars:
-        default: {}
-      HeatEngineOptVolumes:
-        default: []
-      HeatEnginePluginDirs:
-        default: []
-      HeatMaxJsonBodySize:
-        default: 4194304
-      HeatMaxNestedStackDepth:
-        default: 6
-      HeatMaxResourcesPerStack:
-        default: 1000
-      HeatPassword:
-        default: pCq33NiSecDklWZKfNKERPuS7
-      HeatReauthenticationAuthMethod:
-        default: ''
-      HeatStackDomainAdminPassword:
-        default: kxQfU85TUd5Db52BvgUzJhns9
-      HeatWorkers:
-        default: 1
-      HeatYaqlLimitIterators:
-        default: 1000
-      HeatYaqlMemoryQuota:
-        default: 100000
-      HideSensitiveLogs:
-        default: true
-      HorizonAllowedHosts:
-        default: '*'
-      HorizonCustomizationModule:
-        default: ''
-      HorizonDebug:
-        default: false
-      HorizonDomainChoices:
-        default: []
-      HorizonPasswordValidator:
-        default: ''
-      HorizonPasswordValidatorHelp:
-        default: ''
-      HorizonSecret:
-        default: vrOT2Jq2D3
-      HorizonSecureCookies:
-        default: false
-      HorizonVhostExtraParams:
-        default:
-          access_log_format: '%a %l %u %t \"%r\" %>s %b \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
-          add_listen: true
-          options:
-          - FollowSymLinks
-          - MultiViews
-          priority: 10
       Hostname:
         default: ''
       HostnameMap:
         default: {}
-      HostsEntry:
-        default: []
       HypervisorNeutronPhysicalBridge:
         default: br-ex
       HypervisorNeutronPublicInterface:
@@ -1014,10 +489,6 @@ stack_data:
         default: {}
       ImageUpdatePolicy:
         default: REBUILD_PRESERVE_EPHEMERAL
-      InotifyInstancesMax:
-        default: 1024
-      InotifyIntancesMax:
-        default: 1024
       InstanceNameTemplate:
         default: instance-%08x
       InternalApiInterfaceDefaultRoute:
@@ -1026,8 +497,6 @@ stack_data:
         default: []
       InternalApiIp:
         default: ''
-      InternalApiIpList:
-        default: []
       InternalApiIpSubnet:
         default: ''
       InternalApiIpUri:
@@ -1042,167 +511,16 @@ stack_data:
         default: []
       InternalTLSCAFile:
         default: /etc/ipa/ca.crt
-      InternalTLSCRLPEMDir:
-        default: /etc/pki/CA/crl/
-      InternalTLSCRLPEMFile:
-        default: /etc/pki/CA/crl/overcloud-crl.pem
-      InternalTLSNbdCAFile:
-        default: /etc/pki/qemu/ca-cert.pem
-      InternalTLSQemuCAFile:
-        default: /etc/pki/CA/certs/qemu.pem
-      InternalTLSVncCAFile:
-        default: /etc/pki/CA/certs/vnc.crt
-      InternalTLSVncProxyCAFile:
-        default: /etc/pki/CA/certs/vnc.crt
-      IsolCpusList:
-        default: ''
-      KernelArgs:
-        default: ''
-      KernelDisableIPv6:
-        default: 0
-      KernelIpForward:
-        default: 1
-      KernelIpNonLocalBind:
-        default: 1
-      KernelPidMax:
-        default: 1048576
       KeyName:
         default: default
-      KeystoneAuthMethods:
-        default: []
-      KeystoneChangePasswordUponFirstUse:
-        default: ''
-      KeystoneCorsAllowedOrigin:
-        default: ''
-      KeystoneCredential0:
-        default: Zz1uZ_YzYI8g5hJ-wMBVOvPhPunmEh7jcXy-VOmctfg=
-      KeystoneCredential1:
-        default: WLaGxLxQwy1Vz_H9YuqrALOHwlPTruGo1XlIV2FDPzc=
-      KeystoneDebug:
-        default: ''
-      KeystoneDisableUserAccountDaysInactive:
-        default: ''
-      KeystoneEnableMember:
-        default: false
-      KeystoneFederationEnable:
-        default: false
-      KeystoneFernetKeys:
-        default:
-          /etc/keystone/fernet-keys/0:
-            content: H51ZXDF78ue9FdMBHwYzzV4jt5ApZXR-lgqQ74pI_7E=
-          /etc/keystone/fernet-keys/1:
-            content: fTw3lTkjYR3-rDBasRR3tsO55vSHjNlfmpOwWVokCso=
-      KeystoneFernetMaxActiveKeys:
-        default: 5
-      KeystoneLDAPBackendConfigs:
-        default: {}
-      KeystoneLDAPDomainEnable:
-        default: false
-      KeystoneLockoutDuration:
-        default: ''
-      KeystoneLockoutFailureAttempts:
-        default: ''
-      KeystoneLoggingSource:
-        default:
-          file: /var/log/containers/keystone/keystone.log
-          tag: openstack.keystone
-      KeystoneMinimumPasswordAge:
-        default: ''
-      KeystoneNotificationFormat:
-        default: basic
-      KeystoneNotificationTopics:
-        default: []
-      KeystoneOpenIdcClientId:
-        default: ''
-      KeystoneOpenIdcClientSecret:
-        default: ''
-      KeystoneOpenIdcCryptoPassphrase:
-        default: openstack
-      KeystoneOpenIdcEnable:
-        default: false
-      KeystoneOpenIdcEnableOAuth:
-        default: false
-      KeystoneOpenIdcIdpName:
-        default: ''
-      KeystoneOpenIdcIntrospectionEndpoint:
-        default: ''
-      KeystoneOpenIdcProviderMetadataUrl:
-        default: ''
-      KeystoneOpenIdcRemoteIdAttribute:
-        default: HTTP_OIDC_ISS
-      KeystoneOpenIdcResponseType:
-        default: id_token
-      KeystonePasswordExpiresDays:
-        default: ''
-      KeystonePasswordRegex:
-        default: ''
-      KeystonePasswordRegexDescription:
-        default: ''
-      KeystonePolicies:
-        default: {}
       KeystoneRegion:
         default: regionOne
-      KeystoneResourcesConfigs:
-        default: {}
-      KeystoneSSLCertificate:
-        default: ''
-      KeystoneSSLCertificateKey:
-        default: ''
-      KeystoneTokenProvider:
-        default: fernet
-      KeystoneTrustedDashboards:
-        default: []
-      KeystoneUniqueLastPasswordCount:
-        default: ''
-      KeystoneWorkers:
-        default: 1
-      LibvirtCACert:
-        default: ''
-      LibvirtEnabledPerfEvents:
-        default: []
-      LibvirtLogFilters:
-        default: 1:libvirt 1:qemu 1:conf 1:security 3:event 3:json 3:file 3:object
-          1:util
-      LibvirtLogLevel:
-        default: 3
-      LibvirtNbdCACert:
-        default: ''
-      LibvirtTLSPassword:
-        default: mH1iUWYqOSUtfBpKFobMvoghG
-      LibvirtTLSPriority:
-        default: NORMAL:-VERS-SSL3.0:-VERS-TLS-ALL:+VERS-TLS1.2
-      LibvirtVirtlogdLogFilters:
-        default: 1:logging 4:object 4:json 4:event 1:util
-      LibvirtVirtlogdLogLevel:
-        default: 3
-      LibvirtVncCACert:
-        default: ''
-      LocalCephAnsibleFetchDirectoryBackup:
-        default: ''
-      LogrotateDateExt:
-        default: false
-      LogrotateDateFormat:
-        default: -%Y%m%d
-      LogrotateDateYesterday:
-        default: false
-      LogrotateMaxsize:
-        default: 10M
-      LogrotatePurgeAfterDays:
-        default: '14'
-      LogrotateRotate:
-        default: '14'
-      LogrotateRotationInterval:
-        default: daily
-      ManageKeystoneFernetKeys:
-        default: true
       ManagementInterfaceDefaultRoute:
         default: ''
       ManagementInterfaceRoutes:
         default: []
       ManagementIp:
         default: ''
-      ManagementIpList:
-        default: []
       ManagementIpSubnet:
         default: ''
       ManagementIpUri:
@@ -1213,84 +531,10 @@ stack_data:
         default: management
       ManagementNetworkVlanID:
         default: 60
-      ManilaCephFSCephFSAuthId:
-        default: manila
-      ManilaCephFSDataPoolName:
-        default: manila_data
-      ManilaCephFSDataPoolPGNum:
-        default: 16
-      ManilaCephFSMetadataPoolName:
-        default: manila_metadata
-      ManilaCephFSMetadataPoolPGNum:
-        default: 16
-      ManilaCephFSShareBackendName:
-        default: cephfs
-      MaxPoll:
-        default: 10
-      MemcachedDebug:
-        default: ''
-      MemcachedIPv6:
-        default: false
-      MemcachedIpSubnet:
-        default: ''
-      MemcachedMaxMemory:
-        default: 50%
-      MessageOfTheDay:
-        default: ''
-      MigrationSshPort:
-        default: 2022
-      MinPoll:
-        default: 6
-      MonitoringSubscriptionCinderApi:
-        default: overcloud-cinder-api
-      MonitoringSubscriptionCinderScheduler:
-        default: overcloud-cinder-scheduler
-      MonitoringSubscriptionCinderVolume:
-        default: overcloud-cinder-volume
-      MonitoringSubscriptionGlanceApi:
-        default: overcloud-glance-api
-      MonitoringSubscriptionHaproxy:
-        default: overcloud-haproxy
-      MonitoringSubscriptionHeatApi:
-        default: overcloud-heat-api
-      MonitoringSubscriptionHeatApiCnf:
-        default: overcloud-heat-api-cfn
-      MonitoringSubscriptionHeatEngine:
-        default: overcloud-heat-engine
-      MonitoringSubscriptionHorizon:
-        default: overcloud-horizon
-      MonitoringSubscriptionKeystone:
-        default: overcloud-keystone
-      MonitoringSubscriptionMemcached:
-        default: overcloud-memcached
-      MonitoringSubscriptionNeutronServer:
-        default: overcloud-neutron-server
       MonitoringSubscriptionNovaApi:
         default: overcloud-nova-api
-      MonitoringSubscriptionNovaCompute:
-        default: overcloud-nova-compute
-      MonitoringSubscriptionNovaConductor:
-        default: overcloud-nova-conductor
-      MonitoringSubscriptionNovaLibvirt:
-        default: overcloud-nova-libvirt
-      MonitoringSubscriptionNovaMetadata:
-        default: overcloud-nova-metadata
-      MonitoringSubscriptionNovaScheduler:
-        default: overcloud-nova-scheduler
-      MonitoringSubscriptionOvnMetadata:
-        default: overcloud-ovn-metadata
-      MonitoringSubscriptionPacemaker:
-        default: overcloud-pacemaker
-      MonitoringSubscriptionPlacement:
-        default: overcloud-placement
-      MonitoringSubscriptionRabbitmq:
-        default: overcloud-rabbitmq
-      MonitoringSubscriptionSwiftProxy:
-        default: overcloud-swift-proxy
       MonitoringSubscriptions:
         default: []
-      MultipathdEnable:
-        default: false
       MysqlClustercheckPassword:
         default: aWasbmo9utzj3JajswxxHelmC
       MysqlIPv6:
@@ -1305,147 +549,27 @@ stack_data:
         default: false
       MysqlUpgradeTransfer:
         default: true
-      NeighbourGcThreshold1:
-        default: 1024
-      NeighbourGcThreshold2:
-        default: 2048
-      NeighbourGcThreshold3:
-        default: 4096
       NetIpMap:
         default: {}
-      NetVipMap:
-        default:
-          description: ''
-          label: NetVipMap
-          name: NetVipMap
-          noEcho: 'false'
-          type: Json
-          value:
-            ovn_dbs: null
-            redis: null
-      NetappShareLocation:
-        default: ''
       NetworkDeploymentActions:
         default:
         - CREATE
-      NetworkHostnameMap:
-        default: []
       NetworkName:
         default: ctlplane
-      NeutronAllowL3AgentFailover:
-        default: 'True'
-      NeutronApiLoggingSource:
-        default:
-          file: /var/log/containers/neutron/server.log
-          tag: openstack.neutron.api
-      NeutronApiOptEnvVars:
-        default: {}
-      NeutronApiOptVolumes:
-        default: []
-      NeutronApiPolicies:
-        default: {}
-      NeutronBridgeMappings:
-        default: datacentre:br-ex
       NeutronControlPlaneID:
         default: ctlplane
-      NeutronCorePlugin:
-        default: ml2
-      NeutronDBSyncExtraParams:
-        default: ''
-      NeutronDebug:
-        default: ''
-      NeutronDefaultAvailabilityZones:
-        default: ''
-      NeutronDhcpAgentsPerNetwork:
-        default: 0
-      NeutronDhcpLoadType:
-        default: networks
-      NeutronDnsDomain:
-        default: openstacklocal
-      NeutronEnableDVR:
-        default: ''
-      NeutronEnableIgmpSnooping:
-        default: false
-      NeutronFirewallDriver:
-        default: iptables_hybrid
-      NeutronFlatNetworks:
-        default: datacentre
-      NeutronGeneveMaxHeaderSize:
-        default: 38
-      NeutronGlobalPhysnetMtu:
-        default: 0
-      NeutronL3HA:
-        default: ''
-      NeutronML2PhysicalNetworkMtus:
-        default: []
-      NeutronMechanismDrivers:
-        default: ovn
       NeutronMetadataProxySharedSecret:
         default: dAyHEgvOzNnSMqFR7K86qUrw3
-      NeutronMetadataWorkers:
-        default: 1
-      NeutronNetworkSchedulerDriver:
-        default: neutron.scheduler.dhcp_agent_scheduler.AZAwareWeightScheduler
-      NeutronNetworkType:
-        default: geneve
-      NeutronNetworkVLANRanges:
-        default: datacentre:1:1000
-      NeutronOverlayIPVersion:
-        default: 4
-      NeutronOvsIntegrationBridge:
-        default: ''
       NeutronPassword:
         default: NeTOhGFgULdW0IXcQiKF3RyeG
       NeutronPhysicalBridge:
         default: br-ex
-      NeutronPhysnetNUMANodesMapping:
-        default: {}
-      NeutronPluginExtensions:
-        default: qos,port_security,dns
-      NeutronPluginMl2PuppetTags:
-        default: neutron_plugin_ml2
-      NeutronPortQuota:
-        default: '500'
       NeutronPublicInterface:
         default: nic1
-      NeutronRouterSchedulerDriver:
-        default: neutron.scheduler.l3_agent_scheduler.AZLeastRoutersScheduler
-      NeutronRpcWorkers:
-        default: ''
-      NeutronSecurityGroupQuota:
-        default: '10'
-      NeutronServiceName:
-        default:
-          description: service name
-          label: NeutronServiceName
-          name: NeutronServiceName
-          noEcho: 'false'
-          type: String
-          value: server
-      NeutronServicePlugins:
-        default: qos,ovn-router,trunk,segments
-      NeutronTunnelIdRanges:
-        default:
-        - 1:4094
-      NeutronTunnelNUMANodes:
-        default: []
-      NeutronTypeDrivers:
-        default: geneve,vlan,flat
-      NeutronVhostuserSocketDir:
-        default: ''
-      NeutronVniRanges:
-        default:
-        - 1:65536
-      NeutronWorkers:
-        default: 1
       NodeCreateBatchSize:
         default: 30
-      NodeDataLookup:
-        default: {}
       NodeIndex:
         default: 0
-      NodeRebootWaitTimeout:
-        default: 900
       NotificationDriver:
         default: noop
       NovaAdditionalCell:
@@ -1456,30 +580,6 @@ stack_data:
           tag: openstack.nova.api
       NovaApiPolicies:
         default: {}
-      NovaAutoDisabling:
-        default: '10'
-      NovaCPUAllocationRatio:
-        default: 0
-      NovaComputeCpuDedicatedSet:
-        default: []
-      NovaComputeCpuSharedSet:
-        default: []
-      NovaComputeEnableKsm:
-        default: false
-      NovaComputeLibvirtType:
-        default: qemu
-      NovaComputeLoggingSource:
-        default:
-          file: /var/log/containers/nova/nova-compute.log
-          tag: openstack.nova.compute
-      NovaComputeOptEnvVars:
-        default: {}
-      NovaComputeOptVolumes:
-        default: []
-      NovaConductorLoggingSource:
-        default:
-          file: /var/log/containers/nova/nova-conductor.log
-          tag: openstack.nova.conductor
       NovaCronArchiveDeleteAllCells:
         default: true
       NovaCronArchiveDeleteRowsAge:
@@ -1536,239 +636,44 @@ stack_data:
         default: ''
       NovaDefaultFloatingPool:
         default: public
-      NovaDiskAllocationRatio:
-        default: 0
       NovaEnableDBArchive:
         default: true
       NovaEnableDBPurge:
         default: true
-      NovaEnableRbdBackend:
-        default: true
-      NovaHWMachineType:
-        default: x86_64=pc-i440fx-rhel7.6.0,aarch64=virt-rhel7.6.0,ppc64=pseries-rhel7.6.0,ppc64le=pseries-rhel7.6.0
-      NovaLibvirtFileBackedMemory:
-        default: 0
-      NovaLibvirtMemStatsPeriodSeconds:
-        default: 10
-      NovaLibvirtNumPciePorts:
-        default: 16
-      NovaLibvirtRxQueueSize:
-        default: 512
-      NovaLibvirtTxQueueSize:
-        default: 512
-      NovaLibvirtVolumeUseMultipath:
-        default: false
-      NovaLiveMigrationWaitForVIFPlug:
-        default: true
       NovaLocalMetadataPerCell:
         default: false
-      NovaMaxDiskDevicesToAttach:
-        default: -1
-      NovaMetadataLoggingSource:
-        default:
-          file: /var/log/containers/nova/nova-metadata-api.log
-          tag: openstack.nova.api.metadata
-      NovaNfsEnabled:
-        default: false
-      NovaNfsOptions:
-        default: context=system_u:object_r:nfs_t:s0
-      NovaNfsShare:
-        default: ''
-      NovaNfsVersion:
-        default: '4'
       NovaOVSBridge:
         default: br-int
       NovaOVSDBConnection:
         default: ''
-      NovaPCIPassthrough:
-        default: ''
       NovaPassword:
         default: mXCUg871bUaFDLm4OtIyXPX3G
-      NovaRAMAllocationRatio:
-        default: 1
-      NovaRbdPoolName:
-        default: vms
-      NovaReservedHostMemory:
-        default: 512
-      NovaReservedHugePages:
-        default: []
-      NovaResumeGuestsShutdownTimeout:
-        default: 300
-      NovaResumeGuestsStateOnHostBoot:
-        default: false
-      NovaSchedulePlacementAggregateRequiredForTenants:
-        default: false
-      NovaSchedulerAvailableFilters:
-        default: []
-      NovaSchedulerDefaultFilters:
-        default: []
-      NovaSchedulerDiscoverHostsInCellsInterval:
-        default: -1
-      NovaSchedulerEnableIsolatedAggregateFiltering:
-        default: false
-      NovaSchedulerLimitTenantsToPlacementAggregate:
-        default: false
-      NovaSchedulerLoggingSource:
-        default:
-          file: /var/log/containers/nova/nova-scheduler.log
-          tag: openstack.nova.scheduler
-      NovaSchedulerMaxAttempts:
-        default: 3
-      NovaSchedulerQueryImageType:
-        default: true
-      NovaSchedulerWorkers:
-        default: 1
-      NovaServiceName:
-        default:
-          description: service name
-          label: NovaServiceName
-          name: NovaServiceName
-          noEcho: 'false'
-          type: String
-          value: conductor
       NovaSyncPowerStateInterval:
         default: 0
-      NovaVNCProxySSLCiphers:
-        default: ''
-      NovaVNCProxySSLMinimumVersion:
-        default: ''
-      NovaVcpuPinSet:
-        default: []
-      NovaVncproxyLoggingSource:
-        default:
-          file: /var/log/containers/nova/nova-novncproxy.log
-          tag: openstack.nova.vncproxy
       NovaWorkers:
         default: 1
-      NtpIburstEnable:
-        default: true
-      NtpPool:
-        default: []
-      NtpServer:
-        default: pool.ntp.org
-      NtpService:
-        default: chrony
-      OVNCMSOptions:
-        default: ''
-      OVNDBSPacemakerTimeout:
-        default: 60
-      OVNDBSReplicationInterval:
-        default: 60000
       OVNDBsVirtualFixedIPs:
         default: []
-      OVNDbConnectionTimeout:
-        default: 180
-      OVNDnsServers:
-        default: []
-      OVNEmitNeedToFrag:
-        default: false
-      OVNEnableHaproxyDockerWrapper:
-        default: true
-      OVNIntegrationBridge:
-        default: br-int
-      OVNMetadataEnabled:
-        default: true
-      OVNNeutronSyncMode:
-        default: log
-      OVNNorthboundServerPort:
-        default: 6641
-      OVNOpenflowProbeInterval:
-        default: 60
-      OVNQosDriver:
-        default: ovn-qos
-      OVNRemoteProbeInterval:
-        default: 60000
-      OVNSouthboundServerPort:
-        default: 6642
-      OVNVifType:
-        default: ovs
-      OVNWrapperDebug:
-        default: false
       OvercloudComputeHCIFlavor:
         default: baremetal
-      OvercloudControlFlavor:
-        default: baremetal
-      OvercloudControllerFlavor:
-        default: baremetal
-      OvnMetadataAgentDebug:
-        default: ''
-      OvnMetadataAgentLoggingSource:
-        default:
-          file: /var/log/containers/neutron/networking-ovn-metadata-agent.log
-          tag: openstack.neutron.agent.ovn-metadata
-      OvsDpdkSocketMemory:
-        default: ''
-      OvsHwOffload:
-        default: false
-      PacemakerBundleOperationTimeout:
-        default: ''
-      PacemakerLoggingSource:
-        default:
-          file: /var/log/host/pacemaker.log
-          startmsg.regex: ^[a-zA-Z]{3} [0-9]{2} [:0-9]{8}
-          tag: system.pacemaker
-      PacemakerTLSPriorities:
-        default: ''
-      PasswordAuthentication:
-        default: 'no'
       PcmkConfigRestartTimeout:
         default: 600
-      PcsdPassword:
-        default: Yq7VFYfm5DiVMNYz
-      PingTestIpsMap:
-        default: ''
       PlacementAPIInterface:
         default: internal
-      PlacementLoggingSource:
-        default:
-          file: /var/log/containers/httpd/placement_wsgi_error_ssl.log
-          tag: openstack.placement
       PlacementPassword:
         default: mXCUg871bUaFDLm4OtIyXPX3G
-      PlacementWorkers:
-        default: 1
       PortName:
         default: ''
-      PublicSSLCertificateAutogenerated:
-        default: false
       PublicVirtualFixedIPs:
         default: []
-      QemuCACert:
-        default: ''
-      QemuMemoryBackingDir:
-        default: ''
-      RabbitAdditionalErlArgs:
-        default: '''+sbwt none'''
-      RabbitCookie:
-        default: VZifkVWMLFAvg2vItBTH
       RabbitCookieSalt:
         default: unset
-      RabbitFDLimit:
-        default: 65536
-      RabbitHAQueues:
-        default: 0
-      RabbitIPv6:
-        default: false
-      RabbitNetTickTime:
-        default: 15
-      RabbitPassword:
-        default: HdWwmrgEoEA9FLRnEkZnhumL4
-      RabbitUserName:
-        default: guest
-      RedisPassword:
-        default: Q1VJU21NCWF3y8ZlM2gqrqohq
       RedisVirtualFixedIPs:
         default: []
       RoleName:
         default: ''
-      RoleNetIpMap:
-        default: {}
-      RoleNetworks:
-        default: ctlplane
       RoleParameters:
         default: {}
-      RootStackName:
-        default: overcloud
       RpcPassword:
         default: O6oSCC5G7S6EaT6wnq7kFaRHr
       RpcPort:
@@ -1777,22 +682,12 @@ stack_data:
         default: false
       RpcUserName:
         default: guest
-      SELinuxMode:
-        default: enforcing
-      SSLCertificate:
-        default: ''
-      SSLIntermediateCertificate:
-        default: ''
-      SSLKey:
-        default: ''
       ServerDeletionPolicy:
         default: delete
       ServerMetadata:
         default: {}
       ServiceData:
         default: {}
-      ServiceHostnameList:
-        default: []
       ServiceMetadataSettings:
         default: {}
       ServiceName:
@@ -1869,61 +764,16 @@ stack_data:
           CephPublicNetwork: CephMonNetwork
           RabbitMqNetwork: RabbitmqNetwork
           SwiftMgmtNetwork: SwiftStorageNetwork
-      ServiceNetMapLower:
-        default: {}
       Services:
         default: []
-      SkipPackageUpdate:
-        default: 'false'
-      SnmpdBindHost:
-        default:
-        - udp:161
-        - udp6:[::1]:161
-      SnmpdIpSubnet:
-        default: ''
-      SnmpdOptions:
-        default: -LS0-5d
-      SnmpdReadonlyUserName:
-        default: ro_snmp_user
-      SnmpdReadonlyUserPassword:
-        default: 51bvCGwd7s046vBHKgxm9s9z
       SoftwareConfigTransport:
         default: POLL_TEMP_URL
-      SshFirewallAllowAll:
-        default: false
-      SshServerOptions:
-        default:
-          AcceptEnv:
-          - LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
-          - LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
-          - LC_IDENTIFICATION LC_ALL LANGUAGE
-          - XMODIFIERS
-          AuthorizedKeysFile: .ssh/authorized_keys
-          ChallengeResponseAuthentication: 'no'
-          GSSAPIAuthentication: 'yes'
-          GSSAPICleanupCredentials: 'no'
-          HostKey:
-          - /etc/ssh/ssh_host_rsa_key
-          - /etc/ssh/ssh_host_ecdsa_key
-          - /etc/ssh/ssh_host_ed25519_key
-          Subsystem: sftp  /usr/libexec/openssh/sftp-server
-          SyslogFacility: AUTHPRIV
-          UseDNS: 'no'
-          UsePAM: 'yes'
-          UsePrivilegeSeparation: sandbox
-          X11Forwarding: 'yes'
-      StackAction:
-        default: CREATE
-      StackUpdateType:
-        default: ''
       StorageInterfaceDefaultRoute:
         default: ''
       StorageInterfaceRoutes:
         default: []
       StorageIp:
         default: ''
-      StorageIpList:
-        default: []
       StorageIpSubnet:
         default: ''
       StorageIpUri:
@@ -1934,8 +784,6 @@ stack_data:
         default: []
       StorageMgmtIp:
         default: ''
-      StorageMgmtIpList:
-        default: []
       StorageMgmtIpSubnet:
         default: ''
       StorageMgmtIpUri:
@@ -1956,55 +804,12 @@ stack_data:
         default: 30
       StorageVirtualFixedIPs:
         default: []
-      SwiftAccountWorkers:
-        default: 0
-      SwiftCeilometerIgnoreProjects:
-        default:
-        - service
-      SwiftCeilometerPipelineEnabled:
-        default: false
-      SwiftContainerSharderEnabled:
-        default: false
-      SwiftContainerWorkers:
-        default: 0
-      SwiftCorsAllowedOrigin:
-        default: ''
-      SwiftEncryptionEnabled:
-        default: false
-      SwiftHashSuffix:
-        default: Vd10HbBK95OgiIuToIxeVxwgL
-      SwiftMinPartHours:
-        default: 1
-      SwiftMountCheck:
-        default: false
-      SwiftObjectWorkers:
-        default: 0
-      SwiftPartPower:
-        default: 10
-      SwiftPassword:
-        default: Gj3Pjdn7qObFzr7BzxCEmwfJ8
-      SwiftProxyNodeTimeout:
-        default: 60
-      SwiftRawDisks:
-        default: {}
-      SwiftReplicas:
-        default: 3
-      SwiftRingBuild:
-        default: true
-      SwiftUseLocalDir:
-        default: true
-      SwiftWorkers:
-        default: 1
-      SystemdDropInDependencies:
-        default: true
       TenantInterfaceDefaultRoute:
         default: ''
       TenantInterfaceRoutes:
         default: []
       TenantIp:
         default: ''
-      TenantIpList:
-        default: []
       TenantIpSubnet:
         default: ''
       TenantIpUri:
@@ -2013,18 +818,8 @@ stack_data:
         default: 1500
       TenantNetName:
         default: tenant
-      TenantNetPhysnetMtu:
-        default: 1500
       TenantNetworkVlanID:
         default: 50
-      TimeZone:
-        default: UTC
-      TokenExpiration:
-        default: 3600
-      TunedCustomProfile:
-        default: ''
-      TunedProfileName:
-        default: throughput-performance
       UndercloudHostsEntries:
         default:
         - 192.168.24.1 undercloud.ctlplane.localdomain undercloud.ctlplane
@@ -2034,22 +829,8 @@ stack_data:
         default: ''
       UpgradeInitCommonCommand:
         default: ''
-      UpgradeLeappDebug:
-        default: true
-      UpgradeLeappDevelSkip:
-        default: ''
-      UpgradeLeappEnabled:
-        default: true
-      UpgradeLeappRebootTimeout:
-        default: 1800
       UpgradeLevelNovaCompute:
         default: ''
-      UseTLSTransportForLiveMigration:
-        default: true
-      UseTLSTransportForNbd:
-        default: true
-      UseTLSTransportForVnc:
-        default: true
       UserData:
         default:
           description: ''
@@ -2058,20 +839,6 @@ stack_data:
           noEcho: 'false'
           type: String
           value: ComputeHCIUserData
-      ValidateControllersIcmp:
-        default: true
-      ValidateFqdn:
-        default: false
-      ValidateGatewaysIcmp:
-        default: true
-      ValidateNtp:
-        default: true
-      VerifyGlanceSignatures:
-        default: false
-      VhostuserSocketGroup:
-        default: qemu
-      VipHostsEntries:
-        default: []
       VipSubnetMap:
         default: {}
       VipSubnetMapDefaults:
@@ -2083,41 +850,12 @@ stack_data:
           ctlplane: ctlplane-subnet
           ovn_dbs: internal_api_subnet
           redis: internal_api_subnet
-      WebSSOChoices:
-        default:
-        - - OIDC
-          - OpenID Connect
-      WebSSOEnable:
-        default: false
-      WebSSOIDPMapping:
-        default:
-          OIDC:
-          - myidp
-          - openid
-      WebSSOInitialChoice:
-        default: OIDC
       controllerExtraConfig:
         default: {}
-      controllerImage:
-        default: overcloud-full
-      deployment_source_hosts:
-        default: Undercloud
-      deployment_target_hosts:
-        default: overcloud
       node_admin_extra_ssh_keys:
         default: []
       node_admin_username:
         default: heat-admin
-      role_data:
-        default:
-          description: Mapping of Role name e.g Controller to the per-role data
-          label: role_data
-          name: role_data
-          noEcho: 'false'
-          type: Json
-          value:
-            ComputeHCI: null
-            Controller: null
       server:
         default:
           description: ''
@@ -2126,20 +864,6 @@ stack_data:
           noEcho: 'false'
           type: String
           value: ComputeHCI
-      servers:
-        default:
-          description: Mapping of Role name e.g Controller to a list of servers
-          label: servers
-          name: servers
-          noEcho: 'false'
-          type: Json
-          value:
-            ComputeHCI: null
-            Controller: null
-      swap_path:
-        default: /swap
-      swap_size_megabytes:
-        default: '4096'
     resources:
       004cb0fa-cb58-45f0-bfc2-8e3232271578:
         id: 004cb0fa-cb58-45f0-bfc2-8e3232271578
