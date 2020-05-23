@@ -24,20 +24,16 @@ it.
 ## How to run it on an undercloud in the context of a real deployment
 
 - Use [tripleo-heat-templates patch](https://review.opendev.org/#/c/714217) `git review -d 714217`
-- Use [tripleo-ansible patch](https://review.opendev.org/#/c/719466) `git review -d 719466`
-
 - Use [ironic.sh](ironic.sh) to tag two nodes for the deployment
 - Use [deploy.sh](deploy.sh) to deploy the two nodes
 - Edit [overrides.yaml](overrides.yaml) as you see fit
 
 Prior to running [deploy.sh](deploy.sh) you'll need to update your
-environment so the 
-[tripleo-ansible patch](https://review.opendev.org/#/c/719466)
-and 
-[tripleo-heat-templates patch](https://review.opendev.org/#/c/714217)
-patches are used.
+environment [tripleo-heat-templates patch](https://review.opendev.org/#/c/714217)
+patch is used.
 
-I have [my own version](roles-tripleo_derived_parameters-tasks.yml)
+If you're testing on a real deployment, then I
+have [my own version](roles-tripleo_derived_parameters-tasks.yml)
 of [roles/tripleo_derived_parameters/tasks/main.yml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/tasks/main.yml)
 which takes some paramters that the HCI derive paramter ansible module
 would return as output called `derived_parameters_result` and then
@@ -50,24 +46,25 @@ top of.
 
 ## How to run it on an undercloud with molecule
 
-- Get [tripleo-ansible patch](https://review.opendev.org/#/c/719466) `git review -d 719466`
 - `cd tripleo-ansible`
 - `time ./scripts/run-local-test tripleo_derived_parameters`
 
-The molecule run takes about 6 minutes on my undercloud and doesn't
-fail. I should probably find a way to update 
-[tripleo_derived_parameters/molecule/default/verify.yml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/molecule/default/verify.yml)
-so I can see it doing something.
+This will trigger molecule and it takes about 5 minutes on my 
+undercloud. Look at the generated 
 
-I might have it do something similar to what my own 
-[my own version](roles-tripleo_derived_parameters-tasks.yml)
-of [roles/tripleo_derived_parameters/tasks/main.yml](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/tasks/main.yml)
-does.
+
+The molecule run takes about 4 minutes on my undercloud and doesn't
+fail. Look at the genereated HTML to understnd what happened within
+the container. Here's my shortcut to pull it to my laptop:
+
+```
+ ssh -A hamfast -t ssh -A stack@undercloud "cat /home/stack/zuul-output/logs/reports.html" > derive_zuul_report_kerenl.html
+```
+
+## How do I mock data with Molecule
+
+See [data](data).
 
 # Next Steps
 
-- Confirm I can see the molecule test update a representation of the deployment plan
-- Trim [mock_params](https://review.opendev.org/#/c/719466/22/tripleo_ansible/roles/tripleo_derived_parameters/molecule/mock_params) so it isn't so needlessly large
-- Stack a new submission on top of [tripleo-ansible patch](https://review.opendev.org/#/c/719466) which introduces a new ansible module to derive parameters for HCI ([I have not written an ansible module since Nov 2019](https://github.com/openstack/tripleo-validations/commit/70596306b19809da8429486df6d39d1d03cf456f))
-
-I'm working on the first two tasks by focusing on mocking the [data](data).
+As per the [mailing list](http://lists.openstack.org/pipermail/openstack-discuss/2020-May/015014.html) write a new ansible module and call it. I'll [link a patch](https://github.com/openstack/tripleo-validations/commit/70596306b19809da8429486df6d39d1d03cf456f) from the last time I wrote a new module.
